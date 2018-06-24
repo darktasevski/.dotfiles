@@ -180,6 +180,9 @@ alias ifactive="ifconfig | pcregrep -M -o '^[^\t:]+:([^\n]|\n\t)*status: active'
 
 # Yarn aliases
 alias ya="yarn add"
+alias yrm="yarn remove"
+alias yanl="yarn add --no-lockfile"
+alias yrn="yarn run"
 alias ycc="yarn cache clean"
 alias yh="yarn help"
 alias yo="yarn outdated"
