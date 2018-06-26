@@ -171,6 +171,8 @@ alias status="sudo systemctl status"
 alias stop="sudo systemctl stop"
 alias view_recent_alerts='sudo journalctl -p err..alert -b'
 alias sys-info='inxi -Fxz'
+# happens so often that it requires alias on its own...
+alias dock-restart='pkill dde-dock & dde-dock'
 
 
 # IP addresses
