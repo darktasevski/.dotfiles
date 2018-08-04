@@ -1,14 +1,31 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+if [[ `uname` == 'Linux' ]]; then
+	export OS=linux
+	# Path to your oh-my-zsh installation.
+	export ZSH=/home/puritanic/.oh-my-zsh
+
+	# enable color support of ls and file types
+	if [ "$TERM" != "dumb" ]; then
+			eval "`dircolors -b ~/.config/dircolors/dircolorsrc_srs`"
+			alias ls='ls --color=auto'
+			alias grep='grep --color=auto'
+	fi
+
+	export NVM_DIR="$HOME/.nvm"
+	[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+elif [[ `uname` == 'Darwin' ]]; then
+	export OS=osx
+	# Path to your oh-my-zsh installation.
+	export ZSH=/Users/puritanic/.oh-my-zsh
+
+	export NVM_DIR="$HOME/.nvm"
+	. "/usr/local/opt/nvm/nvm.sh"
+fi
 
 # Point to Yarn global installs, enable if there are problems
 export PATH="$PATH:$(yarn global bin)"
-
-# Path to your oh-my-zsh installation.
-export ZSH=/home/puritanic/.oh-my-zsh
 
 export BROWSER=/usr/bin/chromium
 export EDITOR='vim'
@@ -28,18 +45,12 @@ export GREP_OPTIONS='--color=auto';
 # no lag on normal / insert mode switch   # see http://dougblack.io/words/zsh-vi-mode.html
 export KEYTIMEOUT=1
 
+
 # Start X at login for Arch boxes
 if [[ -z "$DISPLAY" ]] && [[ $(tty) = /dev/tty1 ]] ; then
     if hash startx 2>& /dev/null; then
         startx && logout
     fi
-fi
-
-# enable color support of ls and file types
-if [ "$TERM" != "dumb" ]; then
-        eval "`dircolors -b ~/.config/dircolors/dircolorsrc_srs`"
-        alias ls='ls --color=auto'
-        alias grep='grep --color=auto'
 fi
 
 # Set Zsh options
@@ -81,10 +92,26 @@ if [[ ! -d ~/.antigen ]]; then
   curl -L git.io/antigen > ~/.antigen/antigen.zsh
 fi
 
-source /home/puritanic/.antigen/antigen.zsh
+if [[ `uname` == 'Linux' ]]; then
+	source /home/puritanic/.antigen/antigen.zsh
+elif [[ `uname` == 'Darwin' ]]; then
+	source /Users/puritanic/antigen.zsh
+fi
+
+GEOMETRY_SYMBOL_PROMPT="λ"        # default prompt symbol
+GEOMETRY_SYMBOL_RPROMPT="⋙"                 # multiline prompts
+GEOMETRY_SYMBOL_EXIT_VALUE="ϟ"              # displayed when exit value is != 0
+GEOMETRY_SYMBOL_ROOT="Ω"                    # when logged in user is root
+
+GEOMETRY_COLOR_EXIT_VALUE="magenta"         # prompt symbol color when exit value is != 0
+GEOMETRY_COLOR_PROMPT="green"               # prompt symbol color
+GEOMETRY_COLOR_ROOT="red"                   # root prompt symbol color
+GEOMETRY_COLOR_DIR="blue"                   # current directory color
+
+antigen use oh-my-zsh
 
 ### Antigen Bundles
-antigen bundle lukechilds/zsh-better-npm-completion
+# antigen bundle lukechilds/zsh-better-npm-completion
 antigen bundle chrissicool/zsh-256color
 antigen bundle unixorn/autoupdate-antigen.zshplugin
 antigen bundle zsh-users/zsh-completions
@@ -102,11 +129,7 @@ antigen bundle zsh-users/zsh-history-substring-search
 # antigen bundle zsh-users/zsh-autosuggestions # slows down terminal it seems
 
 ### Antigen Themes
-# antigen bundle mafredri/zsh-async
-# antigen bundle marszall87/lambda-pure
-# antigen bundle sindresorhus/pure
-# antigen theme https://github.com/denysdovhan/spaceship-zsh-theme spaceship
-antigen theme NelsonBrandao/absolute absolute
+antigen theme geometry-zsh/geometry
 
 ## let antigen know we re finished
 antigen apply
@@ -115,9 +138,15 @@ antigen apply
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(
-  archlinux # https://github.com/robbyrussell/oh-my-zsh/tree/master/plugins/archlinux
-)
+if [[ `uname` == 'Linux' ]]; then
+  	plugins=(
+		archlinux # https://github.com/robbyrussell/oh-my-zsh/tree/master/plugins/archlinux
+	)
+elif [[ `uname` == 'Darwin' ]]; then
+ 	plugins=(
+		osx # https://github.com/robbyrussell/oh-my-zsh/tree/master/plugins/osx
+	)
+fi
 
 source $ZSH/oh-my-zsh.sh
 
@@ -292,78 +321,3 @@ srcr() {
 	[[ -n "$SHELL" ]] && exec ${SHELL#-} || exec zsh
 }
 
-# Set list of themes to load
-# Setting this variable when ZSH_THEME=random
-# cause zsh load theme from this variable instead of
-# looking in ~/.oh-my-zsh/themes/
-# An empty array have no effect
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
-
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
-
-# Uncomment the following line to use hyphen-insensitive completion. Case
-# sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
-
-# Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
-
-# Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
-
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# HIST_STAMPS="mm/dd/yyyy"
-
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
-
-
-
-# User configuration
-
-# export MANPATH="/usr/local/man:$MANPATH"
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# ssh
-# export SSH_KEY_PATH="~/.ssh/rsa_id"
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
