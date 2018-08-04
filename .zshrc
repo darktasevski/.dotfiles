@@ -5,7 +5,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 
 # Point to Yarn global installs, enable if there are problems
-# export PATH="$PATH:$(yarn global bin)"
+export PATH="$PATH:$(yarn global bin)"
 
 # Path to your oh-my-zsh installation.
 export ZSH=/home/puritanic/.oh-my-zsh
@@ -149,6 +149,8 @@ alias gpoh='git push origin HEAD'
 alias gits='git status -uno'
 # View abbreviated SHA, description, history graph, time and author
 alias glog='git log --color --graph --date=iso --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ci) %C(bold blue)<%an>%Creset" --abbrev-commit --'
+
+alias nvp='npm version patch'
 
 # Editors
 alias sudoCode='sudo code --user-data-dir=~/.config/Code/'
