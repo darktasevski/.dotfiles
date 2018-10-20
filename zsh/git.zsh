@@ -12,6 +12,10 @@ GIT_PROMPT_UNTRACKED="%F{9}●%F{reset}"
 GIT_PROMPT_MODIFIED="%F{11}●%F{reset}"
 GIT_PROMPT_STAGED="%F{10}●%F{reset}"
 
+function dirdiff() {
+  diff -r $1 $2 | sed '/Binary\ files\ /d'
+}
+
 parse_git_repo() {
   (basename "$(git rev-parse --show-toplevel)") 2> /dev/null
 }
