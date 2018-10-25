@@ -2,8 +2,8 @@
 setopt AUTO_CD
 setopt correct
 # Keep 1000 lines of history within the shell and save it to ~/.zsh_history:
-HISTSIZE=10000
-SAVEHIST=20000
+HISTSIZE=1000
+SAVEHIST=1000
 HISTFILE=~/.zsh_history
 #man pages
 # example: run-help crypt shows crypt man pages
