@@ -42,7 +42,8 @@ antigen bundle zsh-users/zsh-history-substring-search
 # antigen bundle zsh-users/zsh-autosuggestions # slows down terminal it seems
 
 ### Antigen Themes
-antigen theme geometry-zsh/geometry
+# antigen theme geometry-zsh/geometry
+antigen theme pure
 
 ## let antigen know we re finished
 antigen apply
