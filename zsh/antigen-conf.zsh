@@ -8,7 +8,7 @@ fi
 if [[ `uname` == 'Linux' ]]; then
 	source /home/puritanic/.antigen/antigen.zsh
 elif [[ `uname` == 'Darwin' ]]; then
-	source /Users/puritanic/antigen.zsh
+	source /Users/v-darko.tasevski/antigen.zsh
 fi
 
 GEOMETRY_SYMBOL_PROMPT="λ"        # default prompt symbol
