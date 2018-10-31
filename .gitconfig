@@ -35,11 +35,11 @@
 	# outputting to the terminal. (This is the default setting in Git ≥ 1.8.4.)
 	ui = auto
 [color "branch"]
-	current = yellow bold
-	local = yellow bold
-	remote = green bold
+	current = cyan reverse bold
+	local = yellow 
+	remote = green 
 [color "diff"]
-	meta = yellow bold
+	meta = cyan bold
 	frag = magenta bold
 	old = red bold
 	new = green bold
@@ -53,7 +53,7 @@
 [color "status"]
 	added = green bold
 	changed = yellow bold
-	untracked = cyan bold
+	untracked = cyan
 
 [commit]
 

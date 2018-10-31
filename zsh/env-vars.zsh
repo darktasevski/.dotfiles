@@ -46,6 +46,8 @@ export MANPAGER='less -X';
 # no lag on normal / insert mode switch   # see http://dougblack.io/words/zsh-vi-mode.html
 export KEYTIMEOUT=1
 
+export PS2=" 🔪 "
+
 # color codes from http://www.termsys.demon.co.uk/vtansi.htm#colors
 # 0 Reset all attributes
 # 1 Bright
@@ -78,7 +80,6 @@ export GREP_COLOR='00;1;31'
 
 # Always enable colored `grep` output.
 export GREP_OPTIONS='--color=auto';
-
 
 # Defer initialization of nvm until nvm, node or a node-dependent command is
 # run. Ensure this block is only run once if .bashrc gets sourced multiple times
