@@ -2,6 +2,7 @@
 alias dl="cd ~/Downloads"
 alias dt="cd ~/Desktop"
 alias p="cd ~/work/Programming"
+alias -- -="cd -" # 
 
 # those are for linux
 alias h="history"
