@@ -165,7 +165,6 @@ Plug 'scrooloose/syntastic'         " Syntax checking hacks for vim
 
 " Git plugins.
 Plug 'tpope/vim-fugitive'           " A git wrapper so awesome, it should be illegal.
-Plug 'Xuyuanp/nerdtree-git-plugin'  " A plugin of NERDTree showing git status.
 
 call plug#end() " All Plugins must be added before this
 
