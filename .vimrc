@@ -122,15 +122,15 @@ set completeopt=longest,menu
 
 "----------PLUGINS-------------------
 
-function! BuildYCM(info)
-  " info is a dictionary with 3 fields
-  " - name:   name of the plugin
-  " - status: 'installed', 'updated', or 'unchanged'
-  " - force:  set on PlugInstall! or PlugUpdate!
-  if a:info.status == 'installed' || a:info.force
-    !./install.py
-  endif
-endfunction
+" function! BuildYCM(info)
+"   " info is a dictionary with 3 fields
+"   " - name:   name of the plugin
+"   " - status: 'installed', 'updated', or 'unchanged'
+"   " - force:  set on PlugInstall! or PlugUpdate!
+"   if a:info.status == 'installed' || a:info.force
+"     !./install.py
+"   endif
+" endfunction
 
 " Plugin manager auto install.
 if empty(glob('~/.vim/autoload/plug.vim'))
@@ -158,7 +158,7 @@ Plug 'jiangmiao/auto-pairs'         " Insert or delete brackets, parens, quotes 
 Plug 'kien/ctrlp.vim'               " Full path fuzzy file, buffer, mru, tag, ... finder for Vim.
 Plug 'tpope/vim-surround'           " Surround.vim is all about 'surroundings': parentheses, brackets, ..., etc.
 Plug 'jlanzarotta/bufexplorer'      " Quickly and easily switch between buffers.
-Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') } " Autocompletion for Vim
+" Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') } " Autocompletion for Vim
 Plug 'nathanaelkane/vim-indent-guides' " Indent guides for Vim
 Plug 'pangloss/vim-javascript'      " JavaScript bundle, provides syntax highlighting and improved indentation.
 Plug 'scrooloose/syntastic'         " Syntax checking hacks for vim

@@ -27,6 +27,8 @@ export PATH=$PATH:$GOPATH/bin
 
 export BROWSER=/usr/bin/chromium
 export EDITOR='vim'
+
+#https://github.com/keybase/keybase-issues/issues/2798
 export GPG_TTY=$(tty)
 
 # Prefer US English and use UTF-8.
