@@ -23,6 +23,7 @@ alias c="clear"
 alias ping=" ping -c 5"
 alias mkdir="mkdir -p"
 alias sudo="sudo " #makes sudo recognize aliases.
+alias help='tldr'
 
 # Git aliases
 alias gst='git status --short --branch'
@@ -42,9 +43,6 @@ alias nvp='npm version patch'
 # Editors
 alias sudoCode='sudo code --user-data-dir=~/.config/Code/'
 
-alias la=" ls --almost-all"
-alias l='ls -l --group-directories-first --color=auto -F'
-alias ll='ls -lha --group-directories-first --color=auto -F'
 alias grep='grep --color=tty -d skip'
 alias cp="cp -i"                          # confirm before overwriting something
 alias df='df -h'                          # human-readable sizes

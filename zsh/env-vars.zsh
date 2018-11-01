@@ -1,30 +1,23 @@
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
-# export NVM_DIR="$HOME/.nvm"
 
 if [[ `uname` == 'Linux' ]]; then
 	# Start X at login for Arch boxes
 	if [[ -z "$DISPLAY" ]] && [[ $(tty) = /dev/tty1 ]] ; then
 		if hash startx 2>& /dev/null; then
 			startx && logout
-		fi
+		fi	
 	fi
+fi
 
 	# enable color support of ls and file types
-	if [ "$TERM" != "dumb" ]; then
-			eval "`dircolors -b ~/.config/dircolors/dircolorsrc_srs`"
-			alias ls='ls --color=auto'
-			alias grep='grep --color=auto'
-	fi
+# if [ "$TERM" != "dumb" ]; then
+# 	# eval "`dircolors -b ~/.config/dircolors/dircolorsrc_srs`"
+# 	alias ls='ls --color=auto'
+# 	alias grep='grep --color=auto'
+# fi
 
-	# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-elif [[ `uname` == 'Darwin' ]]; then
-	
-fi
-# https://github.com/robbyrussell/oh-my-zsh/issues/5327#issuecomment-248836398
-# Speeds up zsh boot time by not loading nvm each time terminal is opened
-# with this alias I can start nvm whenever I want
-# alias loadnvm=". /usr/local/opt/nvm/nvm.sh"
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
 # Point to Yarn global installs, enable if there are problems
 export PATH="$PATH:$(yarn global bin)"
@@ -81,18 +74,3 @@ export GREP_COLOR='00;1;31'
 # Always enable colored `grep` output.
 export GREP_OPTIONS='--color=auto';
 
-# Defer initialization of nvm until nvm, node or a node-dependent command is
-# run. Ensure this block is only run once if .bashrc gets sourced multiple times
-# by checking whether __init_nvm is a function.
-if [ -s "$HOME/.nvm/nvm.sh" ] && [ ! "$(whence -w __init_nvm)" = function ]; then
-  export NVM_DIR="$HOME/.nvm"
-  [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
-  declare -a __node_commands=('nvm' 'node' 'npm' 'yarn' 'gulp' 'grunt' 'webpack')
-  function __init_nvm() {
-    for i in "${__node_commands[@]}"; do unalias $i; done
-    . "$NVM_DIR"/nvm.sh
-    unset __node_commands
-    unset -f __init_nvm
-  }
-  for i in "${__node_commands[@]}"; do alias $i='__init_nvm && '$i; done
-fi
