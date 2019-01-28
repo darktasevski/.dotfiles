@@ -2,7 +2,8 @@
 alias dl="cd ~/Downloads"
 alias dt="cd ~/Desktop"
 alias p="cd ~/work/Programming"
-alias -- -="cd -" # 
+alias -- -="cd -" #
+alias roj="cd ~/Projects"
 
 # those are for linux
 alias h="history"
@@ -25,15 +26,23 @@ alias ping=" ping -c 5"
 alias mkdir="mkdir -p"
 alias sudo="sudo " #makes sudo recognize aliases.
 alias help='tldr'
+alias rmf='rm -rf'
 
 # Git aliases
 alias gst='git status --short --branch'
 alias gpoh='git push origin HEAD'
 alias gits='git status -uno'
+alias gdi='git diff --ignore-all-space'
+alias gdw='git diff --color-words'
+alias gcu='git gc --aggressive' # Cleanup unnecessary files and optimize the local repository
+alias glr='git rev-list --left-right --count master...' # Lists commit objects in reverse chronological order
+alias gmb='git merge-base $(current_branch) master'  # Find as good common ancestors as possible for a merge
+alias upfork='git fetch upstream; git checkout master; git merge upstream/master'
 # View abbreviated SHA, description, history graph, time and author
 alias glog='git log --color --graph --date=iso --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ci) %C(bold blue)<%an>%Creset" --abbrev-commit --'
 # Show a formatted commit tree
 alias gtree="git log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all"
+alias since='git log --oneline --decorate $(git merge-base --fork-point master)..HEAD'
 # Show unmodified tracked files
 alias gunm='echo -e "$(git ls-files --modified)\n$(git ls-files)" | sort | uniq -u'
 # Nuke files from repo history
@@ -61,6 +70,7 @@ alias dock-restart='pkill dde-dock & dde-dock'
 
 
 # IP addresses
+alias myip='ipconfig getifaddr en1 || ipconfig getifaddr en0'
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias ips="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'"
 alias ifactive="ifconfig | pcregrep -M -o '^[^\t:]+:([^\n]|\n\t)*status: active'"
