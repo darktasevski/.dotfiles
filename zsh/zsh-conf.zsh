@@ -2,8 +2,11 @@ autoload -U promptinit; promptinit
 
 # optionally define some options
 # PURE_CMD_MAX_EXEC_TIME=10
+# prompt pure
 
-prompt pure
+# Set Spaceship ZSH as a prompt
+autoload -U promptinit; promptinit
+prompt spaceship
 
 setopt AUTO_CD
 setopt correct

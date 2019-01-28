@@ -8,7 +8,7 @@ if [[ `uname` == 'Linux' ]]; then
 	fi
 fi
 
-	# enable color support of ls and file types
+# enable color support of ls and file types
 # if [ "$TERM" != "dumb" ]; then
 # 	# eval "`dircolors -b ~/.config/dircolors/dircolorsrc_srs`"
 # 	alias ls='ls --color=auto'

@@ -65,16 +65,44 @@ function fs() {
     fi;
 }
 
-srcr() {
-	local cache="$ZSH_CACHE_DIR"
-	autoload -U compinit zrecompile
-	compinit -i -d "$cache/zcomp-$HOST"
+# Git Update/Sync with remote repository
+upr() {
+    local repo=$1
+    : ${repo:=.}
+    cd $repo > /dev/null 2>&1
+    local repo_dir=$(git rev-parse --show-toplevel)
+    local repo_name=$(basename $repo_dir)
+    local padded_repo_name_len=$((${#repo_name}+2))
+    local default_branch_name=$(git remote show origin | \grep "HEAD branch" | cut -d ":" -f 2 | tr -d '[:space:]')
+    echo
+    echo -n ╔
+    printf '═%.0s' {1..$padded_repo_name_len}
+    echo ╗
+    echo "║ $repo_name ║"
+    echo -n ╚
+    printf '═%.0s' {1..$padded_repo_name_len}
+    echo ╝
+    local current_branch=$(git rev-parse --abbrev-ref HEAD)
+    if [ "$current_branch" != "$default_branch_name" ] && [ "x$current_branch" != "x" ]; then
+        echo Currently on branch $current_branch
+        git stash
+        git checkout $default_branch_name
+    fi
 
-	for f in ~/.zshrc "$cache/zcomp-$HOST"; do
-		zrecompile -p $f && command rm -f $f.zwc.old
-	done
+    if [ "x$current_branch" != "x" ]; then
+        git pull
+        echo "Checking for branches merged to $default_branch_name..."
+        git branch --merged | \grep -v "\*" | xargs -n 1 git branch -d
+    fi
 
-	# Use $SHELL if available; remove leading dash if login shell
-	[[ -n "$SHELL" ]] && exec ${SHELL#-} || exec zsh
+    git remote prune origin
+
+    cd - > /dev/null 2>&1
 }
 
+look_for_process() {
+    local ps_name=$1
+    ps aux | ack $ps_name
+}
+
+alias lfp='look_for_process'
