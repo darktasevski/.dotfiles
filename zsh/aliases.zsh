@@ -8,6 +8,8 @@ alias roj="cd ~/Projects"
 alias ls='ls -G'
 
 alias tree='tree -C -I $(git check-ignore * 2>/dev/null | tr "\n" "|").git'
+alias brewup='brew update && brew upgrade'
+alias fact="elinks -dump randomfunfacts.com | sed -n '/^| /p' | tr -d \|"
 
 # Get macOS Software Updates, and update installed Ruby gems, Homebrew, npm, and their installed packages
 alias update='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup; npm install npm -g; npm update -g; sudo gem update --system; sudo gem update; sudo gem cleanup'
