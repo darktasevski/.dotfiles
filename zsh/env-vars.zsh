@@ -22,7 +22,13 @@ export NVM_DIR="$HOME/.nvm"
 # Point to Yarn global installs, enable if there are problems
 export PATH="$PATH:$(yarn global bin)"
 # Golang
-export GOPATH=~/go
+# export GOPATH=~/go
+export GOPATH="${HOME}/.go"
+export GOROOT="$(brew --prefix golang)/libexec"
+export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
+test -d "${GOPATH}" || mkdir "${GOPATH}"
+test -d "${GOPATH}/src/github.com" || mkdir -p "${GOPATH}/src/github.com"
+
 export PATH=$PATH:$GOPATH/bin
 
 export BROWSER=/usr/bin/chromium

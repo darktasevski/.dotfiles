@@ -5,6 +5,17 @@ alias p="cd ~/work/Programming"
 alias -- -="cd -" #
 alias roj="cd ~/Projects"
 
+alias ls='ls -G'
+
+alias tree='tree -C -I $(git check-ignore * 2>/dev/null | tr "\n" "|").git'
+
+# Get macOS Software Updates, and update installed Ruby gems, Homebrew, npm, and their installed packages
+alias update='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup; npm install npm -g; npm update -g; sudo gem update --system; sudo gem update; sudo gem cleanup'
+# Empty the Trash on all mounted volumes and the main HDD.
+# Also, clear Apple’s System Logs to improve shell startup speed.
+# Finally, clear download history from quarantine. https://mths.be/bum
+alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl; sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'"
+
 # those are for linux
 alias h="history"
 alias work='cd /work/'
@@ -27,6 +38,9 @@ alias mkdir="mkdir -p"
 alias sudo="sudo " #makes sudo recognize aliases.
 alias help='tldr'
 alias rmf='rm -rf'
+
+# URL-encode strings
+alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
 
 # Git aliases
 alias gst='git status --short --branch'
@@ -73,7 +87,11 @@ alias dock-restart='pkill dde-dock & dde-dock'
 alias myip='ipconfig getifaddr en1 || ipconfig getifaddr en0'
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias ips="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'"
+# Show active network interfaces
 alias ifactive="ifconfig | pcregrep -M -o '^[^\t:]+:([^\n]|\n\t)*status: active'"
+# View HTTP traffic
+alias sniff="sudo ngrep -d 'en1' -t '^(GET|POST) ' 'tcp and port 80'"
+alias httpdump="sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET \/.*\""
 
 # Yarn aliases
 alias ya="yarn add"
@@ -84,6 +102,23 @@ alias ycc="yarn cache clean"
 alias yh="yarn help"
 alias yo="yarn outdated"
 alias yui="yarn upgrade-interactive"
+
+# colored man
+# https://github.com/robbyrussell/oh-my-zsh/blob/master/plugins/colored-man-pages/colored-man-pages.plugin.zsh
+man() {
+    env \
+        LESS_TERMCAP_mb=$(printf "\e[1;31m") \
+        LESS_TERMCAP_md=$(printf "\e[1;31m") \
+        LESS_TERMCAP_me=$(printf "\e[0m") \
+        LESS_TERMCAP_se=$(printf "\e[0m") \
+        LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
+        LESS_TERMCAP_ue=$(printf "\e[0m") \
+        LESS_TERMCAP_us=$(printf "\e[1;32m") \
+        PAGER="${commands[less]:-$PAGER}" \
+        _NROFF_U=1 \
+        PATH="$HOME/bin:$PATH" \
+            man "$@"
+}
 
 # Docker
 # alias dockerps='docker ps --format=$FORMAT'

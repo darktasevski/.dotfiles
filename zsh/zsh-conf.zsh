@@ -5,14 +5,14 @@ autoload -U promptinit; promptinit
 # prompt pure
 
 # Set Spaceship ZSH as a prompt
-autoload -U promptinit; promptinit
-prompt spaceship
+# autoload -U promptinit; promptinit
+# prompt spaceship
 
 setopt AUTO_CD
 setopt correct
 
-# Keep 1000 lines of history within the shell and save it to ~/.zsh_history:
-HISTSIZE=1000
+HISTCONTROL=ignoreboth # don't put duplicate lines or lines starting with space in the history.
+HISTSIZE=1000 # Keep 1000 lines of history within the shell and save it to ~/.zsh_history:
 SAVEHIST=1000
 HISTFILE=~/.zsh_history
 
@@ -20,8 +20,7 @@ HISTFILE=~/.zsh_history
 # example: run-help crypt shows crypt man pages
 autoload -U run-help
 autoload run-help-git
-# autoload run-help-svn
-# autoload run-help-svk
+
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -56,4 +55,36 @@ elif [[ `uname` == 'Darwin' ]]; then
 	)
 fi
 
-# source $ZSH/oh-my-zsh.sh/
+# Load Nerd Fonts 
+POWERLEVEL9K_MODE='nerdfont-complete'
+# Customise the Powerlevel9k prompts
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
+  dir # current working directory
+#   custom_javascript # custom section
+  vcs # version control system, such as git
+  newline # starts a new line in your terminal
+  status # shows a tick if the last command was successful or the return code if there was an error.
+)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=()
+POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
+
+# echo -n prints the line without starting a newline at the end of it
+# ‘\ue781’ is the icon you want to display — it needs to be in quotes and start with \u to tell the shell to interpret it as a unicode escape sequence to print the icon rather than the four character code
+# JavaScript is the text you want to be shown following the icon
+# POWERLEVEL9K_CUSTOM_JAVASCRIPT="echo -n '\ue781' JavaScript"
+# # background and foreground colors for custom prompt section
+# # The values of the color names can be changed in iTerm2’s Preferences.
+# POWERLEVEL9K_CUSTOM_JAVASCRIPT_FOREGROUND="black"
+# POWERLEVEL9K_CUSTOM_JAVASCRIPT_BACKGROUND="yellow"
+
+# POWERLEVEL9K_CUSTOM_PYTHON="echo -n '\uf81f' Python"
+# POWERLEVEL9K_CUSTOM_PYTHON_FOREGROUND="black"
+# POWERLEVEL9K_CUSTOM_PYTHON_BACKGROUND="blue"
+
+# POWERLEVEL9K_CUSTOM_RUBY="echo -n '\ue21e' Ruby"
+# POWERLEVEL9K_CUSTOM_RUBY_FOREGROUND="black"
+# POWERLEVEL9K_CUSTOM_RUBY_BACKGROUND="red"
+
+# Load Powerlevel9k theme for Zsh
+source ~/.dotfiles/zsh/powerlevel9k/powerlevel9k.zsh-theme
+
