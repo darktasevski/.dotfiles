@@ -14,3 +14,4 @@ else
     print "404: ZSH config directory not found"
 fi
 
+export PATH="/usr/local/sbin:$PATH"

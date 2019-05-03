@@ -1,3 +1,4 @@
+export TERM="xterm-256color"
 
 ## Check if Antigen is installed
 if [[ ! -d ~/.antigen ]]; then
@@ -43,7 +44,7 @@ antigen bundle zsh-users/zsh-history-substring-search
 ### Antigen Themes
 # antigen theme geometry-zsh/geometry
 antigen bundle mafredri/zsh-async
-antigen bundle sindresorhus/pure
+# antigen bundle sindresorhus/pure
 
 ## let antigen know we re finished
 antigen apply

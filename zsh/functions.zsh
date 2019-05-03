@@ -34,6 +34,11 @@ run_ls() {
 	ls --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --color=auto -F
 }
 
+# ls for Directories.
+function lsd {
+    ls -1F $* | grep '/$'
+}
+
 run_dir() {
 	dir -i --color=auto -w $(tput cols) "$@"
 }
@@ -63,6 +68,23 @@ function fs() {
     else
         du $arg .[^.]* *;
     fi;
+}
+
+# Finding files and directories
+function ff() {
+        find . -type f -name "*$1*"
+}
+
+function fd() {
+        find . -type d -name "*$1*"
+}
+
+# `tre` is a shorthand for `tree` with hidden files and color enabled, ignoring
+# the `.git` directory, listing directories first. The output gets piped into
+# `less` with options to preserve color and line numbers, unless the output is
+# small enough for one screen.
+function tre() {
+    tree -aC -I '.git' --dirsfirst "$@" | less -FRNX
 }
 
 # Git Update/Sync with remote repository
@@ -106,3 +128,34 @@ look_for_process() {
 }
 
 alias lfp='look_for_process'
+
+function download-web() {
+    wget -r -nH --no-parent --reject='index.html*' "$@" ;
+}
+
+bye-bye-branches() {
+  git fetch -p && for branch in `git branch -vv | grep ': gone]' | awk '{print $1}'`; do git branch -D $branch; done
+}
+
+# Intuitive map function
+# For example, to list all directories that contain a certain file:
+# find . -name .gitattributes | map dirname
+alias map="xargs -n1"
+
+
+#  ssh + scp without storing or prompting for keys.
+function sshtmp
+{
+    ssh -o "ConnectTimeout 3" \
+        -o "StrictHostKeyChecking no" \
+        -o "UserKnownHostsFile /dev/null" \
+        "$@"
+}
+
+function scptmp
+{
+    exec scp -o "ConnectTimeout 3" \
+        -o "StrictHostKeyChecking no" \
+        -o "UserKnownHostsFile /dev/null" \
+        "$@"
+}
