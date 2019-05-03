@@ -1,5 +1,3 @@
-export TERM="xterm-256color"
-
 ## Check if Antigen is installed
 if [[ ! -d ~/.antigen ]]; then
   mkdir ~/.antigen
