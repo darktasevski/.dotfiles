@@ -1,13 +1,13 @@
 ## Check if Antigen is installed
 if [[ ! -d ~/.antigen ]]; then
   mkdir ~/.antigen
-  curl -L git.io/antigen > ~/.antigen/antigen.zsh
+  curl -L git.io/antigen > ~/.dotfiles/.antigen/antigen.zsh
 fi
 
 if [[ `uname` == 'Linux' ]]; then
-	source /home/puritanic/.antigen/antigen.zsh
+	source /home/puritanic/.dotfiles/.antigen/antigen.zsh
 elif [[ `uname` == 'Darwin' ]]; then
-	source /Users/v-darko.tasevski/antigen.zsh
+	source /Users/v-darko.tasevski/.dotfiles/.antigen/antigen.zsh
 fi
 
 # GEOMETRY_SYMBOL_PROMPT="λ"        # default prompt symbol
