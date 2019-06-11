@@ -14,6 +14,24 @@ function test-microphone() {
     arecord -vvv -f dat /dev/null
 }
 
+# Trims whitespace
+# Source: https://unix.stackexchange.com/questions/102008/how-do-i-trim-leading-and-trailing-whitespace-from-each-line-of-some-output
+function trimWS(){
+    awk '{$1=$1};1'
+}
+
+# Find which program is using a port, works in reverse as well
+# Eg. `snitch 8080` or `snitch node`
+function snitch() {
+    netstat -tulpn | grep $1 | tail -n 2
+}
+
+# Kill the program using a specified port
+# Eg. `snatch 8080`
+function snatch() {
+    kill -9 $(netstat -tulpn 2>/dev/null | grep $1 | awk '{print $7}' | cut -d / -f 1)
+}
+
 # Creates an archive from given directory
 function mktar() { tar cvf  "${1%%/}.tar"     "${1%%/}/"; }
 function mktgz() { tar cvzf "${1%%/}.tar.gz"  "${1%%/}/"; }

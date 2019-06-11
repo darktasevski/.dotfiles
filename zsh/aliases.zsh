@@ -36,8 +36,6 @@ alias fixit='sudo rm -f /var/lib/pacman/db.lck && sudo pacman-mirrors -g && sudo
 alias reload="exec $SHELL -l"
 
 # Set custom aliases
-
-# Commands starting with space are not saved in history
 alias c=" clear"
 alias ping="ping -c 5"
 alias mkdir="mkdir -p"
