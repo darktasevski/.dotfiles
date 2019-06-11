@@ -1,11 +1,13 @@
 # Shortcuts
-alias dl="cd ~/Downloads"
-alias dt="cd ~/Desktop"
-alias p="cd ~/work/Programming"
-alias -- -="cd -" #
+alias dl=" cd ~/Downloads"
+alias dt=" cd ~/Desktop"
+alias p=" cd ~/work/Programming"
+alias -- -="cd -" # Switch back to previous directory where you working earlier.
 alias roj="cd ~/Projects"
+alias zshconfig="vim ~/.zshrc"
+alias vimconfig="vim ~/.vimrc"
 
-alias ls='ls -G'
+alias ls=' ls -G'
 
 alias tree='tree -C -I $(git check-ignore * 2>/dev/null | tr "\n" "|").git'
 alias brewup='brew update && brew upgrade'
@@ -19,11 +21,11 @@ alias update='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup
 alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl; sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'"
 
 # those are for linux
-alias h="history"
-alias work='cd /work/'
+alias h=" history"
+alias work=' cd /work/'
 alias keybhr='setxkbmap hr'
 alias keybus='setxkbmap us'
-alias rem-orphans=' pacman -Rs $(pacman -Qqdt)'
+alias rem-orphans='pacman -Rs $(pacman -Qqdt)'
 alias nxt="playerctl -p spotify next"
 alias prv="playerctl -p spotify previous"
 alias pp="playerctl -p spotify play-pause"
@@ -34,8 +36,10 @@ alias fixit='sudo rm -f /var/lib/pacman/db.lck && sudo pacman-mirrors -g && sudo
 alias reload="exec $SHELL -l"
 
 # Set custom aliases
-alias c="clear"
-alias ping=" ping -c 5"
+
+# Commands starting with space are not saved in history
+alias c=" clear"
+alias ping="ping -c 5"
 alias mkdir="mkdir -p"
 alias sudo="sudo " #makes sudo recognize aliases.
 alias help='tldr'
@@ -104,23 +108,6 @@ alias ycc="yarn cache clean"
 alias yh="yarn help"
 alias yo="yarn outdated"
 alias yui="yarn upgrade-interactive"
-
-# colored man
-# https://github.com/robbyrussell/oh-my-zsh/blob/master/plugins/colored-man-pages/colored-man-pages.plugin.zsh
-man() {
-    env \
-        LESS_TERMCAP_mb=$(printf "\e[1;31m") \
-        LESS_TERMCAP_md=$(printf "\e[1;31m") \
-        LESS_TERMCAP_me=$(printf "\e[0m") \
-        LESS_TERMCAP_se=$(printf "\e[0m") \
-        LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
-        LESS_TERMCAP_ue=$(printf "\e[0m") \
-        LESS_TERMCAP_us=$(printf "\e[1;32m") \
-        PAGER="${commands[less]:-$PAGER}" \
-        _NROFF_U=1 \
-        PATH="$HOME/bin:$PATH" \
-            man "$@"
-}
 
 # Docker
 # alias dockerps='docker ps --format=$FORMAT'

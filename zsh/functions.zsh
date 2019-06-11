@@ -3,21 +3,21 @@
 # https://twitter.com/climagic/status/551435572490010624
 # same can be done using VLC => vlc v4l2:///dev/video0
 # Use your webcam and mplayer as a mirror with this function.
-mirror(){ mplayer -vf mirror -v tv:// -tv device=/dev/video0:driver=v4l2; }
+function mirror(){ mplayer -vf mirror -v tv:// -tv device=/dev/video0:driver=v4l2; }
 
 #make a directory and go on it
 function mkcd(){
     mkdir -p "$@" && eval cd "\"\$$#\"";
 }
 
-test-microphone() {
+function test-microphone() {
     arecord -vvv -f dat /dev/null
 }
 
 # Creates an archive from given directory
-mktar() { tar cvf  "${1%%/}.tar"     "${1%%/}/"; }
-mktgz() { tar cvzf "${1%%/}.tar.gz"  "${1%%/}/"; }
-mktbz() { tar cvjf "${1%%/}.tar.bz2" "${1%%/}/"; }
+function mktar() { tar cvf  "${1%%/}.tar"     "${1%%/}/"; }
+function mktgz() { tar cvzf "${1%%/}.tar.gz"  "${1%%/}/"; }
+function mktbz() { tar cvjf "${1%%/}.tar.bz2" "${1%%/}/"; }
 
 function localip() {
   function _localip() { echo "📶  "$(ipconfig getifaddr "$1"); }
@@ -30,7 +30,12 @@ function localip() {
     sed -r "s/(VLAN Configurations)|==*//g"
 }
 
-run_ls() {
+# Parse markdown file and print it man page like
+function mdless() {
+	pandoc -s -f markdown -t man $1 | groff -T utf8 -man | less
+}
+
+function run_ls() {
 	ls --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --color=auto -F
 }
 
@@ -39,11 +44,11 @@ function lsd {
     ls -1F $* | grep '/$'
 }
 
-run_dir() {
+function run_dir() {
 	dir -i --color=auto -w $(tput cols) "$@"
 }
 
-run_vdir() {
+function run_vdir() {
 	vdir -i --color=auto -w $(tput cols) "$@"
 }
 # alias ls="run_ls"
@@ -52,7 +57,7 @@ alias vdir="run_vdir"
 
 # In some cases some zip files are "corrupted"
 # https://huit.re/MMnBu4uG
-recover_archive () {
+function recover_archive () {
     jar xvf $1
 }
 
@@ -88,30 +93,31 @@ function tre() {
 }
 
 # Git Update/Sync with remote repository
-upr() {
+function upr() {
     local repo=$1
     : ${repo:=.}
-    cd $repo > /dev/null 2>&1
+    cd ${repo} > /dev/null 2>&1
     local repo_dir=$(git rev-parse --show-toplevel)
-    local repo_name=$(basename $repo_dir)
+    local repo_name=$(basename ${repo_dir})
     local padded_repo_name_len=$((${#repo_name}+2))
     local default_branch_name=$(git remote show origin | \grep "HEAD branch" | cut -d ":" -f 2 | tr -d '[:space:]')
     echo
-    echo -n ╔
-    printf '═%.0s' {1..$padded_repo_name_len}
-    echo ╗
+    echo -n "╔"
+    printf '═%.0s' {1..${padded_repo_name_len}}
+    echo "╗"
     echo "║ $repo_name ║"
-    echo -n ╚
-    printf '═%.0s' {1..$padded_repo_name_len}
-    echo ╝
+    echo -n "╚"
+    printf '═%.0s' {1..${padded_repo_name_len}}
+    echo "╝"
     local current_branch=$(git rev-parse --abbrev-ref HEAD)
-    if [ "$current_branch" != "$default_branch_name" ] && [ "x$current_branch" != "x" ]; then
-        echo Currently on branch $current_branch
+
+    if [[ "$current_branch" != "$default_branch_name" ]] && [[ "x$current_branch" != "x" ]]; then
+        echo Currently on branch ${current_branch}
         git stash
-        git checkout $default_branch_name
+        git checkout ${default_branch_name}
     fi
 
-    if [ "x$current_branch" != "x" ]; then
+    if [[ "x$current_branch" != "x" ]]; then
         git pull
         echo "Checking for branches merged to $default_branch_name..."
         git branch --merged | \grep -v "\*" | xargs -n 1 git branch -d
@@ -122,9 +128,9 @@ upr() {
     cd - > /dev/null 2>&1
 }
 
-look_for_process() {
+function look_for_process() {
     local ps_name=$1
-    ps aux | ack $ps_name
+    ps aux | ack ${ps_name}
 }
 
 alias lfp='look_for_process'
@@ -133,8 +139,8 @@ function download-web() {
     wget -r -nH --no-parent --reject='index.html*' "$@" ;
 }
 
-bye-bye-branches() {
-  git fetch -p && for branch in `git branch -vv | grep ': gone]' | awk '{print $1}'`; do git branch -D $branch; done
+function bye-bye-branches() {
+  git fetch -p && for branch in `git branch -vv | grep ': gone]' | awk '{print $1}'`; do git branch -D ${branch}; done
 }
 
 # Intuitive map function

@@ -1,10 +1,8 @@
 [user]
 	name = Darkø Tasevski
 	email = darko.tasevski@redbox.com # office mail
-	signingkey = F081E8952DDDCD47
 	# email = darktasevski@gmail.com # Home mail
-	# signingkey = 33E8E4EFD9DBE599 # home gpg key
-	# signingkey = B207AF0F2BD5A3F6 # office gpg key
+	signingkey = 58AC580B134D81B6
 
 [apply]
 	# Detect whitespace errors when applying a patch

@@ -29,7 +29,7 @@ autoload run-help-git
 
 # Use zsh-completions if it exists
 if [[ -d "/usr/local/share/zsh-completions" ]]; then
-    fpath=(/usr/local/share/zsh-completions $fpath)
+    fpath=(/usr/local/share/zsh-completions ${fpath})
 fi
 
 # make tab complete work  - https://github.com/robbyrussell/oh-my-zsh/issues/943
