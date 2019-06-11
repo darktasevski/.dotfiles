@@ -17,11 +17,12 @@ fi
 
 export TERM="xterm-256color"
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+[[ -s "$NVM_DIR/nvm.sh" ]] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[[ -s "$NVM_DIR/bash_completion" ]] && \. "$NVM_DIR/bash_completion"
 
-# Point to Yarn global installs, enable if there are problems
+# Point to Yarn global installs
 export PATH="$PATH:$(yarn global bin)"
+
 # Golang
 # export GOPATH=~/go
 export GOPATH="${HOME}/.go"

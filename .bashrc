@@ -4,7 +4,7 @@
 
 [[ $- != *i* ]] && return
 
-colors() {
+function colors() {
 	local fgc bgc vals seq0
 
 	printf "Color escapes are %s\n" '\e[${value};...;${value}m'
@@ -15,12 +15,12 @@ colors() {
 	# foreground colors
 	for fgc in {30..37}; do
 		# background colors
-		for bgc in {40..47}; do
+		for bgc in 40 41 42 43 44 45 46 47; do
 			fgc=${fgc#37} # white
 			bgc=${bgc#40} # black
 
 			vals="${fgc:+$fgc;}${bgc}"
-			vals=${vals%%;}
+			vals=${${vals}%%;}
 
 			seq0="${vals:+\e[${vals}m}"
 			printf "  %-9s" "${seq0:-(default)}"
@@ -33,7 +33,7 @@ colors() {
 
 [[ -f ~/.extend.bashrc ]] && . ~/.extend.bashrc
 
-[ -r /usr/share/bash-completion/bash_completion   ] && . /usr/share/bash-completion/bash_completion
+[[ -r /usr/share/bash-completion/bash_completion   ]] && . /usr/share/bash-completion/bash_completion
 
 
 export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).

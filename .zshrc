@@ -1,7 +1,7 @@
 Fortune | cowsay -f vader
 
 # Load configurations
-if [ -d ~/.dotfiles/zsh ]; then
+if [[ -d ~/.dotfiles/zsh ]]; then
     source ~/.dotfiles/zsh/detect-os.zsh
     source ~/.dotfiles/zsh/env-vars.zsh
     source ~/.dotfiles/zsh/zsh-conf.zsh
