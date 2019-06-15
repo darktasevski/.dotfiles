@@ -261,7 +261,13 @@ function trimWS(){ awk '{$1=$1};1' }
 ### Snitch and Snatch should be refactored so that they can work on OSX too ###
 # Find which program is using a port, works in reverse as well
 # Eg. `snitch 8080` or `snitch node`
-function snitch() { netstat -tulpn | grep $1 | tail -n 2 }
+function snitch() {
+	if is_mac; then
+		lsof -nPi | grep $1 | tail -n 2
+	else
+	 	netstat -tulpn | grep $1 | tail -n 2 
+	fi
+}
 # Kill the program using a specified port
 # Eg. `snatch 8080`
 function snatch() { kill -9 $(netstat -tulpn 2>/dev/null | grep $1 | awk '{print $7}' | cut -d / -f 1) }
