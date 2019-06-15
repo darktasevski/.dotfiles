@@ -33,7 +33,7 @@ ln -sf "$SCRIPT_DIR"/.gitconfig "$DEST"/.gitconfig
 ln -sf "$SCRIPT_DIR"/.gitignore_global "$DEST"/.gitignore_global
 ln -sf "$SCRIPT_DIR"/.gitattributes_global "$DEST"/.gitattributes_global
 ln -sf "$SCRIPT_DIR"/pystartup "$DEST"/.pystartup
-ln -sf "$SCRIPT_DIR"/tmux/.tmux.conf "$DEST"/.tmux.conf
+ln -sf "$SCRIPT_DIR"/.tmux.conf "$DEST"/.tmux.conf
 ln -sf "$SCRIPT_DIR"/.npmrc "$DEST"/.npmrc
 
 # Zsh
@@ -45,7 +45,7 @@ ln -sf "$SCRIPT_DIR"/zsh/.zshrc "$DEST"/.zshrc
 [[ ! -e "$DEST/.tmux/plugins/tpm" ]] && git clone https://github.com/tmux-plugins/tpm "$DEST"/.tmux/plugins/tpm
 
 # copy tmux project settings
-for file in "$SCRIPT_DIR"/tmux/.tmux.*.conf; do
+for file in "$SCRIPT_DIR"/tmux/*.{conf,proj}; do
   ln -sf "$file" "${DEST}/.tmux/"
 done
 
@@ -63,7 +63,7 @@ if [[ ! -e "$DEST"/.vim ]]; then
     ln -sf "$SCRIPT_DIR"/vim/dotvim "$DEST"/.vim
 fi
 
-ln -sf "$SCRIPT_DIR"/vim/.vimrc "$DEST"/.vimrc
+ln -sf "$SCRIPT_DIR"/vim/vimrc "$DEST"/.vimrc
 
 # Checks out the Vundle submodule
 git submodule update --init --recursive
