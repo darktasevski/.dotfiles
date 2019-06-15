@@ -2,6 +2,7 @@
 "" http://mislav.uniqpath.com/2011/12/vim-revisited/
 
 " Changelog
+" @forked from 
 " 2019-04-02 Swapped Vundle for vim-plug. Needed post-install hooks 
 " 2015-09-24 Swapped Pathogen for Vundle. Simplicity!
 "            Tipped from: http://lepture.com/en/2012/vundle-vs-pathogen
@@ -24,6 +25,7 @@ let g:ale_fix_on_save = 1
 nmap <F8> <Plug>(ale_fix)
 
 source ~/.vim/plugins-config
+
 filetype plugin indent on       " load file type plugins + indentation
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
@@ -43,12 +45,12 @@ set guifont=PragmataPro:h14
 "" http://stackoverflow.com/questions/9450905/how-to-bind-vim-through-tmux-to-cmd-key/9451636#9451636
 "" map <D-/> <plug>NERDCommenterToggle  
 set showcmd "" show leader commands
-set ruler
+set ruler						" shows the current line number column number
 
 "" Whitespace
 set nowrap                      " don't wrap lines
 set tabstop=4 shiftwidth=4      " a tab is four spaces 
-set expandtab                   " use spaces, not tabs (optional)
+set expandtab                   " use spaces, not tabs (optional).  On pressing tab, insert 4 spaces.
 set backspace=indent,eol,start  " backspace through everything in insert mode
 
 "" Searching
@@ -196,6 +198,37 @@ let g:ale_fixers = {
 \       {buffer, lines -> filter(lines, 'v:val !=~ ''^\s*//''')},
 \   ],
 \}
+
+""" More Customizations """
+
+" Achieve (, [, {,", 'Automatically fill in the right part of the input, the cursor will be in the middle position
+inoremap (() <ESC> i
+inoremap [] <ESC> i
+inoremap {{} <ESC> i
+inoremap < <><ESC>i
+inoremap " ""<ESC>i
+inoremap  '  ' ' <ESC> i
+
+" After exiting vim, the content is displayed on the terminal screen and can be used for viewing and copying
+" Benefits-> What is accidentally deleted, if the previous screen opens, you can retrieve
+"
+set  t_ti =  t_te =
+
+" For regular expressions turn magic on
+set magic
+
+" Automatic completion of the configuration
+" Let Vim's complement menu behave as a regular IDE (see VimTip 1228)
+set completeopt=longest,menu
+
+"----------UI SETTINGS---------------
+set t_Co=256                        " Enable 256 colors.
+set background=dark                 " Editor background.
+colorscheme solarized               " Colorscheme settings.
+
+let g:airline_theme='gruvbox'
+let g:gruvbox_termcolors=256
+let g:gruvbox_contrast_dark='hard'
 
 source ~/.vimrc.local
 
