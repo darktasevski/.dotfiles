@@ -34,6 +34,7 @@ ln -sf "$SCRIPT_DIR"/.gitignore_global "$DEST"/.gitignore_global
 ln -sf "$SCRIPT_DIR"/.gitattributes_global "$DEST"/.gitattributes_global
 ln -sf "$SCRIPT_DIR"/pystartup "$DEST"/.pystartup
 ln -sf "$SCRIPT_DIR"/tmux/.tmux.conf "$DEST"/.tmux.conf
+ln -sf "$SCRIPT_DIR"/.npmrc "$DEST"/.npmrc
 
 # Zsh
 ln -sf "$SCRIPT_DIR"/zsh/.zshrc "$DEST"/.zshrc

@@ -8,6 +8,11 @@ if has("macunix")
     Plug 'vim-scripts/copy-as-rtf'
 endif
 
+" UI.
+Plug 'morhetz/gruvbox'                                              " Retro groove color scheme.
+Plug 'vim-airline/vim-airline'                                      " Lean & mean status/tabline.
+Plug 'mhinz/vim-startify', {'do': 'mkdir -p ~/.vim/files/info'} 
+
 " Needs backend: npm -g update instant-markdown-d
 Plug 'suan/vim-instant-markdown', { 'for': 'markdown'}
 Plug 'scrooloose/nerdcommenter'
@@ -21,6 +26,9 @@ Plug 'alvan/vim-closetag'
 Plug 'ruanyl/vim-sort-imports'
 Plug 'sbdchd/neoformat' " Used with prettier
 Plug 'w0rp/ale'
+Plug 'jiangmiao/auto-pairs'         " Insert or delete brackets, parens, quotes in pair.
+Plug 'tpope/vim-surround'           " Surround.vim is all about 'surroundings': parentheses, brackets, ..., etc.
+Plug 'scrooloose/syntastic'         " Syntax checking hacks for vim
 
 " YCM alternative - needs Node, Yarn
 Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
@@ -48,5 +56,28 @@ Plug 'tpope/vim-rhubarb'
 
 " All of your plugins must be added before the following line
 call plug#end()
+
+"----------PLUGGINS SETTINGS---------
+" Syntastics settings
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_javascript_checkers=['eslint']
+
+" Filter out some error messages
+" Trimming empty warning labels, there is nothing in the instructions for some labels
+let g:syntastic_html_tidy_ignore_errors = ['trimming']
+
+" Plug 'scrooloose/nerdtree'.
+" Open NERDTree with 'Ctrl+n'.
+map <Leader>n :NERDTreeToggle<CR>
+" Change default arrows.
+let g:NERDTreeDirArrowExpandable = '+'
+let g:NERDTreeDirArrowCollapsible = '-'
 
 " vi: ft=vim
