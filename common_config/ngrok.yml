@@ -1,0 +1,16 @@
+region: eu
+tunnels:
+  demo:
+    addr: 9090
+    auth: demo:secret
+    hostname: demo.inconshreveable.com
+    inspect: false
+    proto: http
+  httpbin:
+    addr: 8000
+    proto: http
+    subdomain: alan-httpbin
+  nimble:
+    addr: 3000
+    proto: http
+    subdomain: nimble-ce

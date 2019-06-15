@@ -5,7 +5,7 @@ alias p=" cd ~/work/Programming"
 alias -- -="cd -" # Switch back to previous directory where you working earlier.
 alias roj="cd ~/Projects"
 alias zshconfig="vim ~/.zshrc"
-alias vimconfig="vim ~/.vimrc"
+alias vimconfig="vim ~/..vimrc"
 
 alias ls=' ls -G'
 
@@ -54,7 +54,7 @@ alias gdi='git diff --ignore-all-space'
 alias gdw='git diff --color-words'
 alias gcu='git gc --aggressive' # Cleanup unnecessary files and optimize the local repository
 alias glr='git rev-list --left-right --count master...' # Lists commit objects in reverse chronological order
-alias gmb='git merge-base $(current_branch) master'  # Find as good common ancestors as possible for a merge
+alias gmb='git merge-base $(current_branch) master'  # Find as good common_config ancestors as possible for a merge
 alias upfork='git fetch upstream; git checkout master; git merge upstream/master'
 # View abbreviated SHA, description, history graph, time and author
 alias glog='git log --color --graph --date=iso --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ci) %C(bold blue)<%an>%Creset" --abbrev-commit --'
@@ -64,7 +64,7 @@ alias since='git log --oneline --decorate $(git merge-base --fork-point master).
 # Show unmodified tracked files
 alias gunm='echo -e "$(git ls-files --modified)\n$(git ls-files)" | sort | uniq -u'
 # Nuke files from repo history
-alias gnuke='sh ~/.dotfiles/scripts/git-nuke.sh'
+alias gnuke='sh ~/.dotfiles/bin/git-nuke.sh'
 
 alias nvp='npm version patch'
 

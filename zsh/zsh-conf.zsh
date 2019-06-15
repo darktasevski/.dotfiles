@@ -72,7 +72,7 @@ POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
 # ‘\ue781’ is the icon you want to display — it needs to be in quotes and start with \u to tell the shell to interpret it as a unicode escape sequence to print the icon rather than the four character code
 # JavaScript is the text you want to be shown following the icon
 # POWERLEVEL9K_CUSTOM_JAVASCRIPT="echo -n '\ue781' JavaScript"
-# # background and foreground colors for custom prompt section
+# # background and foreground colors.sh for custom prompt section
 # # The values of the color names can be changed in iTerm2’s Preferences.
 # POWERLEVEL9K_CUSTOM_JAVASCRIPT_FOREGROUND="black"
 # POWERLEVEL9K_CUSTOM_JAVASCRIPT_BACKGROUND="yellow"

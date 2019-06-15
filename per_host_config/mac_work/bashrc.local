@@ -1,0 +1,28 @@
+#Se man bash i delen som heter "Prompting"
+#PS1="skinny \W \u\$  "
+t_debug "Load personalized bashrc for mac"
+
+#Add SSH keys using the keychain
+if ! ssh-add -l > /dev/null;then
+    ssh-add -K
+fi
+
+alias iso8601='date -u +"%Y-%m-%dT%H:%M:%SZ"'
+alias remove_downloaded_internet_warning='xattr -d -r com.apple.quarantine '
+
+# Conditionals
+alias vim='nvim'
+#alias rm=trash
+
+# Make Ctrl-S work again (incremental search forwards)
+# http://stackoverflow.com/questions/791765/unable-to-forward-search-bash-history-similarly-as-with-ctrl-r
+stty -ixon
+
+# With Solarized theme for iTerm2, dark_grey is invisible, while "normal white" is dark_grey (well at least grey)
+# Redefine
+# c_dark_grey='\033[39m'
+# set_prompt
+
+export LLVM="/usr/local/opt/emscripten/libexec/llvm/bin"
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"

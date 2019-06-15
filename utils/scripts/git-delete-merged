@@ -1,0 +1,177 @@
+#!/bin/bash
+# Delete all 
+
+if [[ x$DEBUG != x ]]; then
+    PS4='$LINENO: '
+    set -x
+fi
+
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source $SCRIPT_DIR/cross-platform-utils.bashlib
+source $SCRIPT_DIR/easyoptions.sh
+DRY_RUN=1
+
+# Check if we are running in a git.sh repo
+GIT_OK=$(git status 2> /dev/stdout)
+if [[ $? != 0 ]]; then
+    echo $GIT_OK > /dev/stderr
+    echo "This command must be run within a git.sh repo!"
+    exit 1
+fi
+
+UPSTREAM=$(git branch  -avv | util.esed -n -e '/\*/s/\*\s+\S+\s+\S+\s+\[(\S+)\/(\S+)\].*/\1\/\2/p')
+CURRENT=$(git branch -a | sed -n '/^*/s/^* //p')
+
+##  Usage: @script.name [--doit] <[--local] | --remote <remote>> [--branches-to-skip <branches to skip>]
+## 
+##  Example to delete all branches on GitHub matching 'patch-': 
+##          git.sh-delete-merged --doit --remote github --match patch-
+## 
+##  By default, "master" and "develop" are skipped
+##  Specifying core.protected-branches in your git.sh config, or
+##  listing them on the command line with commas will override this
+## 
+##  Options:
+##      -d, --doit              Execute the plan. 
+##      -l, --local             Operate on local branches
+##      --remote=my-remote      Operate on remote branches on the remote repo
+##      --skip=branches         The list of branches to skip. Default is "master,develop"
+##      --match=<regex>         Only delete branch names matching <regex>
+
+skipped(){
+    default='master,develop'
+    override="$(git.sh config --get core.protected-branches)"
+
+    # command line args trumps git.sh config
+    if [[ -n $skip ]]; then
+        override=$skip
+    fi
+
+    if [[ x$override != x ]]; then
+        echo "$override" 
+    else 
+        echo "$default"
+    fi
+}
+
+print-branches(){
+    for b in $@; do
+        echo "   $b"
+    done
+}
+
+# filters out the skipped branches and wraps each branch name in a regex with start/stop markers
+# @returns a list of branch names as exact regexes: '^foo$ ^bar$ ^baz$'
+filter-branches(){
+    egrep -v \
+        "$(skipped $skip |  # get the skipped branches
+
+            # replace 'a,b,c' with regex 'a|b|c'
+            # then replace 'a|b|c' with '^a$|^b$|^c$'
+            util.esed -e 's/,/|/g' \
+                      -e 's/([a-zA-Z0-9_-]+)/^\1$/g' 
+        )" | # sub-shell end 
+        egrep "$match" | # just keep lines matching $match - if unset, it matches all
+        paste -s # actually not totally sure about why this is here anymore ...
+}
+
+main(){
+    if [[ -n $doit ]];then
+        DRY_RUN=0
+    fi
+
+    no_branches_msg="No branches to delete"
+    delete_branches_msg="Deleting the following branches"
+
+    if [[ -n $local ]];then
+        branches=$(
+                    git branch --merged |  # show local, merged branches 
+                        util.esed -n 's/..(.*)/\1/p' | # remove first two characters
+                        egrep -v "$CURRENT" |  # it's usually an error to remove the branch you are on   '
+                        filter-branches    # remove skipped and filter on matches
+                )
+
+    else 
+        branches=$(
+                    git branch -r --merged   |  # show remote merged branches
+                        grep "  $remote"     |  # just keep lines with remote
+                        egrep -v "$UPSTREAM" |  # it's usually an error to remove the branch you are on   '
+                        egrep -v "HEAD ->"   |  # remove irrelevant noise
+                        util.esed -n 's/  \w*\/(.*)/\1/p' | # remove the remote/ bit 
+                        filter-branches        # remove skipped and filter on matches
+                )
+        no_branches_msg="${no_branches_msg} on ${remote}"
+        delete_branches_msg="${delete_branches_msg} on ${remote}"
+    fi
+
+
+    if [[ x$branches == x ]];then
+        echo $no_branches_msg
+        exit 1
+    fi
+
+    if [[ x$DRY_RUN == x1 ]]; then
+        echo "NOT DELETING any branches. Pass --doit to go through with action."
+        echo
+        echo "Would have deleted the following branches:"
+        print-branches $branches
+        echo
+        echo "Would have skipped these branches: "
+        print-branches $(skipped $skip | tr ',' ' ')
+    else
+        echo "$delete_branches_msg"
+        print-branches $branches
+        echo
+        echo "Pausing for 2 seconds ... Press Ctrl-C to quit"
+        sleep 2
+
+        if [[ -n $local ]];then
+            git branch -d $branches
+        else 
+            git push --no-verify --delete $remote $branches
+        fi
+    fi
+}
+
+usage(){
+    $0 --help 
+    exit 1
+}
+
+# mini test-suite
+if [[ -n $self_test ]]; then
+    function verify(){
+        if [[ $? = 0 ]];then
+            echo OK
+        else
+            echo fail && exit 1
+        fi
+    }
+    echo '#filter-branches test'
+
+    skip="foo,bar,p1" branches="b1\nfoo\nbar\np1"
+    [[ $(/bin/echo -e "$branches" | filter-branches) == "b1" ]]
+    verify
+
+    skip="foo-bar,p1" branches="b1\nfoo-bar\np1"
+    [[ $(/bin/echo -e "$branches" | filter-branches) == "b1" ]] && echo OK || echo fail && exit 1
+    verify
+fi
+
+if [[ -n $local && -n $remote ]]; then
+    /bin/echo -e "\n ERROR: Can\'t specify both remote and local options!\n"
+    usage
+fi
+
+if [[ ! -n $local && ! -n $remote ]]; then
+    /bin/echo -e "\n ERROR: Need to specify either remote or local option!\n"
+    usage
+fi
+
+if [[ -n $local || -n $remote ]]; then
+    main "$@"
+else
+    usage
+fi
+
+# vim: set ft=sh
