@@ -611,7 +611,7 @@ prompt_pure_setup() {
 	local ps4_symbols='${${'${ps4_parts[compare]}':+"'${ps4_parts[main]}'"}:-"'${ps4_parts[secondary]}'"}'
 
 	# Improve the debug prompt (PS4), show depth by repeating the +-sign and
-	# add colors to highlight essential parts like file and function name.
+	# add colors.sh to highlight essential parts like file and function name.
 	PROMPT4="${ps4_parts[depth]} ${ps4_symbols}${ps4_parts[prompt]}"
 
 	unset ZSH_THEME  # Guard against Oh My Zsh themes overriding Pure.

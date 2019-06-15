@@ -1,5 +1,5 @@
 # https://gist.github.com/joshdick/4415470
-# Modify the colors and symbols in these variables as desired.
+# Modify the colors.sh and symbols in these variables as desired.
 
 setopt prompt_subst
 

@@ -3,7 +3,7 @@
 # Print public SSH key, generate it if necessary
 
 file="$HOME/.ssh/id_rsa.pub"
-if [ ! -f "$file" ]; then
+if [[ ! -f "$file" ]]; then
 	ssh-keygen -t rsa
 fi
 

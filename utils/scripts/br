@@ -11,14 +11,14 @@
 # License: MIT
 # https://github.com/sapegin/dotfiles
 
-if [ "$1" != "-d" ] && [ "$1" != "-D" ] && [ "$1" != "" ]; then
+if [[ "$1" != "-d" ]] && [[ "$1" != "-D" ]] && [[ "$1" != "" ]]; then
 	# Switch to a branch
 	branch "$1"
 
 	# Pull data if the remote branch exists
 	branch_name=$(git rev-parse --abbrev-ref HEAD)
 	remote_branch_exists=$(git branch -r --no-color | egrep " origin/$branch_name\$")
-	if [ -n "$remote_branch_exists" ]; then
+	if [[ -n "$remote_branch_exists" ]]; then
 		echo
 		pull
 	fi
