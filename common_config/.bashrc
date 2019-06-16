@@ -134,7 +134,7 @@ export VISUAL='vim'
 export EDITOR='vim'
 
 if [[ -d ~/scripts ]] ; then
-    echo $(dark_yellow "Deprecated! Try to avoid ~/bin in favor of ~/bin")
+    echo $(dark_yellow "Deprecated! Try to avoid ~/scripts in favor of ~/bin")
 	PATH=~/scripts:"$PATH"
 fi
 
