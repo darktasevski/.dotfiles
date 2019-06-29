@@ -20,8 +20,8 @@ source $HOME/.bash.d/core_utils.sh
 # cannot be in the profile file, which is read later on
 # Otherwise, we will for instance get "millis: command not found" on
 # every new terminal, even though it is found on the CLI when testing
-if [[ -d ~/bin ]] ; then
-    PATH=~/bin:"${PATH}"
+if [[ -d ~/.bin ]] ; then
+    PATH=~/.bin:"${PATH}"
 fi
 
 
@@ -45,9 +45,9 @@ ulimit -c unlimited
 umask 022
 
 function read_config {
-  if [[ && "$1" ]]; then
+  if [[ -e "$1" ]]; then
       . "$1"
-  else echo Missing $1
+  else echo Missing $1s
   fi
 }
 
@@ -61,7 +61,7 @@ if [[ -z "${ORIGINAL_PATH}" ]]; then
 fi
 
 t_debug "Reading utility functions and aliases"
-read_config "$HOME/.bash.d/bash_aliases_functions.sh"
+read_config "$HOME/.bash.d/aliases_and_functions.sh"
 
 t_debug "Reading utils for git prompt"
 read_config "$HOME/.bash.d/git-prompt.sh"
@@ -145,7 +145,7 @@ t_debug "Reading local settings for this machine"
 # This needs to be at the bottom to be able to override earlier settings/variables/functions
 read_config_if_exists "$HOME/.bashrc.local"
 
-if [[ && "$HOME/.bulksms.auth" ]]; then
+if [[ -e "$HOME/.bulksms.auth" ]]; then
     . "$HOME/.bulksms.auth"
     export BULKSMS_ID 
     export BULKSMS_SECRET
@@ -154,3 +154,5 @@ fi
 t_debug Finished bash setup
 
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
+export N_PREFIX="$HOME/.n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).

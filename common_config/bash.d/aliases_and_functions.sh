@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# vim: syntax=sh
 
 if ! declare -p t_debug > /dev/null 2> /dev/null; then
     source ~/.bash.d/core_utils.sh
@@ -23,9 +22,9 @@ function is_mac() {
 
 # Bash setup
 alias edit-rc="vim ~/.bashrc"
-alias edit-alias="vim ~/.bash.d/bash_aliases"
+alias edit-alias="vim ~/.bash.d/aliases_and_functions.sh"
 alias source-rc="source ~/.bashrc"
-alias source-alias="source ~/.bash.d/bash_aliases"
+alias source-alias="source ~/.bash.d/aliases_and_functions.sh"
 
 alias editzsh="vim ~/.zshrc"
 alias editvim="vim ~/..vimrc"
@@ -108,7 +107,7 @@ alias webserver='python -c "import SimpleHTTPServer; m = SimpleHTTPServer.Simple
 alias servers='sudo lsof -iTCP -sTCP:LISTEN -P -n'
 
 # time
-alias epoch=millis #  tool that we compile ourselves
+# alias epoch=millis #  tool that we compile ourselves
 
 # find external ip
 alias my-ip='curl -s http://ipinfo.io/ip'
@@ -249,14 +248,14 @@ alias map="xargs -n1"
 # alias dkre='docker-runtime-environment'  # List environmental variables of the supplied image ID
 # alias dkelc='docker exec -it `dklcid` bash' # Enter last container (works with Docker 1.3 and above)
 
-function psgrep() { ps -ef | grep -i "$@"; };
+function psgrep() { ps -ef | grep -i "$@"; }
 
 # Trims whitespace at start and end of line
 alias trim="sed '/^[[:space:]]*$/d'"
 
 # Trims whitespace
 # Source: https://unix.stackexchange.com/questions/102008/how-do-i-trim-leading-and-trailing-whitespace-from-each-line-of-some-output
-function trimWS(){ awk '{$1=$1};1' }
+function trimWS(){ awk '{$1=$1};1'; }
 
 ### Snitch and Snatch should be refactored so that they can work on OSX too ###
 # Find which program is using a port, works in reverse as well
@@ -270,7 +269,7 @@ function snitch() {
 }
 # Kill the program using a specified port
 # Eg. `snatch 8080`
-function snatch() { kill -9 $(netstat -tulpn 2>/dev/null | grep $1 | awk '{print $7}' | cut -d / -f 1) }
+function snatch() { kill -9 $(netstat -tulpn 2>/dev/null | grep $1 | awk '{print $7}' | cut -d / -f 1); }
 
 function look_for_process() {
     local ps_name=$1
@@ -297,7 +296,7 @@ alias apt='sudo apt' # Need Java for this
 # command in your ~/bin directory does not work
 function restore_path() {
         PATH="${ORIGINAL_PATH}"
-        export PATH
+        export PATH;
 }
 
 # Zach Holman's git aliases converted to functions for more flexibility
@@ -324,15 +323,13 @@ function gh-commit() {
 }
 function gh-compare() {
     [[ -n $3 ]] &&  open "https://github.com/$1/compare/$2...$3" \
-    || echo "Usage: gh-compare fatso83/razor-cli-node 779490 master"; 
+    || echo "Usage: gh-compare fatso83/razor-cli-node 779490 master"
 }
-
-# Nice util for listing all declared functions. You use `type` to print them
-alias list-functions='declare | egrep '\''^[[:alpha:]][[:alnum:]_]* ()'\''; echo -e "\nTo print a function definition, issue \`type function-name\` "'
 
 function tmux-restore () {
     if [[ -n $1 ]]; then
         local setup_file="$HOME/tmux/$1.proj"
+
         if [[ -e ${setup_file} ]]; then
             $(which tmux) new-session "tmux $2 source-file $setup_file"
         else
@@ -353,7 +350,7 @@ function mirror() { mplayer -vf mirror -v tv:// -tv device=/dev/video0:driver=v4
 
 #make a directory and go on it
 function mkcd() { mkdir -p "$@" && eval cd "\"\$$#\""; }
-function test-microphone() { arecord -vvv -f dat /dev/null }
+function test-microphone() { arecord -vvv -f dat /dev/null; }
 
 # Creates an archive from given directory
 function mktar() { tar cvf  "${1%%/}.tar"     "${1%%/}/"; }
@@ -362,13 +359,13 @@ function mktbz() { tar cvjf "${1%%/}.tar.bz2" "${1%%/}/"; }
 
 # In some cases some zip files are "corrupted"
 # https://huit.re/MMnBu4uG
-function recover_archive () { jar xvf $1 }
+function recover_archive () { jar xvf $1; }
 
 # Parse markdown file and print it man page like
-function mdless() { pandoc -s -f markdown -t man $1 | groff -T utf8 -man | less }
+function mdless() { pandoc -s -f markdown -t man $1 | groff -T utf8 -man | less; }
 
 # ls for Directories.
-function lsd { ls -1F $* | grep '/$' }
+function lsd { ls -1F $* | grep '/$'; }
 
 # Determine size of a file or total size of a directory
 function fs() {
@@ -377,33 +374,37 @@ function fs() {
     else
         local arg=-sh;
     fi
+
     if [[ -n "$@" ]]; then
         du $arg -- "$@";
     else
         du $arg .[^.]* *;
-    fi;
+    fi
 }
 
 # Finding files and directories
-function ff() { find . -type f -name "*$1*" }
-function fd() { find . -type d -name "*$1*" }
+function ff() { find . -type f -name "*$1*"; }
+function fd() { find . -type d -name "*$1*"; }
 
-function download-web() { wget -r -nH --no-parent --reject='index.html*' "$@" ; }
+function download-web() { wget -r -nH --no-parent --reject='index.html*' "$@"; }
 
 #  ssh + scp without storing or prompting for keys.
 function sshtmp() {
     ssh -o "ConnectTimeout 3" \
         -o "StrictHostKeyChecking no" \
         -o "UserKnownHostsFile /dev/null" \
-        "$@"
+        "$@";
 }
 
 function scptmp() {
     exec scp -o "ConnectTimeout 3" \
         -o "StrictHostKeyChecking no" \
         -o "UserKnownHostsFile /dev/null" \
-        "$@"
+        "$@";
 }
+
+# Nice util for listing all declared functions. You use `type` to print them
+alias list-functions='declare | egrep '\''^[[:alpha:]][[:alnum:]_]* ()'\''; echo -e "\nTo print a function definition, issue \`type function-name\` "'
 
 t_debug "global aliases and functions finished"
 

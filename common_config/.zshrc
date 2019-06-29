@@ -1,14 +1,16 @@
-Fortune | cowsay -f vader
+fortune | cowsay -f vader
 
 # Re-use BASH aliases
-source ~/.bash.d/bash_aliases_functions.sh
+source ~/.bash.d/aliases_and_functions.sh
 source ~/.zsh/env-vars.zsh
 source ~/.zsh/zsh-conf.zsh
 source ~/.zsh/colors.zsh
 
-# Zsh plugin manager (handles oh-my-zsh, etc)
-# https://github.com/zplug/zplug
-if [[ -e ~/.zplug/init.zsh ]]; then
+# Check if zplug is installed
+if [[ ! -d ~/.zplug ]]; then
+    git clone https://github.com/zplug/zplug ~/.zplug
+    source ~/.zplug/init.zsh && zplug update --self
+else
     source ~/.zplug/init.zsh
 fi
 

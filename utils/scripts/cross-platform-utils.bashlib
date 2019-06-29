@@ -10,7 +10,7 @@
 shopt -s expand_aliases
 
 if ! declare -f -p is_mac > /dev/null 2> /dev/null; then
-    source ~/.bash.d/bash_aliases_functions
+    source ~/.bash.d/aliases_and_functions.sh
 fi
 
 

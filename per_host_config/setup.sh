@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# Put your machine name in this file.
+ touch  ~/.machine && echo "$(hostname)" > ~/.machine
+# Yur machine name (hostname) will be in this file.
 # The name must match one of the subdirectories in this dir
 MACHINE_NAME_FILE="$HOME/.machine"
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
@@ -31,5 +32,7 @@ else
     echo -e $(dark_red "Missing local settings directory: $SCRIPT_DIR/$MACHINE" >> /dev/stderr)
     exit 1
 fi
+
+rm ~/.machine
 
 popd >> /dev/null

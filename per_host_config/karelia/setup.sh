@@ -15,6 +15,13 @@ sudo chown -R $(whoami) /usr/local
 
 echo -e $(blue Installing local apps ...)
 #sudo apt-get install -y --no-install-recommends $(strip-comments apps.local)
+[[ -e ./install.sh ]] && sudo chmod 777 ./install.sh && ./install.sh
+
+# install Github 'hub'
+if ! $(which pip3 >> /dev/null); then
+    echo -e $(blue "Installing Pip3..")
+    curl https://bootstrap.pypa.io/get-pip.py | python3
+fi
 
 # upgrade PIP
 # if there are problems with pip, run curl https://bootstrap.pypa.io/get-pip.py | python3
@@ -31,13 +38,6 @@ while read line; do
 
     sudo gem install $line; 
 done < ruby.local 
-
-
-if ! $(which n >> /dev/null); then
-    # upgrade Node
-    npm install -g n
-    n stable
-fi
 
 # Install Yarn - used for instance by coc.vim
 if ! which yarn >> /dev/null; then
@@ -56,10 +56,8 @@ else
 fi
 # if non-zero, https://unix.stackexchange.com/a/146945/18594
 if [[ -n "${node_apps// }" ]]; then
-    npm -g install $node_apps 
+    sudo npm -g install $node_apps 
 fi
-
-sudo apt-get autoremove --yes
 
 # install Github 'hub'
 if ! $(which hub >> /dev/null); then
