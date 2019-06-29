@@ -7,7 +7,8 @@ fi
 t_debug "Reading aliases and functions"
 
 function is_mac() {
-  cmd=`which uname`
+  cmd=$(command -v uname)
+  
   if [[ -z ${cmd} ]];then
     return 1
   else
@@ -39,7 +40,7 @@ alias htmlencode='python3 -c "import sys, html; print(html.escape(sys.argv[1]))"
 alias html2text='python -c "import sys,html2text;sys.stdout.write(html2text.html2text(sys.stdin.read().decode(\"utf-8\")))"'
 
 t_debug Use htop if available
-if which htop > /dev/null; then
+if command -v htop > /dev/null; then
     alias top='htop'
 fi
 
@@ -58,7 +59,7 @@ if ! is_mac; then
   done
 fi
 
-alias ls="/bin/ls $IGNORE "
+alias ls='/bin/ls $IGNORE'
 
 t_debug small utils and aliases
 alias c=" clear"
@@ -117,7 +118,7 @@ alias myip='ipconfig getifaddr en1 || ipconfig getifaddr en0'
 alias dig-ip="dig +short myip.opendns.com @resolver1.opendns.com"
 
 function localip() {
-  function _localip() { echo "📶  "$(ipconfig getifaddr "$1"); }
+  function _localip() { echo "📶  " "$(ipconfig getifaddr "$1")"; }
   export -f _localip
   local purple="\x1B\[35m" reset="\x1B\[m"
   networksetup -listallhardwareports | \
@@ -153,7 +154,7 @@ alias tree='tree -C -I $(git check-ignore * 2>/dev/null | tr "\n" "|").git'
 # the `.git` directory, listing directories first. The output gets piped into
 # `less` with options to preserve color and line numbers, unless the output is
 # small enough for one screen.
-function tre() { tree -aC -I '.git' --dirsfirst "$@" | less -FRNX }
+function tre() { tree -aC -I '.git' --dirsfirst "$@" | less -FRNX; }
 
 # Get macOS Software Updates, and update installed Ruby gems, Homebrew, npm, and their installed packages
 alias update='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup; npm install npm -g; npm update -g; sudo gem update --system; sudo gem update; sudo gem cleanup'
@@ -173,7 +174,7 @@ alias bootservices="systemctl list-unit-files | grep enabled"
 alias fixit='sudo rm -f /var/lib/pacman/db.lck && sudo pacman-mirrors -g && sudo pacman -Syyuu  && sudo pacman -Suu'
 
 # Reload the shell (i.e. invoke as a login shell)
-alias reload="exec $SHELL -l"
+alias reload='exec $SHELL -l'
 
 ##### Git aliases #####
 alias gcu='git gc --aggressive' # Cleanup unnecessary files and optimize the local repository
@@ -262,30 +263,31 @@ function trimWS(){ awk '{$1=$1};1'; }
 # Eg. `snitch 8080` or `snitch node`
 function snitch() {
 	if is_mac; then
-		lsof -nPi | grep $1 | tail -n 2
+		lsof -nPi | grep "$1" | tail -n 2
 	else
-	 	netstat -tulpn | grep $1 | tail -n 2 
+	 	netstat -tulpn | grep "$1" | tail -n 2 
 	fi
 }
 # Kill the program using a specified port
 # Eg. `snatch 8080`
-function snatch() { kill -9 $(netstat -tulpn 2>/dev/null | grep $1 | awk '{print $7}' | cut -d / -f 1); }
+function snatch() { kill -9 "$(netstat -tulpn 2>/dev/null | grep "$1" | awk '{print $7}' | cut -d / -f 1)"; }
 
 function look_for_process() {
     local ps_name=$1
-    ps aux | ack ${ps_name}
+    ps aux | ack "${ps_name}"
 }
 
 # Based on https://stackoverflow.com/a/12579554/200987
 function remove-last-newline(){
-    local file=$(mktemp)
-    cat > ${file}
-    if [[ $(tail -c1 $file | wc -l) == 1 ]]; then
-        head -c -1 ${file} > ${file}.tmp
-        mv ${file}.tmp ${file}
+    local file
+    file=$(mktemp)
+    cat > "${file}"
+    if [[ $(tail -c1 "$file" | wc -l) == 1 ]]; then
+        head -c -1 "${file}" > "${file}".tmp
+        mv "${file}".tmp "${file}"
     fi
-    cat ${file}
-    rm ${file}&
+    cat "${file}"
+    rm "${file}"&
 }
 
 
@@ -305,15 +307,15 @@ function restore_path() {
 #
 #   The -r flag to `less` is uses to make it work with the color escape codes
 #   @depends on strip-diff-prefix alias
-function gd() {   git diff          --color $@ | strip-diff-prefix | less -r; }
-function gds() {  git diff --staged --color $@ | strip-diff-prefix | less -r; }
-function gdw() {  git diff          --color --word-diff $@         | less -r; }
-function gdws() { git diff --staged --color --word-diff $@         | less -r; }
+function gd() {   git diff          --color "$@"| strip-diff-prefix | less -r; }
+function gds() {  git diff --staged --color "$@"| strip-diff-prefix | less -r; }
+function gdw() {  git diff          --color --word-diff "$@"        | less -r; }
+function gdws() { git diff --staged --color --word-diff "$@"        | less -r; }
 alias gs='git status -sb' # upgrade your git if -sb breaks for you. it's fun.
 alias glg='git lg'
 
 function bye-bye-branches() {
-  git fetch -p && for branch in `git branch -vv | grep ': gone]' | awk '{print $1}'`; do git branch -D ${branch}; done
+  git fetch -p && for branch in $(git branch -vv | grep ': gone]' | awk '{print $1}'); do git branch -D "${branch}"; done
 }
 
 # View commits in GitHub 
@@ -331,7 +333,7 @@ function tmux-restore () {
         local setup_file="$HOME/tmux/$1.proj"
 
         if [[ -e ${setup_file} ]]; then
-            $(which tmux) new-session "tmux $2 source-file $setup_file"
+            $(command -v tmux) new-session "tmux $2 source-file $setup_file"
         else
             printf "\nNo such file \"$setup_file\".\nListing existing files:\n\n"
             ls -1 ~/.tmux/*.proj
@@ -359,13 +361,13 @@ function mktbz() { tar cvjf "${1%%/}.tar.bz2" "${1%%/}/"; }
 
 # In some cases some zip files are "corrupted"
 # https://huit.re/MMnBu4uG
-function recover_archive () { jar xvf $1; }
+function recover_archive () { jar xvf "$1"; }
 
 # Parse markdown file and print it man page like
-function mdless() { pandoc -s -f markdown -t man $1 | groff -T utf8 -man | less; }
+function mdless() { pandoc -s -f markdown -t man "$1" | groff -T utf8 -man | less; }
 
 # ls for Directories.
-function lsd { ls -1F $* | grep '/$'; }
+function lsd { ls -1F "$*" | grep '/$'; }
 
 # Determine size of a file or total size of a directory
 function fs() {
@@ -375,7 +377,7 @@ function fs() {
         local arg=-sh;
     fi
 
-    if [[ -n "$@" ]]; then
+    if [[ -n "$*" ]]; then
         du $arg -- "$@";
     else
         du $arg .[^.]* *;

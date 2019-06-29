@@ -12,14 +12,14 @@ pushd "$SCRIPT_DIR" > /dev/null
 # Get some color codes for printing
 source common_config/bash.d/colors.sh
 
-echo -e $(blue "Installing common_config setup")
+echo -e "$(blue "Installing common_config setup")"
 common_config/setup.sh
 
 echo "Install config specific to this machine"
 per_host_config/setup.sh
 
 # Add the little `millis` util for cross-platform millisecond support
-echo -e $(blue "Adding bin and binary utilities")
+echo -e "$(blue "Adding bin and binary utilities")"
 utils/setup.sh
 
 # Restore current directory of user

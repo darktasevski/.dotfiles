@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # To enable debug printing, just set the DEBUG environment variable
 # You can then use `debug` or `t_debug` statements to echo debug info
 
@@ -13,7 +15,7 @@
 ################################################################################
 
 # @see http://stackoverflow.com/questions/3601515/how-to-check-if-a-variable-is-set-in-bash
-source $HOME/.bash.d/core_utils.sh
+source "$HOME/.bash.d/core_utils.sh"
 
 # include selfmade binaries and bin
 # Needed for some of the utility functions in this rc file, therefore 
@@ -30,7 +32,7 @@ fi
 timer_start
 # To debug how long init takes, run "DEBUG=1 source-rc"
 
-t_debug Executing '$HOME'/.bashrc
+t_debug Executing "$HOME"/.bashrc
 
 ################################################################################
 # Prolog finished
@@ -47,12 +49,12 @@ umask 022
 function read_config {
   if [[ -e "$1" ]]; then
       . "$1"
-  else echo Missing $1s
+  else echo Missing "$1"
   fi
 }
 
 function read_config_if_exists {
-  [[ -e "$1" ]] && . "$1" && t_debug Read $1
+  [[ -e "$1" ]] && . "$1" && t_debug Read "$1"
 }
 
 # Needed for the utility function "restore_path"
@@ -68,7 +70,7 @@ read_config "$HOME/.bash.d/git-prompt.sh"
 
 t_debug "Reading bash completion files"
 for f in "${HOME}"/.bash_completion.d/*; do
-    t_debug $f
+    t_debug "$f"
     read_config "$f"
 done
 
@@ -122,10 +124,6 @@ export HISTFILE=~/.bash_eternal_history
 # http://superuser.com/questions/20900/bash-history-loss
 PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
 
-# Disable per-session history file on OSX
-# https://stackoverflow.com/questions/32418438/how-can-i-disable-bash-sessions-in-os-x-el-capitan
-SHELL_SESSION_HISTORY=0
-
 export PATH="/usr/local/bin:$PATH"
 export PYTHONSTARTUP="$HOME/.pystartup"
 export HISTCONTROL=ignoredups
@@ -134,7 +132,7 @@ export VISUAL='vim'
 export EDITOR='vim'
 
 if [[ -d ~/scripts ]] ; then
-    echo $(dark_yellow "Deprecated! Try to avoid ~/scripts in favor of ~/bin")
+  echo "dark_yellow "Deprecated! Try to avoid ~/scripts in favor of ~/bin""
 	PATH=~/scripts:"$PATH"
 fi
 

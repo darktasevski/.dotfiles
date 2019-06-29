@@ -12,7 +12,7 @@ pushd "$SCRIPT_DIR" > /dev/null
 source "$SCRIPT_DIR/bash.d/colors.sh"
 
 if [[ ! -e "$MAIN_DIR" ]]; then
-  echo Destination ${MAIN_DIR} does not exist
+  echo Destination "${MAIN_DIR}" does not exist
   exit 1
 fi
 
@@ -72,15 +72,15 @@ ln -sf "$SCRIPT_DIR"/vim/vimrc "$DEST"/.vimrc
 git submodule update --init --recursive
 
 # Install n - Node version manager
-if ! $(which n >> /dev/null); then
+if ! command -v n >> /dev/null; then
     curl -L https://git.io/n-install | N_PREFIX=~/.n bash
     # Export N_PREFIX here to make node/npm available to the rest of the script
     export N_PREFIX="$HOME/.n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).
 fi
 
 
-echo  -n -e $(blue "Installing all VIM plugins")
-echo -e $(dark_grey "(might take some time the first time ... )")
+echo  -n -e "$(blue "Installing all VIM plugins")"
+echo -e "$(dark_grey "(might take some time the first time ... )")"
 vim +PlugInstall +qall
 
 # Vim Fugitive setup
@@ -88,8 +88,8 @@ vim -u NONE -c "helptags vim-fugitive/doc" -c q
 
 # Needed for Typescript support in CoC and YCM using tsserver
 ts_cmd='npm install -g typescript'
-if which npm > /dev/null 2>&1 ; then
-    which tsc > /dev/null 2>&1 || bash -c "$ts_cmd"
+if command -v npm > /dev/null 2>&1 ; then
+    command -v tsc > /dev/null 2>&1 || bash -c "$ts_cmd"
 else
     echo "Install NodeJS and run '$ts_cmd' to get TypeScript support in Vim"
 fi
@@ -104,6 +104,6 @@ ln -sf ~/.vimrc ~/.config/nvim/init.vim
 
 # Make a config file for ngrok
 [[ ! -e "$DEST"/.ngrok2 ]] && mkdir "$DEST/.ngrok2"
-ln -sf ${SCRIPT_DIR}/ngrok.yml ${DEST}/.ngrok2/ngrok.yml
+ln -sf "${SCRIPT_DIR}"/ngrok.yml "${DEST}"/.ngrok2/ngrok.yml
 
 popd > /dev/null

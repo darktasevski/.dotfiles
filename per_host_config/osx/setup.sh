@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # exit on errors
 set -e
@@ -10,7 +10,7 @@ pushd "$SCRIPT_DIR" > /dev/null
 source ../../common_config/bash.d/colors.sh
 
 # Homebrew
-if ! which brew > /dev/null; then
+if ! command -v brew > /dev/null; then
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
     brew update
@@ -27,7 +27,7 @@ blue "Installing local apps using Homebrew"
 brew bundle
 
 # Node Version Manager
-if ! which n > /dev/null; then
-    npm install -g n
+if ! command -v n > /dev/null; then
+    brew install n
     n latest
 fi

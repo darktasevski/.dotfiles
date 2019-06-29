@@ -1,3 +1,4 @@
+#!/bin/bash
 ###############################################################
 # Docker Helpers
 # @author https://github.com/jmervine	
@@ -66,14 +67,14 @@ function own {
 
 function dcex {
   local cmd="bash"
-  test $1 && cmd=$1
+  test "$1" && cmd=$1
   echo "+ docker exec -it $(docker ps | grep $(basename $(pwd))_web | awk '{ print $(NF) }') $cmd"
-  docker exec -it $(docker ps | grep $(basename $(pwd))_web | awk '{ print $(NF) }') $cmd
+  docker exec -it "$(docker ps | grep "$(basename "$(pwd)")"_web | awk '{ print $(NF) }')" "$cmd"
 }
 
 function rr {
   local v=$1
   [[ -z $v ]] && v=latest
 
-  docker run -it --rm -v $(pwd):/src jmervine/herokudev-ruby:$v
+  docker run -it --rm -v "$(pwd)":/src jmervine/herokudev-ruby:$v
 }	

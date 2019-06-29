@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 # To debug how long init takes, run "DEBUG=1 source-rc"
 function debug() {
-        [[ x == ${DEBUG+x} ]] && echo $@ >&2
+        [[ x == "${DEBUG+x}" ]] && echo "$@" >&2
 }
 
 function t_debug() {
-        [[ x == ${DEBUG+x} ]] && echo $(timer_now) $@ >&2
+        [[ x == "${DEBUG+x}" ]] && echo "$(timer_now)" "$@" >&2
 }
 
 function timer_start(){
@@ -26,9 +26,10 @@ function timer_now(){
     fi
 
     local diff;
-    local now=$(millis)
-    let diff=$now-$__timer
-    echo ${diff}
+    local now;
+    now=$(millis)
+    diff=$now-$__timer
+    echo "${diff}"
 }
 
 # vi: ft=sh

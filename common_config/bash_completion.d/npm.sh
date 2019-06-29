@@ -1,3 +1,4 @@
+#!/bin/bash
 ###-begin-npm-completion-###
 #
 # npm command completion script

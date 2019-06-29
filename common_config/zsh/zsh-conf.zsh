@@ -1,3 +1,4 @@
+#!/bin/zsh
 autoload -U promptinit; promptinit
 
 setopt AUTO_CD
@@ -15,7 +16,7 @@ setopt share_history
 
 # Use zsh-completions if it exists
 if [[ -d "/usr/local/share/zsh-completions" ]]; then
-    fpath=(/usr/local/share/zsh-completions ${fpath})
+    fpath=(/usr/local/share/zsh-completions "${fpath}")
 fi
 
 # make tab complete work  - https://github.com/robbyrussell/oh-my-zsh/issues/943
@@ -29,12 +30,12 @@ export COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-if [[ `uname` == 'Linux' ]]; then
+if [[ $(uname) == 'Linux' ]]; then
   	plugins=(
 		archlinux, # https://github.com/robbyrussell/oh-my-zsh/tree/master/plugins/archlinux
 		colorize
 	)
-elif [[ `uname` == 'Darwin' ]]; then
+elif [[ $(uname) == 'Darwin' ]]; then
  	plugins=(
 		#osx # https://github.com/robbyrussell/oh-my-zsh/tree/master/plugins/osx
 		colorize

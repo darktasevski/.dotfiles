@@ -1,3 +1,4 @@
+#!/bin/zsh
 # Tweak highlighting
 typeset -A ZSH_HIGHLIGHT_STYLES
 

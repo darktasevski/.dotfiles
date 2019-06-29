@@ -1,3 +1,4 @@
+#!/bin/zsh
 fortune | cowsay -f vader
 
 # Re-use BASH aliases
@@ -47,7 +48,7 @@ zplug "bhilburn/powerlevel9k", use:powerlevel9k.zsh-theme
 # Install plugins if there are plugins that have not been installed
 if ! zplug check --verbose; then
     printf "Install? [y/N]: "
-    if read -q; then
+    if read -r -q; then
         echo; zplug install
     fi
 fi
