@@ -1,4 +1,4 @@
-#!/bin/bash
+
 
  touch  ~/.machine && echo "$(hostname)" > ~/.machine
 # Yur machine name (hostname) will be in this file.

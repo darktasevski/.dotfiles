@@ -1,4 +1,3 @@
-#!/bin/bash
 #
 # Print statistics on gzipped vs uncompressed size of files
 #

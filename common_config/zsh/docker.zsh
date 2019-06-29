@@ -1,4 +1,3 @@
-#!/bin/bash
 ###############################################################
 # Docker Helpers
 # @author https://github.com/jmervine	

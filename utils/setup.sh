@@ -6,7 +6,7 @@ pushd "$SCRIPT_DIR" > /dev/null
 # Get some color codes for printing
 source ../common_config/bash.d/colors.sh
 
-echo  -n -e $(blue "Installing Utils")
+echo  -n -e "$(blue "Installing Utils")"
 if [[ ! -e ~/.bin ]]; then
     mkdir ~/.bin
 fi
@@ -15,7 +15,7 @@ fi
 make install
 
 # scripts
-ln -sf scripts/* $HOME/.bin/
+ln -sf scripts/* "$HOME"/.bin/
 
 # Dependencies for scripts
 pip3 install smsutil

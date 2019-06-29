@@ -1,4 +1,3 @@
-#!/bin/bash
 #@author   Carl-Erik Kopseng
 #@date     2008-03-27
 #@version  0.2

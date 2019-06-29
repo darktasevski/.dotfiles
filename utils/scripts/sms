@@ -1,4 +1,3 @@
-#!/bin/bash
 # To use this script you need to have set these two env variables: $BULKSMS_ID and $BULKSMS_SECRET
 # I suggest putting them in ~/.bulksms.auth and sourcing that from .bashrc
 #

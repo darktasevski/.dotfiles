@@ -1,4 +1,4 @@
-#!/bin/bash
+
 
 export notificator_message=''
 export notificator_title=''

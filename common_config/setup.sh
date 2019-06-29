@@ -1,5 +1,4 @@
 
-#!/bin/bash
 # Run to setup with ./setup.sh
 MAIN_DIR="$HOME"
 DEST="${MAIN_DIR}"
@@ -78,6 +77,11 @@ if ! command -v n >> /dev/null; then
     export N_PREFIX="$HOME/.n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).
 fi
 
+# Install yarn
+if ! command -v yarn >> /dev/null; then
+    curl -o- -L https://yarnpkg.com/install.sh | bash
+    export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+fi
 
 echo  -n -e "$(blue "Installing all VIM plugins")"
 echo -e "$(dark_grey "(might take some time the first time ... )")"
@@ -85,14 +89,6 @@ vim +PlugInstall +qall
 
 # Vim Fugitive setup
 vim -u NONE -c "helptags vim-fugitive/doc" -c q
-
-# Needed for Typescript support in CoC and YCM using tsserver
-ts_cmd='npm install -g typescript'
-if command -v npm > /dev/null 2>&1 ; then
-    command -v tsc > /dev/null 2>&1 || bash -c "$ts_cmd"
-else
-    echo "Install NodeJS and run '$ts_cmd' to get TypeScript support in Vim"
-fi
 
 touch "$DEST"/.vimrc.local
 

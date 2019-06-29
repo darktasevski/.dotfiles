@@ -1,5 +1,3 @@
-#!/bin/bash
-
 
 # Just delegate down
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )" # BASH_SOURCE is the executed script path

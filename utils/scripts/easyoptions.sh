@@ -1,4 +1,4 @@
-#!/bin/bash
+
 
 ##
 ##     EasyOptions Bash Front End 2015.2.28

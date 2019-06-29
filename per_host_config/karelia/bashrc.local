@@ -1,4 +1,3 @@
-#!/bin/bash
 # vi: ft=sh
 
 #See man bash: "Prompting"
@@ -69,7 +68,7 @@ alias tmux="tmux -S /tmp/persisted-tmux "
 
 alias babel-node='$(npm bin)/babel-node'
 
-# Open JIRA issues: `nim 434` opens NIM-434 in the browser
+# Open JIRA issues: `viz 434` opens VIZ-434 in the browser
 function viz() { xdg-open http://redbox.atlassian.net/browse/VIZ-$1;  }
 
 export PATH="$HOME/bin/Telegram:$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
