@@ -1,4 +1,3 @@
-#!/bin/bash
 # https://gist.github.com/stefansundin/f386d3d2a0e1aa6e5c5a
 
 set -o errexit

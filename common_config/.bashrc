@@ -1,4 +1,3 @@
-#!/bin/bash
 
 # To enable debug printing, just set the DEBUG environment variable
 # You can then use `debug` or `t_debug` statements to echo debug info

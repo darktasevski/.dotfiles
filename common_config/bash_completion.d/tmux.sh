@@ -1,4 +1,3 @@
-#!/bin/bash
 # START tmux completion
 # This file is in the public domain
 # See: http://www.debian-administration.org/articles/317 for how to write more.

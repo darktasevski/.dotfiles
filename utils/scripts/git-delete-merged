@@ -1,4 +1,3 @@
-#!/bin/bash
 # Delete all 
 
 if [[ x$DEBUG != x ]]; then

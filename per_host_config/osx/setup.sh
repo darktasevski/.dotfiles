@@ -1,4 +1,3 @@
-#!/bin/bash
 
 # exit on errors
 set -e

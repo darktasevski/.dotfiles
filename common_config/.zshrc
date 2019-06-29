@@ -1,8 +1,10 @@
 #!/bin/zsh
 fortune | cowsay -f vader
 
-# Re-use BASH aliases
+# Re-use BASH aliases nad exports
+source ~/.profile
 source ~/.bash.d/aliases_and_functions.sh
+
 source ~/.zsh/env-vars.zsh
 source ~/.zsh/zsh-conf.zsh
 source ~/.zsh/colors.zsh
@@ -10,7 +12,7 @@ source ~/.zsh/colors.zsh
 # Check if zplug is installed
 if [[ ! -d ~/.zplug ]]; then
     git clone https://github.com/zplug/zplug ~/.zplug
-    source ~/.zplug/init.zsh && zplug update --self
+    source ~/.zplug/init.zsh && zplug update --self > /dev/null
 else
     source ~/.zplug/init.zsh
 fi
@@ -54,9 +56,8 @@ if ! zplug check --verbose; then
 fi
 
 # Then, source plugins and add commands to $PATH
-zplug load --verbose
-
-
-
+zplug load 
 
 export PATH="/usr/local/sbin:$PATH"
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+export N_PREFIX="$HOME/.n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).

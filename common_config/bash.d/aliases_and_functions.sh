@@ -108,7 +108,7 @@ alias webserver='python -c "import SimpleHTTPServer; m = SimpleHTTPServer.Simple
 alias servers='sudo lsof -iTCP -sTCP:LISTEN -P -n'
 
 # time
-# alias epoch=millis #  tool that we compile ourselves
+alias epoch=millis #  tool that we compile ourselves
 
 # find external ip
 alias my-ip='curl -s http://ipinfo.io/ip'

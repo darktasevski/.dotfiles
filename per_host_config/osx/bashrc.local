@@ -1,4 +1,3 @@
-#!/bin/bash
 
 #PS1="skinny \W \u\$  "
 t_debug "Load personalized bashrc for mac"

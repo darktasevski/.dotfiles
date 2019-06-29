@@ -1,5 +1,4 @@
 
-#!/bin/bash
 if [[ $(uname) == 'Linux' ]]; then
 	# Start X at login for Arch boxes
 	if [[ -z "$DISPLAY" ]] && [[ $(tty) = /dev/tty1 ]] ; then

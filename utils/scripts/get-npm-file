@@ -1,4 +1,3 @@
-#!/bin/bash
 # Requires curl and `pick_json` : npm.sh i -g pick_json
 
 usage(){

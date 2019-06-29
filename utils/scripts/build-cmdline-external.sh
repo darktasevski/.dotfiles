@@ -1,4 +1,3 @@
-#!/bin/bash
 ## Utility to build a set of command line to download 
 ## a script of mine
 ##
