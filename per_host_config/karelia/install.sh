@@ -1,3 +1,4 @@
+#!/bin/bash
 # Prepare pacman
 sudo mkdir -p /root/.gnupg
 sudo pacman-key --init && sudo pacman-key --populate archlinux manjaro && sudo pacman-key --refresh-keys
@@ -21,7 +22,7 @@ wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - 
 # Do logout & login  
 
 # Install official packages and dev tools
-sudo pacman -S --noconfirm plank openssh nethogs python2 python2-pip python-pip ruby docker synapse vlc git zsh ttf-hack vim vim-runtime binutils make curl gcc fakeroot
+sudo pacman -S --noconfirm plank shellcheck openssh nethogs python2 python2-pip python-pip ruby docker synapse vlc git zsh ttf-hack vim vim-runtime binutils make curl gcc fakeroot
 
 # Install community packages
 yay -S --noconfirm ngrok elementary-icon-theme fasd firefox-developer-edition vscodium-bin dropbox postman-bin spotify
