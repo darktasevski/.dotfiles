@@ -1,8 +1,8 @@
 gifify
 pick_json
-ngrok
 import-sort-cli
 import-sort-parser-babylon
 import-sort-parser-typescript
 import-sort-style-module
 prettier
+rimraf

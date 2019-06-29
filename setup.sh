@@ -15,15 +15,15 @@ source common_config/bash.d/colors.sh
 echo -e $(blue "Installing common_config setup")
 common_config/setup.sh
 
+echo "Install config specific to this machine"
+per_host_config/setup.sh
+
 # Add the little `millis` util for cross-platform millisecond support
 echo -e $(blue "Adding bin and binary utilities")
 utils/setup.sh
-
-echo "Install config specific to this machine"
-per_host_config/setup.sh
 
 # Restore current directory of user
 popd > /dev/null
 
 # Re-read BASH settings
-green "\n\nRemember to 'source ~/.zshrc'!"
+green "\n\n Remember to 'source ~/.zshrc'! \n\n"

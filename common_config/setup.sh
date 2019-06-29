@@ -9,7 +9,7 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 pushd "$SCRIPT_DIR" > /dev/null
 
-source "$SCRIPT_DIR/colors.sh"
+source "$SCRIPT_DIR/bash.d/colors.sh"
 
 if [[ ! -e "$MAIN_DIR" ]]; then
   echo Destination ${MAIN_DIR} does not exist
@@ -24,7 +24,10 @@ if [[ ! -e "$ZSH_DIR" ]]; then
   mkdir "${ZSH_DIR}"
 fi
 
-rm -r "$DEST"/.bash_completion.d
+if [[ -d "$DEST"/.bash_completion.d ]]; then
+  rm -r "$DEST"/.bash_completion.d
+fi
+
 ln -s "$SCRIPT_DIR"/bash_completion.d "$DEST"/.bash_completion.d
 
 ln -sf "$SCRIPT_DIR"/.profile "$DEST"/.profile
@@ -37,7 +40,7 @@ ln -sf "$SCRIPT_DIR"/.tmux.conf "$DEST"/.tmux.conf
 ln -sf "$SCRIPT_DIR"/.npmrc "$DEST"/.npmrc
 
 # Zsh
-ln -sf "$SCRIPT_DIR"/zsh/.zshrc "$DEST"/.zshrc
+ln -sf "$SCRIPT_DIR"/.zshrc "$DEST"/.zshrc
 
 # create needed dirs
 [[ ! -e "$DEST/.tmux" ]] && mkdir "$DEST/.tmux";
@@ -67,6 +70,14 @@ ln -sf "$SCRIPT_DIR"/vim/vimrc "$DEST"/.vimrc
 
 # Checks out the Vundle submodule
 git submodule update --init --recursive
+
+# Install n - Node version manager
+if ! $(which n >> /dev/null); then
+    curl -L https://git.io/n-install | N_PREFIX=~/.n bash
+    # Export N_PREFIX here to make node/npm available to the rest of the script
+    export N_PREFIX="$HOME/.n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).
+fi
+
 
 echo  -n -e $(blue "Installing all VIM plugins")
 echo -e $(dark_grey "(might take some time the first time ... )")
