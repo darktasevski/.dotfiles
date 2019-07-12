@@ -64,6 +64,23 @@ ln -sf "$SCRIPT_DIR"/.npmrc "$DEST"/.npmrc
 [[ ! -e "$DEST/.tmux/plugins/tpm" ]] && git clone https://github.com/tmux-plugins/tpm "$DEST"/.tmux/plugins/tpm
 
 # ============================
+# Node.js, npm & yarn setup
+# ============================
+
+# Install n - Node version manager
+if ! command -v n >> /dev/null; then
+    curl -L https://git.io/n-install | N_PREFIX=~/.n bash
+    # Export N_PREFIX here to make node/npm available to the rest of the script
+    export N_PREFIX="$HOME/.n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).
+fi
+
+# Install yarn
+if ! command -v yarn >> /dev/null; then
+    curl -o- -L https://yarnpkg.com/install.sh | bash
+    export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+fi
+
+# ============================
 # Vim setup
 # ============================
 
@@ -90,23 +107,6 @@ vim -u NONE -c "helptags vim-fugitive/doc" -c q
 rm -rf ~/.config/nvim
 ln -sf ~/.vim ~/.config/nvim
 ln -sf ~/.vimrc ~/.config/nvim/init.vim
-
-# ============================
-# Node.js, npm & yarn setup
-# ============================
-
-# Install n - Node version manager
-if ! command -v n >> /dev/null; then
-    curl -L https://git.io/n-install | N_PREFIX=~/.n bash
-    # Export N_PREFIX here to make node/npm available to the rest of the script
-    export N_PREFIX="$HOME/.n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).
-fi
-
-# Install yarn
-if ! command -v yarn >> /dev/null; then
-    curl -o- -L https://yarnpkg.com/install.sh | bash
-    export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
-fi
 
 # @see https://stackoverflow.com/a/17072017/7453363 for more OSs
 if [[ "$(uname)" == "Darwin" ]]; then    # Do something under Mac OS X platform
