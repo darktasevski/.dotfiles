@@ -18,8 +18,8 @@ sudo zypper update
 sudo zypper install -y $suse_packages
 #sudo zypper install -y $chrome_package
 
-sudo zypper addrepo -f http://packman.inode.at/suse/openSUSE_Tumbleweed/ packman
-sudo zypper dup --from http://packman.inode.at/suse/openSUSE_Tumbleweed/
+sudo zypper ar -cfp 90 http://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/Essentials packman-essentials
+sudo zypper dup --from packman --allow-vendor-change
 
 # Golang dependencies
 go get -u github.com/constabulary/gb/...
