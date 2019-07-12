@@ -128,11 +128,6 @@ rm ~/.zshrc
 # Zsh
 ln -sf "$SCRIPT_DIR"/.zshrc "$DEST"/.zshrc
 
-# Check if zplug is installed
-if [[ ! -d ~/.zplug ]]; then
-    git clone https://github.com/zplug/zplug ~/.zplug
-fi
-
 # ============================
 # ngrok config
 # ============================

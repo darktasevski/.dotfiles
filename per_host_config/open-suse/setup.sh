@@ -11,7 +11,7 @@ sudo chown -R "$(whoami)" /usr/local
 
 echo -e "$(blue Installing local apps ...)"
 
-suse_packages="gcc-c++ git-gui docker wireshark htop cmake stow go go-doc libgit2-devel automake tmux rxvt-unicode urxvt-font-size libtool xclip gdbm-devel libyaml-devel ncurses-devel readline-devel zlib-devel cowsay fortune"
+suse_packages="gcc-c++ git-gui docker wireshark htop cmake stow go go-doc libgit2-devel automake tmux rxvt-unicode urxvt-font-size libtool xclip gdbm-devel libyaml-devel ncurses-devel readline-devel zlib-devel"
 
 #chrome_package="https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm"
 # run an update
@@ -53,7 +53,7 @@ if ! command -v rbenv >> /dev/null; then
     (cd ~/.rbenv && src/configure && make -C src) # @see https://stackoverflow.com/a/10382170/7453363
     echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.zshrc
     ~/.rbenv/bin/rbenv init
-    source ~/.zshrc
+    export PATH="$HOME/.rbenv/bin:$PATH"
 fi
 
 echo -e "$(blue Installing ruby packages ...)"

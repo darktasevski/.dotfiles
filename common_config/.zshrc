@@ -8,7 +8,18 @@ source ~/.bash.d/aliases_and_functions.sh
 source ~/.zsh/env-vars.zsh
 source ~/.zsh/zsh-conf.zsh
 source ~/.zsh/colors.zsh
-source ~/.zplug/init.zsh
+
+# Zsh plugin manager (handles oh-my-zsh, etc)
+# https://github.com/zplug/zplug
+if [[ -e ~/.zplug/init.zsh ]]; then
+    # Check if zplug is installed
+    if [[ ! -d ~/.zplug ]]; then
+        git clone https://github.com/zplug/zplug ~/.zplug
+        source ~/.zplug/init.zsh && zplug update --self
+    else
+        source ~/.zplug/init.zsh
+    fi
+fi
 
 ##################################################
 ## Based on zplug Example section
@@ -52,5 +63,3 @@ fi
 zplug load 
 
 export PATH="/usr/local/sbin:$PATH"
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
-export N_PREFIX="$HOME/.n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).
