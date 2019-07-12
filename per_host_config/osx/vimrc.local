@@ -1,0 +1,4 @@
+" OS X custom vim config
+colorscheme koehler
+
+" vi: ft=vim
