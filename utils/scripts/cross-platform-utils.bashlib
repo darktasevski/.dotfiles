@@ -1,0 +1,30 @@
+# Bash utility functions for BSD (Mac) and GNU (Linux, Mingw, CygWin)
+# that shouldn't be necessary to reimplement
+#
+# We use aliases defined at startup rather than functions to avoid
+# repeating the overhead of runtime detection each time a command is invoked
+#
+# Depends on is_mac from the startup functions
+
+# to make aliases expand in non-interactive sub-shells
+shopt -s expand_aliases
+
+if ! declare -f -p is_mac > /dev/null 2> /dev/null; then
+    source ~/.bash.d/aliases_and_functions.sh
+fi
+
+
+if ! is_mac; then
+
+    # Interpret regular expressions as extended (modern) regular expressions 
+    # rather than basic regular expressions (BRE's).  The re_format(7) manual page fully describes both formats.
+    alias util.esed='sed -r '
+
+    # size in bytes
+    alias util.size='stat -c %s -- '
+else
+    alias util.esed='sed -E '
+    alias util.size='stat -Lf %z -- '
+fi
+
+# vim: set ft=sh
