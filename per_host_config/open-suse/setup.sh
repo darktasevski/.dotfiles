@@ -47,12 +47,12 @@ echo -e "$(blue Installing python packages ...)"
 sudo pip3 install -r python.local
 
 echo -e "$(blue Installing ruby packages ...)"
-while read -r line; do 
-    if gem list -i "$line" > /dev/null; then
-        continue
-    fi
-    sudo gem install "$line"; 
-done < ruby.local 
+if command -v gem >> dev/null; then
+    echo -e "$(blue Installing ruby gems ...)"
+    sudo gem install bundler
+    rbenv rehash
+    bundle install
+fi
 
 # install Github 'hub'
 if ! command -v hub >> /dev/null; then
