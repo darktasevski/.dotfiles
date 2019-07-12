@@ -11,17 +11,14 @@ sudo chown -R "$(whoami)" /usr/local
 
 echo -e "$(blue Installing local apps ...)"
 
-suse_packages="git vim gcc-c++ zsh git-gui docker wireshark htop cmake stow make go go-doc libgit2-devel automake tmux rxvt-unicode urxvt-font-size libtool xclip"
+suse_packages="gcc-c++ git-gui docker wireshark htop cmake stow go go-doc libgit2-devel automake tmux rxvt-unicode urxvt-font-size libtool xclip"
 #chrome_package="https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm"
 # run an update
 sudo zypper update
 sudo zypper install -y $suse_packages
 #sudo zypper install -y $chrome_package
 
-# Install codecs
 sudo zypper addrepo -f http://packman.inode.at/suse/openSUSE_Tumbleweed/ packman
-sudo zypper addrepo -f http://packman.inode.at/suse/openSUSE_Tumbleweed/ packman
-sudo zypper install -y ffmpeg lame gstreamer-plugins-bad gstreamer-plugins-ugly gstreamer-plugins-ugly-orig-addon gstreamer-plugins-libav libdvdcss2
 sudo zypper dup --from http://packman.inode.at/suse/openSUSE_Tumbleweed/
 
 # Golang dependencies
@@ -57,11 +54,6 @@ while read -r line; do
     sudo gem install "$line"; 
 done < ruby.local 
 
-# Install Yarn - used for instance by coc.vim
-if ! command -v yarn >> /dev/null; then
-    curl --compressed -o- -L https://yarnpkg.com/install.sh | bash
-fi
-
 # install Github 'hub'
 if ! command -v hub >> /dev/null; then
     echo -e "$(blue "Installing Github's Hub...")"
@@ -78,6 +70,20 @@ if ! command -v hub >> /dev/null; then
         rm -rf "${BASENAME}"*
     fi
 fi
+
+# VsCodium install
+rpm --import https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg
+sudo tee -a /etc/zypp/repos.d/vscodium.repo << 'EOF'
+[gitlab.com_paulcarroty_vscodium_repo]
+name=gitlab.com_paulcarroty_vscodium_repo
+baseurl=https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/repos/rpms/
+enabled=1
+gpgcheck=1
+repo_gpgcheck=1
+gpgkey=https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg
+EOF
+
+sudo zypper in codium
 
 # restore current directory
 popd > /dev/null
