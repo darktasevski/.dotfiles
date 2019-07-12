@@ -1,10 +1,12 @@
-
-
- touch  ~/.machine && echo "$(hostname)" > ~/.machine
-# Yur machine name (hostname) will be in this file.
+# Your machine name (hostname) will be in this file.
 # The name must match one of the subdirectories in this dir
 MACHINE_NAME_FILE="$HOME/.machine"
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+if [[ ! -e "MACHINE_NAME_FILE" ]]; then
+   echo -e $(dark_yellow "No .machine file detected! I'll try to create one with hostname as machine name")
+   touch  ~/.machine && echo "$(hostname)" > ~/.machine
+fi
 
 pushd "$SCRIPT_DIR" > /dev/null
 

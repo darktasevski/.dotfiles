@@ -8,14 +8,7 @@ source ~/.bash.d/aliases_and_functions.sh
 source ~/.zsh/env-vars.zsh
 source ~/.zsh/zsh-conf.zsh
 source ~/.zsh/colors.zsh
-
-# Check if zplug is installed
-if [[ ! -d ~/.zplug ]]; then
-    git clone https://github.com/zplug/zplug ~/.zplug
-    source ~/.zplug/init.zsh && zplug update --self > /dev/null
-else
-    source ~/.zplug/init.zsh
-fi
+source ~/.zplug/init.zsh
 
 ##################################################
 ## Based on zplug Example section
@@ -26,7 +19,7 @@ fi
 zplug "lib/completion", from:oh-my-zsh
 
 # Never got the oh-my-zsh version to work without manual configuration,
-zplug "rupa/z", use:z.sh
+# zplug "rupa/z", use:z.sh
 
 # Syntax highlighting for commands, load last
 zplug "zsh-users/zsh-syntax-highlighting", from:github, defer:3
