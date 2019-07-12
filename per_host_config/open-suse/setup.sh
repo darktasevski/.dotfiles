@@ -21,19 +21,19 @@ sudo zypper install -y $suse_packages
 sudo zypper ar -cfp 90 http://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/Essentials packman-essentials
 sudo zypper dup --from packman --allow-vendor-change
 
-# Golang dependencies
-go get -u github.com/constabulary/gb/...
-go get -u github.com/nsf/gocode
-go get -u github.com/libgit2/git2go
-go get -u github.com/zenazn/goji
-go get -u github.com/davecgh/go-spew/spew
-go get -u github.com/spf13/viper
-go get -u github.com/google/go-github/github
-go get -u github.com/garyburd/redigo/redis
-go get -u github.com/Rafflecopter/golang-relyq/relyq
-go get -u github.com/Rafflecopter/golang-relyq/storage/redis
-go get -u github.com/bradfitz/gomemcache/memcache
-curl https://glide.sh/get | sh
+# [TODO] Golang dependencies - need to add GO to path before I install these
+#go get -u github.com/constabulary/gb/...
+#go get -u github.com/nsf/gocode
+##go get -u github.com/libgit2/git2go
+#go get -u github.com/zenazn/goji
+#go get -u github.com/davecgh/go-spew/spew
+#go get -u github.com/spf13/viper
+#go get -u github.com/google/go-github/github
+#go get -u github.com/garyburd/redigo/redis
+#go get -u github.com/Rafflecopter/golang-relyq/relyq
+#go get -u github.com/Rafflecopter/golang-relyq/storage/redis
+#go get -u github.com/bradfitz/gomemcache/memcache
+#curl https://glide.sh/get | sh
 
 if ! command -v pip3 >> /dev/null; then
     echo -e "$(blue "Installing Pip3..")"
@@ -44,7 +44,7 @@ fi
 pip3 install --upgrade pip
 
 echo -e "$(blue Installing python packages ...)"
-pip3 install -r python.local
+sudo pip3 install -r python.local
 
 echo -e "$(blue Installing ruby packages ...)"
 while read -r line; do 
