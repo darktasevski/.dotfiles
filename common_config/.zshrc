@@ -9,16 +9,12 @@ source ~/.zsh/env-vars.zsh
 source ~/.zsh/zsh-conf.zsh
 source ~/.zsh/colors.zsh
 
-# Zsh plugin manager (handles oh-my-zsh, etc)
-# https://github.com/zplug/zplug
-if [[ -e ~/.zplug/init.zsh ]]; then
-    # Check if zplug is installed
-    if [[ ! -d ~/.zplug ]]; then
-        git clone https://github.com/zplug/zplug ~/.zplug
-        source ~/.zplug/init.zsh && zplug update --self
-    else
-        source ~/.zplug/init.zsh
-    fi
+# Check if zplug is installed
+if [[ ! -d ~/.zplug ]]; then
+  git clone https://github.com/zplug/zplug ~/.zplug
+  source ~/.zplug/init.zsh && zplug update --self > /dev/null
+else
+    source ~/.zplug/init.zsh
 fi
 
 ##################################################
