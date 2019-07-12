@@ -87,7 +87,7 @@ function set_prompt(){
 }
 
 # Now set it. If any of these colors are later overridden, then just rerun `set_prompt`
-set_prompt
+# set_prompt
 
 # Start ssh-agent
 # This somehow started failing on OS X at some time, as `ssh-add -l`
@@ -136,7 +136,7 @@ if [[ -d ~/scripts ]] ; then
 fi
 
 # Z utility :-)
-read_config_if_exists "$HOME/.zplug/repos/rupa/z/z.sh"
+#read_config_if_exists "$HOME/.zplug/repos/rupa/z/z.sh"
 
 t_debug "Reading local settings for this machine"
 # This needs to be at the bottom to be able to override earlier settings/variables/functions
