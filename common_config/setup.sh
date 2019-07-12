@@ -58,21 +58,6 @@ ln -sf "$SCRIPT_DIR"/.tmux.conf "$DEST"/.tmux.conf
 ln -sf "$SCRIPT_DIR"/.npmrc "$DEST"/.npmrc
 
 # ============================
-# Zsh setup
-# ============================
-sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-
-rm ~/.zshrc
-
-# Zsh
-ln -sf "$SCRIPT_DIR"/.zshrc "$DEST"/.zshrc
-
-# Check if zplug is installed
-if [[ ! -d ~/.zplug ]]; then
-    git clone https://github.com/zplug/zplug ~/.zplug
-fi
-
-# ============================
 # Tmux setup
 # ============================
 [[ ! -e "$DEST/.tmux/plugins" ]] && mkdir "$DEST/.tmux/plugins";
@@ -126,10 +111,26 @@ fi
 # @see https://stackoverflow.com/a/17072017/7453363 for more OSs
 if [[ "$(uname)" == "Darwin" ]]; then    # Do something under Mac OS X platform
     echo  -n -e "$(blue "Installing OSX needful")"
-#    brew install vim neovim
+    brew install zsh vim neovim
 elif [[ "$(expr substr $(uname -s) 1 5)" == "Linux" ]]; then # Do something under GNU/Linux platform
     echo  -n -e "$(blue "Installing Manjaro needful")" # Only Manjaro for now
 #    sudo pacman -Sy --noconfirm curl vim vim-runtime wget
+    sudo zypper install -y zsh vim neovim
+fi
+
+# ============================
+# Zsh setup
+# ============================
+sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+
+rm ~/.zshrc
+
+# Zsh
+ln -sf "$SCRIPT_DIR"/.zshrc "$DEST"/.zshrc
+
+# Check if zplug is installed
+if [[ ! -d ~/.zplug ]]; then
+    git clone https://github.com/zplug/zplug ~/.zplug
 fi
 
 # ============================
