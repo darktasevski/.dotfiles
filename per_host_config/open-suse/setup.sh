@@ -13,7 +13,8 @@ echo -e "$(blue Installing local apps ...)"
 
 suse_packages="git vim gcc-c++ zsh git-gui docker wireshark htop cmake stow make go go-doc libgit2-devel automake tmux rxvt-unicode urxvt-font-size libtool xclip"
 #chrome_package="https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm"
-
+# run an update
+sudo zypper update
 sudo zypper install -y $suse_packages
 #sudo zypper install -y $chrome_package
 
