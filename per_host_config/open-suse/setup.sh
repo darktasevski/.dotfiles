@@ -11,7 +11,7 @@ sudo chown -R "$(whoami)" /usr/local
 
 echo -e "$(blue Installing local apps ...)"
 
-suse_packages="gcc-c++ git-gui docker wireshark htop cmake stow go go-doc libgit2-devel automake tmux rxvt-unicode urxvt-font-size libtool xclip gdbm-devel libyaml-devel ncurses-devel readline-devel zlib-devel libopenssl-devel"
+suse_packages="gcc-c++ git-gui docker wireshark htop cmake stow go go-doc libgit2-devel automake tmux rxvt-unicode urxvt-font-size libtool xclip gdbm-devel libyaml-devel ncurses-devel readline-devel zlib-devel cowsay fortune"
 
 #chrome_package="https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm"
 # run an update
@@ -48,7 +48,7 @@ echo -e "$(blue Installing python packages ...)"
 sudo pip3 install -r python.local
 
 #Install rbenv
-if command -v rbenv >> dev/null; then
+if ! command -v rbenv >> /dev/null; then
     git clone https://github.com/rbenv/rbenv.git ~/.rbenv
     (cd ~/.rbenv && src/configure && make -C src) # @see https://stackoverflow.com/a/10382170/7453363
     echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.zshrc
@@ -56,10 +56,8 @@ if command -v rbenv >> dev/null; then
     source ~/.zshrc
 fi
 
-
-
 echo -e "$(blue Installing ruby packages ...)"
-if command -v gem >> dev/null; then
+if command -v gem >> /dev/null; then
     echo -e "$(blue Installing ruby gems ...)"
     sudo gem install bundler
     rbenv rehash
