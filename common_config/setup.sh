@@ -121,7 +121,8 @@ ln -sf ~/.vimrc ~/.config/nvim/init.vim
 # ============================
 # Zsh setup
 # ============================
-sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+# @see https://github.com/robbyrussell/oh-my-zsh/pull/5169
+RUNZSH=no sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
 rm ~/.zshrc
 
