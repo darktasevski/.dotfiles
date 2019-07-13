@@ -11,16 +11,25 @@ sudo chown -R "$(whoami)" /usr/local
 
 echo -e "$(blue Installing local apps ...)"
 
-suse_packages="gcc-c++ git-gui docker wireshark htop cmake stow go go-doc libgit2-devel automake tmux rxvt-unicode urxvt-font-size libtool xclip gdbm-devel libyaml-devel ncurses-devel readline-devel zlib-devel"
-
+rbenv_build_prerequisites="libyaml-devel ncurses-devel readline-devel zlib-devel"
+suse_packages="go go-doc docker transmission wireshark htop tmux rxvt-unicode urxvt-font-size xclip"
+media_and_codecs="libxine2-codecs ffmpeg-3 gstreamer-plugins-bad gstreamer-plugins-bad-orig-addon gstreamer-plugins-base gstreamer-plugins-good gstreamer-plugins-good-extra gstreamer-plugins-libav gstreamer-plugins-qt5 gstreamer-plugins-ugly gstreamer-plugins-ugly-orig-addon vlc smplayer x264 x265 vlc-codecs vlc-codec-gstreamer ogmtools libavcodec58"
 #chrome_package="https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm"
 # run an update
-sudo zypper update
+sudo zypper refresh && sudo zypper update
+sudo zypper install -t pattern devel_basis devel_web devel_python3 devel_ruby # install the development tools bundles
 sudo zypper install -y $suse_packages
+sudo zypper install -y $rbenv_build_prerequisites
 #sudo zypper install -y $chrome_package
 
+sudo zypper ar -f  http://download.opensuse.org/repositories/M17N:/fonts/openSUSE_Tumbleweed fonts
 sudo zypper ar -cfp 90 http://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/Essentials packman-essentials
-sudo zypper dup --from packman --allow-vendor-change
+sudo zypper ar -f http://opensuse-guide.org/repo/openSUSE_Tumbleweed/ libdvdcss # media codecs and stuff
+sudo zypper dup --from packman-essentials --allow-vendor-change
+sudo zypper dup --from libdvdcss --allow-vendor-change
+sudo zypper ref # accept always and trust the signing key
+
+sudo zypper install -from libdvdcss $media_and_codecs
 
 # [TODO] Golang dependencies - need to add GO to path before I install these
 #go get -u github.com/constabulary/gb/...
