@@ -11,13 +11,14 @@ sudo chown -R "$(whoami)" /usr/local
 
 echo -e "$(blue Installing local apps ...)"
 
+tools=""
 rbenv_build_prerequisites="libyaml-devel ncurses-devel readline-devel zlib-devel"
 suse_packages="go go-doc docker transmission wireshark htop tmux rxvt-unicode urxvt-font-size xclip"
 media_and_codecs="libxine2-codecs ffmpeg-3 gstreamer-plugins-bad gstreamer-plugins-bad-orig-addon gstreamer-plugins-base gstreamer-plugins-good gstreamer-plugins-good-extra gstreamer-plugins-libav gstreamer-plugins-qt5 gstreamer-plugins-ugly gstreamer-plugins-ugly-orig-addon vlc smplayer x264 x265 vlc-codecs vlc-codec-gstreamer ogmtools libavcodec58"
 #chrome_package="https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm"
 # run an update
 sudo zypper refresh && sudo zypper update
-sudo zypper install -t pattern devel_basis devel_web devel_python3 devel_ruby # install the development tools bundles
+sudo zypper install -yt pattern devel_basis devel_web devel_python3 devel_ruby # install the development tools bundles
 sudo zypper install -y $suse_packages
 sudo zypper install -y $rbenv_build_prerequisites
 #sudo zypper install -y $chrome_package
@@ -83,11 +84,7 @@ if ! command -v hub >> /dev/null; then
     cd "$BASENAME" || exit
     sudo ./install
     cd ..
-    if ! command -v rimraf >> /dev/null; then
-        rimraf "${BASENAME}"*
-    else
-        rm -rf "${BASENAME}"*
-    fi
+    rm -rf "${BASENAME}"*
 fi
 
 # VsCodium install
