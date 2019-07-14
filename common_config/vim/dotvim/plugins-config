@@ -34,6 +34,7 @@ Plug 'scrooloose/syntastic'         " Syntax checking hacks for vim
 Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
 
 " Syntax highlighting
+Plug 'vim-syntastic/syntastic'
 Plug 'leafgarland/typescript-vim', {'for': 'typescript' }
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 Plug 'mxw/vim-jsx' " fixes JSX: https://github.com/pangloss/vim-javascript/issues/955#issuecomment-356350901

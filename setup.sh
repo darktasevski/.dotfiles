@@ -20,6 +20,13 @@ per_host_config/setup.sh
 echo -e "$(blue "Adding bin and binary utilities")"
 utils/setup.sh
 
+# ============================
+# Zsh setup
+# ============================
+sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+rm ~/.zshrc
+ln -sf "$SCRIPT_DIR"/common_config/.zshrc "$DEST"/.zshrc
+
 # Restore current directory of user
 popd > /dev/null
 
