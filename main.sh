@@ -21,19 +21,14 @@ per_host_config/setup.sh
 echo -e "$(blue "Adding bin and binary utilities")"
 utils/setup.sh
 
-# ============================
-# Zsh setup
-# ============================
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" "" --unattended
-
-chsh -s $(which zsh)
-exec zsh
-
-[[ ! -e ~/.zshrc ]] && rm ~/.zshrc
-ln -sf common_config/zshrc ~/.zshrc
-
 # Restore current directory of user
 popd > /dev/null
 
 # Re-read BASH settings
-green "\n\n Remember to 'source ~/.zshrc'! \n\n"
+green "\n\n Remember to 'source ~/.zshrc and reboot the system'! \n\n"
+
+##################################
+# - download and install .fonts
+# - fetch WebStorm settings
+# - download Ngrok https://ngrok.com/download
+##################################

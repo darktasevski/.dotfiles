@@ -28,7 +28,7 @@ alias source-rc="source ~/.bashrc"
 alias source-alias="source ~/.bash.d/aliases_and_functions.sh"
 
 alias editzsh="vim ~/.zshrc"
-alias editvim="vim ~/..vimrc"
+alias editvim="vim ~/.vimrc"
 
 # Conversions
 t_debug conversions

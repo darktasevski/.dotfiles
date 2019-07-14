@@ -1,8 +1,8 @@
-"" Based on tips from  VIM Revisited (after dropping Janus)
+"" Based on tips from VIM Revisited (after dropping Janus)
 "" http://mislav.uniqpath.com/2011/12/vim-revisited/
 
 " Changelog
-" @forked from 
+" @forked from https://github.com/fatso83/dotfiles
 " 2019-04-02 Swapped Vundle for vim-plug. Needed post-install hooks 
 " 2015-09-24 Swapped Pathogen for Vundle. Simplicity!
 "            Tipped from: http://lepture.com/en/2012/vundle-vs-pathogen
@@ -129,35 +129,34 @@ nmap <C-n> :NERDTreeToggle<CR>
 cmap w!! w !sudo tee > /dev/null %
 
 " Tips mostly from nvie.com/
-set showmatch     " When in insert mode, this will momentarily flash the cursor back to the opening bracket
-set matchtime=1   " just jump for 100 ms
+set showmatch                           " When in insert mode, this will momentarily flash the cursor back to the opening bracket
+set matchtime=1                         " just jump for 100 ms
 
-set shiftwidth=4  " number of spaces to use for autoindenting
-set shiftround    " use multiple of shiftwidth when indenting with '<' and '>'
-set ignorecase    " ignore case when searching
-set smartcase     " ignore case if search pattern is all lowercase, case-sensitive otherwise
-set smarttab      " insert tabs on the start of a line according to shiftwidth, not tabstop
-set hlsearch      " highlight search terms
-set incsearch     " show search matches as you type
-set history=1000         " remember more commands and search history
-set undolevels=1000      " use many muchos levels of undo
+set shiftwidth=4                        " number of spaces to use for autoindenting
+set shiftround                          " use multiple of shiftwidth when indenting with '<' and '>'
+set ignorecase                          " ignore case when searching
+set smartcase                           " ignore case if search pattern is all lowercase, case-sensitive otherwise
+set smarttab                            " insert tabs on the start of a line according to shiftwidth, not tabstop
+set hlsearch                            " highlight search terms
+set incsearch                           " show search matches as you type
+set history=1000                        " remember more commands and search history
+set undolevels=1000                     " use many muchos levels of undo
 set wildignore=*.swp,*.bak,*.pyc,*.class
-set title                " change the terminal's title
-set visualbell           " don't beep
-set noerrorbells         " don't beep
-" Clear highlighted search text by just typing ",/"
-nmap <silent> <leader>/ :nohlsearch<CR>  
-" Use sudo after you opened a file, in case you forgot
-cmap w!! w !sudo tee % >/dev/null
+set title                               " change the terminal's title
+set visualbell                          " don't beep
+set noerrorbells                        " don't beep
+
+nmap <silent> <leader>/ :nohlsearch<CR> " Clear highlighted search text by just typing ",/"
+cmap w!! w !sudo tee % >/dev/null       " Use sudo after you opened a file, in case you forgot
 
 " Show 'hidden' characters, like tab and newline: https://vi.stackexchange.com/a/430/1087
 set listchars=eol:⏎,tab:␉·,trail:␠,nbsp:⎵
 
 " Lucas F. Costa: http://lucasfcosta.com/2017/01/23/Quick-vIM-Tips-That-Will-Save-Your-Life.html
-set relativenumber             " Show relative line numbers
-set number                     " Show current line number
+set relativenumber                      " Show relative line numbers
+set number                              " Show current line number
 " https://twitter.com/mantoni/status/880079687946522625
-set suffixesadd+=.js           " Makes gf work for relative files as well
+set suffixesadd+=.js                    " Makes gf work for relative files as well
 
 " Disable mouse integration by default to make copy-paste easy. Toggle with F12
 set mouse=
@@ -167,7 +166,7 @@ source ~/.vim/ctrlp-config
 source ~/.vim/coc-config
 
 " Elm settings - see https://github.com/elmcast/elm-vim
-let g:elm_format_autosave = 1 "reformat on autosave
+let g:elm_format_autosave = 1           "reformat on autosave
 "let g:ycm_semantic_triggers.elm = ['.']
 
 " js settings
@@ -223,8 +222,8 @@ set completeopt=longest,menu
 
 "----------UI SETTINGS---------------
 set t_Co=256                        " Enable 256 colors.
+set termguicolors
 set background=dark                 " Editor background.
-colorscheme solarized               " Colorscheme settings.
 
 let g:airline_theme='gruvbox'
 let g:gruvbox_termcolors=256
