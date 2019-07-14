@@ -36,26 +36,26 @@ fi
 # Create symlinks
 # ============================
 for file in "$SCRIPT_DIR"/bash.d/*; do
-  ln -sf "$file" "${BASH_DIR}"/
+  ln -sfv "$file" "${BASH_DIR}"/
 done
 
 for file in "$SCRIPT_DIR"/zsh/*; do
-  ln -sf "$file" "${ZSH_DIR}"/
+  ln -sfv "$file" "${ZSH_DIR}"/
 done
 
 for file in "$SCRIPT_DIR"/tmux/*.conf "$SCRIPT_DIR"/tmux/*.proj; do
-  ln -sf "$file" "${DEST}/.tmux/"
+  ln -sfv "$file" "${DEST}/.tmux/"
 done
 
-ln -s "$SCRIPT_DIR"/bash_completion.d "$DEST"/.bash_completion.d
-ln -sf "$SCRIPT_DIR"/.profile "$DEST"/.profile
-ln -sf "$SCRIPT_DIR"/.bashrc "$DEST"/.bashrc
-ln -sf "$SCRIPT_DIR"/.gitconfig "$DEST"/.gitconfig
-ln -sf "$SCRIPT_DIR"/.gitignore_global "$DEST"/.gitignore_global
-ln -sf "$SCRIPT_DIR"/.gitattributes_global "$DEST"/.gitattributes_global
-ln -sf "$SCRIPT_DIR"/pystartup "$DEST"/.pystartup
-ln -sf "$SCRIPT_DIR"/.tmux.conf "$DEST"/.tmux.conf
-ln -sf "$SCRIPT_DIR"/.npmrc "$DEST"/.npmrc
+ln -sv "$SCRIPT_DIR"/bash_completion.d "$DEST"/.bash_completion.d
+ln -sfv "$SCRIPT_DIR"/.profile "$DEST"/.profile
+ln -sfv "$SCRIPT_DIR"/.bashrc "$DEST"/.bashrc
+ln -sfv "$SCRIPT_DIR"/.gitconfig "$DEST"/.gitconfig
+ln -sfv "$SCRIPT_DIR"/.gitignore_global "$DEST"/.gitignore_global
+ln -sfv "$SCRIPT_DIR"/.gitattributes_global "$DEST"/.gitattributes_global
+ln -sfv "$SCRIPT_DIR"/pystartup "$DEST"/.pystartup
+ln -sfv "$SCRIPT_DIR"/.tmux.conf "$DEST"/.tmux.conf
+ln -sfv "$SCRIPT_DIR"/.npmrc "$DEST"/.npmrc
 
 # ============================
 # Tmux setup
@@ -119,9 +119,21 @@ ln -sf ~/.vim ~/.config/nvim
 ln -sf ~/.vimrc ~/.config/nvim/init.vim
 
 # ============================
+# Zsh setup
+# ============================
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" "" --unattended
+
+chsh -s $(which zsh)
+
+[[ ! -e ~/.zshrc ]] && rm ~/.zshrc
+ln -sf common_config/zshrc ~/.zshrc
+
+exec zsh
+
+# ============================
 # ngrok config
 # ============================
 [[ ! -e "$DEST"/.ngrok2 ]] && mkdir "$DEST/.ngrok2"
-ln -sf "${SCRIPT_DIR}"/ngrok.yml "${DEST}"/.ngrok2/ngrok.yml
+ln -vsiF "${SCRIPT_DIR}"/ngrok.yml "${DEST}"/.ngrok2/ngrok.yml
 
 popd > /dev/null
