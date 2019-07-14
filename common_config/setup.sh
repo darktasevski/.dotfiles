@@ -68,7 +68,7 @@ if [[ "$(uname)" == "Darwin" ]]; then    # Do something under Mac OS X platform
     echo  -n -e "$(blue "Installing OSX needful")"
     brew install zsh vim neovim
 elif [[ "$(expr substr $(uname -s) 1 5)" == "Linux" ]]; then # Do something under GNU/Linux platform
-    echo  -n -e "$(blue "Installing Manjaro needful")" # Only Manjaro for now
+    echo  -n -e "$(blue "Installing Linux needful")" # Only openSUSE for now
 #    sudo pacman -Sy --noconfirm curl vim vim-runtime wget
     sudo zypper install -y zsh vim neovim make
 fi

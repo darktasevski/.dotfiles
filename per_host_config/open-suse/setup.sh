@@ -30,7 +30,7 @@ sudo zypper dup --from packman-essentials --allow-vendor-change
 sudo zypper dup --from libdvdcss --allow-vendor-change
 sudo zypper ref # accept always and trust the signing key
 
-sudo zypper install -from libdvdcss $media_and_codecs
+sudo zypper install -y -from libdvdcss $media_and_codecs
 
 # [TODO] Golang dependencies - need to add GO to path before I install these
 #go get -u github.com/constabulary/gb/...
