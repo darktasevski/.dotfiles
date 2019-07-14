@@ -1,4 +1,4 @@
-
+#!/usr/bin/env bash
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 pushd "$SCRIPT_DIR" > /dev/null
@@ -11,9 +11,8 @@ sudo chown -R "$(whoami)" /usr/local
 
 echo -e "$(blue Installing local apps ...)"
 
-tools=""
 rbenv_build_prerequisites="libyaml-devel ncurses-devel readline-devel zlib-devel"
-suse_packages="go go-doc docker transmission wireshark htop tmux rxvt-unicode urxvt-font-size xclip"
+suse_packages="go go-doc docker transmission wireshark htop tmux rxvt-unicode urxvt-font-size xclip ShellCheck openssh nethogs fakeroot fasd fortune cowsay"
 media_and_codecs="libxine2-codecs ffmpeg-3 gstreamer-plugins-bad gstreamer-plugins-bad-orig-addon gstreamer-plugins-base gstreamer-plugins-good gstreamer-plugins-good-extra gstreamer-plugins-libav gstreamer-plugins-qt5 gstreamer-plugins-ugly gstreamer-plugins-ugly-orig-addon vlc smplayer x264 x265 vlc-codecs vlc-codec-gstreamer ogmtools libavcodec58"
 #chrome_package="https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm"
 # run an update
@@ -61,7 +60,7 @@ sudo pip3 install -r python.local
 if ! command -v rbenv >> /dev/null; then
     git clone https://github.com/rbenv/rbenv.git ~/.rbenv
     (cd ~/.rbenv && src/configure && make -C src) # @see https://stackoverflow.com/a/10382170/7453363
-    echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.zshrc
+    echo 'export PATH="$HOME/.rbenv/bin:$PATH" \n eval "$(rbenv init -)"' >> "$HOME"/.zsh/env-vars.zsh
     ~/.rbenv/bin/rbenv init
     export PATH="$HOME/.rbenv/bin:$PATH"
 fi
@@ -71,7 +70,7 @@ if command -v gem >> /dev/null; then
     echo -e "$(blue Installing ruby gems ...)"
     sudo gem install bundler
     rbenv rehash
-    bundle install
+#   bundle install
 fi
 
 # install Github 'hub'

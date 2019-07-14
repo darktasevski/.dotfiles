@@ -17,9 +17,9 @@ make install
 # scripts
 ln -sf scripts/* "$HOME"/.bin/
 
-# Dependencies for scripts
-pip3 install smsutil
-pip3 install requests
+# Dependencies for scripts (requires sudo for some reason when installing from shellscript :/)
+sudo -H pip3 install smsutil
+sudo -H pip3 install requests
 
 # Restore current directory of user
 popd > /dev/null

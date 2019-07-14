@@ -64,13 +64,13 @@ ln -sfv "$SCRIPT_DIR"/.npmrc "$DEST"/.npmrc
 [[ ! -e "$DEST/.tmux/plugins/tpm" ]] && git clone https://github.com/tmux-plugins/tpm "$DEST"/.tmux/plugins/tpm
 
 # @see https://stackoverflow.com/a/17072017/7453363 for more OSs
-if [[ "$(uname)" == "Darwin" ]]; then    # Do something under Mac OS X platform
+if [[ "$(uname)" == "Darwin" ]]; then                        # Do something under Mac OS X platform
     echo  -n -e "$(blue "Installing OSX needful")"
     brew install zsh vim neovim
 elif [[ "$(expr substr $(uname -s) 1 5)" == "Linux" ]]; then # Do something under GNU/Linux platform
-    echo  -n -e "$(blue "Installing Linux needful")" # Only openSUSE for now
-#    sudo pacman -Sy --noconfirm curl vim vim-runtime wget
-    sudo zypper install -y zsh vim neovim make
+    echo  -n -e "$(blue "Installing Linux needful")"
+#    sudo pacman -Sy --noconfirm curl vim vim-runtime wget   # Manjaro
+    sudo zypper install -y zsh vim neovim make               # openSUSE
 fi
 
 # ============================
@@ -125,10 +125,8 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/mas
 
 chsh -s $(which zsh)
 
-[[ ! -e ~/.zshrc ]] && rm ~/.zshrc
-ln -sf common_config/zshrc ~/.zshrc
-
-exec zsh
+[[ ! -e "$DEST"/.zshrc ]] && rm "$DEST"/.zshrc
+ln -sfv "$SCRIPT_DIR"/zshrc "$DEST"/.zshrc
 
 # ============================
 # ngrok config

@@ -25,4 +25,10 @@ utils/setup.sh
 popd > /dev/null
 
 # Re-read BASH settings
-green "\n\n Remember to 'source ~/.zshrc'! \n\n"
+green "\n\n Remember to 'source ~/.zshrc and reboot the system'! \n\n"
+
+##################################
+# - download and install .fonts
+# - fetch WebStorm settings
+# - download Ngrok https://ngrok.com/download
+##################################
