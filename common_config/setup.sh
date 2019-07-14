@@ -119,16 +119,6 @@ ln -sf ~/.vim ~/.config/nvim
 ln -sf ~/.vimrc ~/.config/nvim/init.vim
 
 # ============================
-# Zsh setup
-# ============================
-# @see https://github.com/robbyrussell/oh-my-zsh/pull/5169
-#RUNZSH=no sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-(sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" && rm ~/.zshrc) &
-
-# Zsh
-ln -sf "$SCRIPT_DIR"/.zshrc "$DEST"/.zshrc
-
-# ============================
 # ngrok config
 # ============================
 [[ ! -e "$DEST"/.ngrok2 ]] && mkdir "$DEST/.ngrok2"
