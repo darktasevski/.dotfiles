@@ -25,6 +25,9 @@ elif [[ $(uname) == 'Darwin' ]]; then
 	export PATH=$PATH:$GOPATH/bin
 fi
 
+# Path to oh-my-zsh installation.
+export ZSH=$HOME/.oh-my-zsh
+
 export EDITOR='vim'
 export TERM="xterm-256color"
 

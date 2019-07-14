@@ -8,48 +8,44 @@ if has("macunix")
     Plug 'vim-scripts/copy-as-rtf'
 endif
 
-" UI.
+" UI and color schemes
+Plug 'mhinz/vim-startify', {'do': 'mkdir -p ~/.vim/files/info'}     " Fancy start screen for Vim
 Plug 'morhetz/gruvbox'                                              " Retro groove color scheme.
-Plug 'vim-airline/vim-airline'                                      " Lean & mean status/tabline.
-Plug 'mhinz/vim-startify', {'do': 'mkdir -p ~/.vim/files/info'} 
+Plug 'vim-airline/vim-airline'                                      " Lean & mean status/tabline
+Plug 'vim-airline/vim-airline-themes'
+Plug 'romainl/Apprentice'
 
 " Needs backend: npm -g update instant-markdown-d
-Plug 'suan/vim-instant-markdown', { 'for': 'markdown'}
+Plug 'alvan/vim-closetag'                                           " Auto close (X)HTML tags
+Plug 'ctrlpvim/ctrlp.vim'                                           " does fuzzy matching to open files
+Plug 'editorconfig/editorconfig-vim'
+Plug 'jiangmiao/auto-pairs'                                         " Insert or delete brackets, parens, quotes in pair.
+Plug 'mwnx/vimcrypt'                                                " GPG & OpenSSL support (AES, ...)
+Plug 'nvie/vim-togglemouse'                                         " F12 will switch mouse mode between terminal and vim
+Plug 'Raimondi/delimitMate'                                         " auto-completion for quotes, parens, brackets
+Plug 'ruanyl/vim-sort-imports'
+Plug 'sbdchd/neoformat'                                             " Used with prettier
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
-Plug 'ctrlpvim/ctrlp.vim' "does fuzzy matching to open files
-Plug 'nvie/vim-togglemouse' " F12 will switch mouse mode between terminal and vim
-Plug 'editorconfig/editorconfig-vim'
-Plug 'mwnx/vimcrypt' " GPG & OpenSSL support (AES, ...)
-Plug 'Raimondi/delimitMate'
-Plug 'alvan/vim-closetag'
-Plug 'ruanyl/vim-sort-imports'
-Plug 'sbdchd/neoformat' " Used with prettier
-Plug 'w0rp/ale'
-Plug 'jiangmiao/auto-pairs'         " Insert or delete brackets, parens, quotes in pair.
-Plug 'tpope/vim-surround'           " Surround.vim is all about 'surroundings': parentheses, brackets, ..., etc.
-Plug 'scrooloose/syntastic'         " Syntax checking hacks for vim
+Plug 'suan/vim-instant-markdown', { 'for': 'markdown'}
+Plug 'tpope/vim-surround'                                           " Surround.vim is all about 'surroundings': parentheses, brackets, ..., etc.
+Plug 'vim-syntastic/syntastic'                                      " Syntax checking hacks for vim
+Plug 'w0rp/ale'                                                     " Asynchronous Lint Engine TODO: config
 
-" YCM alternative - needs Node, Yarn
-Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
+
+Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}          " YCM alternative - needs Node, Yarn
 
 " Syntax highlighting
-Plug 'vim-syntastic/syntastic'
-Plug 'leafgarland/typescript-vim', {'for': 'typescript' }
-Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
-Plug 'mxw/vim-jsx' " fixes JSX: https://github.com/pangloss/vim-javascript/issues/955#issuecomment-356350901
-Plug 'PProvost/vim-ps1' " powershell
-Plug 'OrangeT/vim-csharp' "razor, c#
-Plug 'inkarkat/vim-ingo-library' " dependency for SyntaxRange
-Plug 'vim-scripts/SyntaxRange' " :[range]SyntaxInclude {filetype}
-"Plug 'lambdatoast/elm.vim'
+" Plug 'OrangeT/vim-csharp' "razor, c#
+" Plug 'PProvost/vim-ps1'                                           " powershell NOTE: Used for windows ps1 powershell scripts
 Plug 'elmcast/elm-vim'
-" color schemes
-Plug 'romainl/Apprentice'
-" git plugin
-Plug 'tpope/vim-fugitive'
-" github plugin
-Plug 'tpope/vim-rhubarb'
+Plug 'leafgarland/typescript-vim', {'for': 'typescript' }
+Plug 'mxw/vim-jsx'                                                  " fixes JSX: https://github.com/pangloss/vim-javascript/issues/955#issuecomment-356350901
+Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+Plug 'tpope/vim-fugitive'                                           " git plugin
+Plug 'tpope/vim-rhubarb'                                            " github plugin
+Plug 'inkarkat/vim-ingo-library'                                    " dependency for SyntaxRange
+Plug 'vim-scripts/SyntaxRange' " :[range]SyntaxInclude {filetype}   " Handling different syntaxes in one file
 
 " DISABLED! This disables the autocmd that remembers where I last was
 "" Per-repo settings - for instance, disable AutoCmd *.js
