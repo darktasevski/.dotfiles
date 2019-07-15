@@ -12,11 +12,11 @@ sudo chown -R "$(whoami)" /usr/local
 echo -e "$(blue Installing local apps ...)"
 
 rbenv_build_prerequisites="libyaml-devel ncurses-devel readline-devel zlib-devel"
-suse_packages="go go-doc docker transmission wireshark htop tmux rxvt-unicode urxvt-font-size xclip ShellCheck openssh nethogs fakeroot fasd fortune cowsay"
+suse_packages="go go-doc docker transmission wireshark redshift htop tmux rxvt-unicode urxvt-font-size xclip ShellCheck openssh nethogs fakeroot fasd fortune cowsay"
 media_and_codecs="libxine2-codecs ffmpeg-3 gstreamer-plugins-bad gstreamer-plugins-bad-orig-addon gstreamer-plugins-base gstreamer-plugins-good gstreamer-plugins-good-extra gstreamer-plugins-libav gstreamer-plugins-qt5 gstreamer-plugins-ugly gstreamer-plugins-ugly-orig-addon vlc smplayer x264 x265 vlc-codecs vlc-codec-gstreamer ogmtools libavcodec58"
 #chrome_package="https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm"
 # run an update
-sudo zypper refresh && sudo zypper update
+sudo zypper refresh && sudo zypper dup
 sudo zypper install -yt pattern devel_basis devel_web devel_python3 devel_ruby # install the development tools bundles
 sudo zypper install -y $suse_packages
 sudo zypper install -y $rbenv_build_prerequisites
@@ -60,7 +60,8 @@ sudo pip3 install -r python.local
 if ! command -v rbenv >> /dev/null; then
     git clone https://github.com/rbenv/rbenv.git ~/.rbenv
     (cd ~/.rbenv && src/configure && make -C src) # @see https://stackoverflow.com/a/10382170/7453363
-    echo 'export PATH="$HOME/.rbenv/bin:$PATH" \n eval "$(rbenv init -)"' >> "$HOME"/.zsh/env-vars.zsh
+    echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> "$HOME"/.zsh/env-vars.zsh
+    echo 'eval "$(rbenv init -)"' >> "$HOME"/.zshrc
     ~/.rbenv/bin/rbenv init
     export PATH="$HOME/.rbenv/bin:$PATH"
 fi
