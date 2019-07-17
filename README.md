@@ -21,7 +21,7 @@ Most of these tools are usually pre-installed on UNIX distributions, and if not 
 
 ## Getting Started
 
-**Make `main.sh` executable with `chmod +x`.** Before starting `main.sh` create a `.machine` file in you `$HOME` directory, with name of your host inside.
+**Make `main.sh` executable with `chmod +x`.** Before starting `main.sh` create a `.machine` file in your `$HOME` directory, with name of your host inside.
 If you don't do this, setup will try to install `per_host_config` by creating `.machine` file with your `hostname` inside, but this is not often a working solution.
 If you don't wan't to install any of the preconfigured host configs you can skip this step, and setup will work just fine, installing only common_config and utils.
 
@@ -29,11 +29,11 @@ If you don't wan't to install any of the preconfigured host configs you can skip
 
 Just run `.main.sh` and follow the installation process, you'll need to enter your sudo password a few times in order to install packages (if on linux) and to change default shell from `bash` to `zsh`*. 
 
-> Note: Installation is a pretty verbose, as I've wanted everything done to be displayed in terminal. you can clean output a bit bu removing verbose flag from creating symlinks beside other things.
+> Note: Installation is a pretty verbose, as I've wanted everything done to be displayed in terminal. you can clean output a bit bu removing verbose flag from creating symlinks among other things.
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests.
 
 ## License
 
@@ -42,4 +42,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 ## Acknowledgments
 
 * Hat tip to anyone whose code was used, there is a lot of stuff borrowed from other people's dotfiles.
-* Kudos to [@fatso83](https://github.com/fatso83) for idea how to automate installation for multiple hosts
+* Kudos to [@fatso83](https://github.com/fatso83) as I borrowed idea how to automate installation for multiple hosts from his/her dotfiles

@@ -1,5 +1,4 @@
 
-# Run to setup with ./setup.sh
 MAIN_DIR="$HOME"
 DEST="${MAIN_DIR}"
 BASH_DIR="${MAIN_DIR}/.bash.d"
@@ -69,7 +68,7 @@ if [[ "$(uname)" == "Darwin" ]]; then                        # Do something unde
     brew install zsh vim neovim
 elif [[ "$(expr substr $(uname -s) 1 5)" == "Linux" ]]; then # Do something under GNU/Linux platform
     echo  -n -e "$(blue "Installing Linux needful")"
-#    sudo pacman -Sy --noconfirm curl vim vim-runtime wget   # Manjaro
+#    sudo pacman -Sy --noconfirm curl vim vim-runtime        # Manjaro
     sudo zypper install -y zsh vim neovim make               # openSUSE
 fi
 
@@ -103,7 +102,7 @@ fi
 ln -sf "$SCRIPT_DIR"/vim/vimrc "$DEST"/.vimrc
 
 # Checks out the Vundle submodule
-git submodule update --init --recursive
+# git submodule update --init --recursive
 
 echo  -n -e "$(blue "Installing all VIM plugins")"
 echo -e "$(dark_grey "(might take some time the first time ... )")"
