@@ -65,6 +65,12 @@ ln -sfv "$SCRIPT_DIR"/.npmrc "$DEST"/.npmrc
 # @see https://stackoverflow.com/a/17072017/7453363 for more OSs
 if [[ "$(uname)" == "Darwin" ]]; then                        # Do something under Mac OS X platform
     echo  -n -e "$(blue "Installing OSX needful")"
+    # Make sure everything under /usr/local belongs to the group admin; and
+    # Make sure anyone from the group admin can write to anything under /usr/local.
+    chgrp -R admin /usr/local
+    chmod -R g+w /usr/local
+    chgrp -R admin /Library/Caches/Homebrew
+    chmod -R g+w /Library/Caches/Homebrew
     brew install zsh vim neovim
 elif [[ "$(expr substr $(uname -s) 1 5)" == "Linux" ]]; then # Do something under GNU/Linux platform
     echo  -n -e "$(blue "Installing Linux needful")"
