@@ -2,5 +2,6 @@
 
 [user]
     name = Darkø Tasevski
-    email = darktasevski@gmail.com
+    # email = darktasevski@gmail.com
     signingkey = 2DF01FE1CB7001D5
+    # signingkey = 58AC580B134D81B6
