@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 MAIN_DIR="$HOME"
 DEST="${MAIN_DIR}"
@@ -64,35 +65,50 @@ ln -sfv "$SCRIPT_DIR"/.npmrc "$DEST"/.npmrc
 
 # @see https://stackoverflow.com/a/17072017/7453363 for more OSs
 if [[ "$(uname)" == "Darwin" ]]; then                        # Do something under Mac OS X platform
-    echo  -n -e "$(blue "Installing OSX needful")"
+    echo  -n -e "$(blue "Installing OSX needful\n")"
+
     # Make sure everything under /usr/local belongs to the group admin; and
     # Make sure anyone from the group admin can write to anything under /usr/local.
-    chgrp -R admin /usr/local
-    chmod -R g+w /usr/local
-    chgrp -R admin /Library/Caches/Homebrew
-    chmod -R g+w /Library/Caches/Homebrew
-    brew install zsh vim neovim
+    # This is not the greatest solution tho
+#    chgrp -R admin /usr/local
+#    chmod -R g+w /usr/local
+#    chgrp -R admin /Library/Caches/Homebrew
+#    chmod -R g+w /Library/Caches/Homebrew
+
+    # This is a bit better one @see https://gist.github.com/irazasyed/7732946
+    sudo chown -R $(whoami) $(brew --prefix)/*
+    sudo mkdir -p /usr/local/sbin /usr/local/Frameworks
+    sudo chown -R $(whoami) /usr/local/sbin /usr/local/Frameworks
+    sudo install -d -o $(whoami) -g admin /usr/local/Frameworks
+
+    if ! command -v zsh > /dev/null; then
+        brew install zsh
+    fi
+
+    if ! command -v neovim > /dev/null; then
+        brew install neovim
+    fi
 elif [[ "$(expr substr $(uname -s) 1 5)" == "Linux" ]]; then # Do something under GNU/Linux platform
-    echo  -n -e "$(blue "Installing Linux needful")"
+    echo  -n -e "$(blue "Installing Linux needful\n")"
 #    sudo pacman -Sy --noconfirm curl vim vim-runtime        # Manjaro
     sudo zypper install -y zsh vim neovim make               # openSUSE
-fi
 
-# ============================
-# Node.js, npm & yarn setup
-# ============================
+    # ============================
+    # Node.js, npm & yarn setup, only for linuxes, we're going to install those later via brew for osx
+    # ============================
 
-# Install n - Node version manager
-if ! command -v n >> /dev/null; then
-    curl -L https://git.io/n-install | N_PREFIX=~/.n bash
-    # Export N_PREFIX here to make node/npm available to the rest of the script
-    export N_PREFIX="$HOME/.n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).
-fi
+    # Install n - Node version manager
+    if ! command -v n >> /dev/null; then
+        curl -L https://git.io/n-install | N_PREFIX=~/.n bash
+        # Export N_PREFIX here to make node/npm available to the rest of the script
+        export N_PREFIX="$HOME/.n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).
+    fi
 
-# Install yarn
-if ! command -v yarn >> /dev/null; then
-    curl -o- -L https://yarnpkg.com/install.sh | bash
-    export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+    # Install yarn
+    if ! command -v yarn >> /dev/null; then
+        curl -o- -L https://yarnpkg.com/install.sh | bash
+        export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+    fi
 fi
 
 # ============================
@@ -101,6 +117,7 @@ fi
 
 # Remove any existing symlink (or dir on mingw) - will fail if it is a dir
 rm -rf "$DEST"/.vim 2>/dev/null
+
 if [[ ! -e "$DEST"/.vim ]]; then
     ln -sf "$SCRIPT_DIR"/vim/dotvim "$DEST"/.vim
 fi
@@ -127,7 +144,7 @@ ln -sf ~/.vimrc ~/.config/nvim/init.vim
 # Zsh setup
 # ============================
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" "" --unattended
-
+sudo bash -c "echo $(which zsh) >> /etc/shells"
 chsh -s $(which zsh)
 
 [[ ! -e "$DEST"/.zshrc ]] && rm "$DEST"/.zshrc

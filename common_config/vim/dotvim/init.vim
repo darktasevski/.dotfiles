@@ -1,1 +1,1 @@
-/home/dark/.vimrc
+/Users/banshee/.vimrc

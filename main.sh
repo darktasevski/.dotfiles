@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+# Ask for the administrator password upfront.
+sudo -v
+
+# Keep-alive: update existing `sudo` time stamp until the script has finished.
+while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+
 # Just delegate down
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )" # BASH_SOURCE is the executed script path
 pushd "$SCRIPT_DIR" > /dev/null
@@ -26,9 +32,3 @@ popd > /dev/null
 
 # Re-read BASH settings
 green "\n\n Remember to 'source ~/.zshrc and reboot the system'! \n\n"
-
-##################################
-# - download and install .fonts
-# - fetch WebStorm settings
-# - download Ngrok https://ngrok.com/download
-##################################
