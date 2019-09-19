@@ -8,14 +8,14 @@ t_debug "Reading aliases and functions"
 
 function is_mac() {
   cmd=$(command -v uname)
-  
+
   if [[ -z ${cmd} ]];then
     return 1
   else
-    # dynamically redefines the function definition to avoid recomputing 
+    # dynamically redefines the function definition to avoid recomputing
     if ${cmd} |grep Darwin 1>/dev/null; then
         is_mac(){ return 0; };
-    else 
+    else
         is_mac(){ return 1; };
     fi
   fi
@@ -54,7 +54,7 @@ t_debug Add custom ignore pattern for GNU ls
 IGNORE=""
 if ! is_mac; then
   #ignore patterns
-  for i in '*~' '*.pyc'; do 
+  for i in '*~' '*.pyc'; do
       IGNORE="$IGNORE --ignore=$i"
   done
 fi
@@ -133,7 +133,7 @@ alias socks_proxy='ssh -v -D 22222 carl-erik@timbuktu.kopseng.no -N'
 alias socks_proxy_all='ssh -v -D :22222 carl-erik@timbuktu.kopseng.no -N'
 
 # Used with the git alias functions; gd, gds, gdw, gdws
-alias strip-diff-prefix='sed "s/^\([^-+ ]*\)[-+ ]/\\1/"' 
+alias strip-diff-prefix='sed "s/^\([^-+ ]*\)[-+ ]/\\1/"'
 
 # For stack overflow pasting
 alias stack-overflow-no-copy='sed -e "s/diffia/ACME/g" -e "s/$USER/myuser/g" | indent4 '
@@ -177,6 +177,14 @@ alias fixit='sudo rm -f /var/lib/pacman/db.lck && sudo pacman-mirrors -g && sudo
 alias reload='exec $SHELL -l'
 
 ##### Git aliases #####
+alias g='git'
+alias gm='git merge'
+alias gl='git pull'
+alias gc='git clone'
+alias gcb='git checkout -b'
+alias gcm='git checkout master'
+alias gco='git checkout'
+alias gaa='git add .'
 alias gcu='git gc --aggressive' # Cleanup unnecessary files and optimize the local repository
 alias gdi='git diff --ignore-all-space'
 alias gdw='git diff --color-words'
@@ -265,7 +273,7 @@ function snitch() {
 	if is_mac; then
 		lsof -nPi | grep "$1" | tail -n 2
 	else
-	 	netstat -tulpn | grep "$1" | tail -n 2 
+	 	netstat -tulpn | grep "$1" | tail -n 2
 	fi
 }
 # Kill the program using a specified port
@@ -294,7 +302,7 @@ function remove-last-newline(){
 # System shortcuts
 alias apt='sudo apt' # Need Java for this
 
-# Restore the original system path if for some reason some 
+# Restore the original system path if for some reason some
 # command in your ~/bin directory does not work
 function restore_path() {
         PATH="${ORIGINAL_PATH}"
@@ -318,7 +326,7 @@ function bye-bye-branches() {
   git fetch -p && for branch in $(git branch -vv | grep ': gone]' | awk '{print $1}'); do git branch -D "${branch}"; done
 }
 
-# View commits in GitHub 
+# View commits in GitHub
 function gh-commit() {
     [[ -n $2 ]] && open "https://github.com/$1/commit/$2" && return
     echo "Usage: gh-commit fatso83/razor-cli-node 779490"

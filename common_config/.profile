@@ -5,3 +5,6 @@ if [[ -n "$BASH_VERSION" ]]; then
         . "$HOME/.bashrc"
     fi
 fi
+
+# Add the directory of Tizen .NET Command Line Tools to user path.
+export PATH=/Users/banshee/tizen-studio/tools/ide/bin:$PATH

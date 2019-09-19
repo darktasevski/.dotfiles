@@ -4,7 +4,7 @@ if [[ $(uname) == 'Linux' ]]; then
 	if [[ -z "$DISPLAY" ]] && [[ $(tty) = /dev/tty1 ]] ; then
 		if hash startx 2>& /dev/null; then
 			startx && logout
-		fi	
+		fi
 	fi
 fi
 
@@ -13,7 +13,7 @@ if [[ $(uname) == 'Linux' ]]; then
 	if [[ -z "$DISPLAY" ]] && [[ $(tty) = /dev/tty1 ]] ; then
 		if hash startx 2>& /dev/null; then
 			startx && logout
-		fi	
+		fi
 	fi
 elif [[ $(uname) == 'Darwin' ]]; then
 	# Golang
@@ -65,3 +65,8 @@ alias egrep="egrep --color=auto"
 # zstyle -e ':completion:*:(ssh|scp|sftp|rsh|rsync):hosts' hosts "reply=(${=${${(f)"$(cat {/etc/ssh_,~/.ssh/known_}hosts(|2)(N) /dev/null)"}%%[# ]*}//,/ })"
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
+
+# Tizen env vars
+export PATH=/Users/banshee/tizen-studio/tools/ide/bin:$PATH
+export PATH=/Users/banshee/tizen-studio/tools:$PATH
+export PATH=/Users/banshee/tizen-studio/tools/emulator/bin:$PATH

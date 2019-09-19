@@ -1,7 +1,7 @@
 #!/bin/zsh
-fortune | cowsay -f vader
+# fortune | cowsay -f vader
 
-# Re-use BASH aliases nad exports
+# Re-use BASH aliases and exports
 source ~/.profile
 source ~/.bash.d/aliases_and_functions.sh
 
@@ -26,10 +26,10 @@ fi
 zplug "lib/completion", from:oh-my-zsh
 
 # Never got the oh-my-zsh version to work without manual configuration,
-# zplug "rupa/z", use:z.sh
+zplug "rupa/z", use:z.sh
 
 # Syntax highlighting for commands, load last
-zplug "zsh-users/zsh-syntax-highlighting", from:github, defer:3
+zplug "zsh-users/zsh-syntax-highlighting", from:github, defer:2
 
 zplug "chrissicool/zsh-256color", from:github
 
@@ -37,7 +37,11 @@ zplug "djui/alias-tips", from:github
 
 zplug "zlsun/solarized-man", from:github
 
-#zplug "plugins/git",   from:oh-my-zsh # Not sure if I need these
+zplug "zsh-users/zsh-autosuggestions"
+zplug "zsh-users/zsh-completions"
+zplug "zsh-users/zsh-history-substring-search", defer:3
+
+#zplug "plugins/git",   from:oh-my-zsh # Not sure if I need these anymore
 
 # Async for zsh, used by pure
 #zplug "mafredri/zsh-async", from:github, defer:0
@@ -45,7 +49,6 @@ zplug "zlsun/solarized-man", from:github
 #zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
 
 zplug "bhilburn/powerlevel9k", use:powerlevel9k.zsh-theme
-
 
 # Install plugins if there are plugins that have not been installed
 if ! zplug check --verbose; then
@@ -56,6 +59,9 @@ if ! zplug check --verbose; then
 fi
 
 # Then, source plugins and add commands to $PATH
-zplug load 
+zplug load
 
 export PATH="/usr/local/sbin:$PATH"
+
+export PATH="$HOME/.jenv/bin:$PATH"
+eval "$(jenv init -)"
