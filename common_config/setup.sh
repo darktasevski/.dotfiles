@@ -30,7 +30,7 @@ if [[ -d "$DEST"/.bash_completion.d ]]; then
   rm -r "$DEST"/.bash_completion.d
 fi
 
-[[ ! -e "$DEST/.tmux" ]] && mkdir "$DEST/.tmux";
+[[ ! -e "$DEST/.tmux" ]] && git clone https://github.com/gpakosz/.tmux.git "$DEST/.tmux";
 
 # ============================
 # Create symlinks
@@ -54,14 +54,9 @@ ln -sfv "$SCRIPT_DIR"/.gitconfig "$DEST"/.gitconfig
 ln -sfv "$SCRIPT_DIR"/.gitignore_global "$DEST"/.gitignore_global
 ln -sfv "$SCRIPT_DIR"/.gitattributes_global "$DEST"/.gitattributes_global
 ln -sfv "$SCRIPT_DIR"/pystartup "$DEST"/.pystartup
-ln -sfv "$SCRIPT_DIR"/.tmux.conf "$DEST"/.tmux.conf
+ln -sfv "$DEST"/.tmux/.tmux.conf "$DEST"/.tmux.conf
+ln -sfv "$DEST"/.tmux/.tmux.conf.local "$DEST"/.tmux.conf.local
 ln -sfv "$SCRIPT_DIR"/.npmrc "$DEST"/.npmrc
-
-# ============================
-# Tmux setup
-# ============================
-[[ ! -e "$DEST/.tmux/plugins" ]] && mkdir "$DEST/.tmux/plugins";
-[[ ! -e "$DEST/.tmux/plugins/tpm" ]] && git clone https://github.com/tmux-plugins/tpm "$DEST"/.tmux/plugins/tpm
 
 # @see https://stackoverflow.com/a/17072017/7453363 for more OSs
 if [[ "$(uname)" == "Darwin" ]]; then                        # Do something under Mac OS X platform

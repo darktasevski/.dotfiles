@@ -25,9 +25,6 @@ setopt always_to_end
 # This will make it not show a list for single options
 zstyle '*' single-ignored complete
 
- # OH-MY-ZSH SETTINGS (Define these before loading oh-my-zsh or it won't work)
-export COMPLETION_WAITING_DOTS="true"
-
 # Load Nerd Fonts
 POWERLEVEL9K_MODE='nerdfont-complete'
 # Customise the Powerlevel9k prompts
@@ -46,7 +43,5 @@ POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
 # bindkey '\e[B' history-beginning-search-forward
 
 # To be used with "zsh-users/zsh-history-substring-search"
-if zplug check zsh-users/zsh-history-substring-search; then
-    bindkey '^[[A' history-substring-search-up
-    bindkey '^[[B' history-substring-search-down
-fi
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down

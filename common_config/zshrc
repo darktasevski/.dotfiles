@@ -1,13 +1,33 @@
-#!/bin/zsh
 # fortune | cowsay -f vader
 
-# Re-use BASH aliases and exports
-source ~/.profile
-source ~/.bash.d/aliases_and_functions.sh
+function read_config {
+  if [[ -e "$1" ]]; then
+      . "$1"
+  else echo Missing "$1"
+  fi
+}
 
-source ~/.zsh/env-vars.zsh
-source ~/.zsh/zsh-conf.zsh
-source ~/.zsh/colors.zsh
+function read_config_if_exists {
+  [[ -e "$1" ]] && . "$1" && t_debug Read "$1"
+}
+
+# Re-use BASH aliases and exports
+read_config "$HOME/.bash.d/core_utils.sh"
+read_config ~/.bash.d/aliases_and_functions.sh
+
+read_config ~/.zsh/env-vars.zsh
+read_config ~/.zsh/zsh-conf.zsh
+read_config ~/.zsh/colors.zsh
+read_config_if_exists "$HOME/.bash.d/colors.sh"
+
+# include selfmade binaries and bin
+# Needed for some of the utility functions in this rc file, therefore
+# cannot be in the profile file, which is read later on
+# Otherwise, we will for instance get "millis: command not found" on
+# every new terminal, even though it is found on the CLI when testing
+if [[ -d ~/.bin ]] ; then
+    PATH=~/.bin:"${PATH}"
+fi
 
 # Check if zplug is installed
 if [[ ! -d ~/.zplug ]]; then
@@ -24,6 +44,8 @@ fi
 
 # Load completion library for those sweet [tab] squares
 zplug "lib/completion", from:oh-my-zsh
+
+zplug "plugins/colorize", from:oh-my-zsh
 
 # Never got the oh-my-zsh version to work without manual configuration,
 zplug "rupa/z", use:z.sh

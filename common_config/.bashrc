@@ -17,14 +17,13 @@
 source "$HOME/.bash.d/core_utils.sh"
 
 # include selfmade binaries and bin
-# Needed for some of the utility functions in this rc file, therefore 
+# Needed for some of the utility functions in this rc file, therefore
 # cannot be in the profile file, which is read later on
 # Otherwise, we will for instance get "millis: command not found" on
 # every new terminal, even though it is found on the CLI when testing
 if [[ -d ~/.bin ]] ; then
     PATH=~/.bin:"${PATH}"
 fi
-
 
 # For debugging info on timing
 #timer_start_if_unset
@@ -55,11 +54,6 @@ function read_config {
 function read_config_if_exists {
   [[ -e "$1" ]] && . "$1" && t_debug Read "$1"
 }
-
-# Needed for the utility function "restore_path"
-if [[ -z "${ORIGINAL_PATH}" ]]; then
-        ORIGINAL_PATH="${PATH}"
-fi
 
 t_debug "Reading utility functions and aliases"
 read_config "$HOME/.bash.d/aliases_and_functions.sh"
@@ -135,16 +129,13 @@ if [[ -d ~/scripts ]] ; then
 	PATH=~/scripts:"$PATH"
 fi
 
-# Z utility :-)
-#read_config_if_exists "$HOME/.zplug/repos/rupa/z/z.sh"
-
 t_debug "Reading local settings for this machine"
 # This needs to be at the bottom to be able to override earlier settings/variables/functions
 read_config_if_exists "$HOME/.bashrc.local"
 
 if [[ -e "$HOME/.bulksms.auth" ]]; then
     . "$HOME/.bulksms.auth"
-    export BULKSMS_ID 
+    export BULKSMS_ID
     export BULKSMS_SECRET
 fi
 

@@ -16,24 +16,21 @@ if [[ $(uname) == 'Linux' ]]; then
 		fi
 	fi
 elif [[ $(uname) == 'Darwin' ]]; then
-	# Golang
-	export GOPATH="${HOME}/.go"
-	export GOROOT="$(brew --prefix golang)/libexec"
-	export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
-	test -d "${GOPATH}" || mkdir "${GOPATH}"
-	test -d "${GOPATH}/src/github.com" || mkdir -p "${GOPATH}/src/github.com"
-	export PATH=$PATH:$GOPATH/bin
+    if [ -x "$(command -v go)" ]; then
+	    # Golang
+        export GOPATH="${HOME}/.go"
+        export GOROOT="$(brew --prefix golang)/libexec"
+        export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
+        test -d "${GOPATH}" || mkdir "${GOPATH}"
+        test -d "${GOPATH}/src/github.com" || mkdir -p "${GOPATH}/src/github.com"
+        export PATH=$PATH:$GOPATH/bin
+    fi
 fi
 
-# Path to oh-my-zsh installation.
-export ZSH=$HOME/.oh-my-zsh
-
+export VISUAL='vim'
 export EDITOR='vim'
 export TERM="xterm-256color"
 
-#export NVM_DIR="$HOME/.nvm"
-#[[ -s "$NVM_DIR/nvm.sh" ]] && \. "$NVM_DIR/nvm.sh"
-#[[ -s "$NVM_DIR/bash_completion" ]] && \. "$NVM_DIR/bash_completion"
 export N_PREFIX="$HOME/.n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
@@ -52,7 +49,6 @@ export MANPAGER='less -X';
 
 # no lag on normal / insert mode switch   # see http://dougblack.io/words/zsh-vi-mode.html
 export KEYTIMEOUT=1
-
 export GREP_COLOR='00;1;31'
 
 # Removed export GREP_OPTIONS="--color=auto" (which is deprecated) and switched to aliases
@@ -62,7 +58,7 @@ alias fgrep="fgrep --color=auto"
 alias egrep="egrep --color=auto"
 
 # Make zsh know about hosts already accessed by SSH
-# zstyle -e ':completion:*:(ssh|scp|sftp|rsh|rsync):hosts' hosts "reply=(${=${${(f)"$(cat {/etc/ssh_,~/.ssh/known_}hosts(|2)(N) /dev/null)"}%%[# ]*}//,/ })"
+zstyle -e ':completion:*:(ssh|scp|sftp|rsh|rsync):hosts' hosts "reply=(${=${${(f)"$(cat {/etc/ssh_,~/.ssh/known_}hosts(|2)(N) /dev/null)"}%%[# ]*}//,/ })"
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
 
@@ -70,3 +66,10 @@ eval "$(rbenv init -)"
 export PATH=/Users/banshee/tizen-studio/tools/ide/bin:$PATH
 export PATH=/Users/banshee/tizen-studio/tools:$PATH
 export PATH=/Users/banshee/tizen-studio/tools/emulator/bin:$PATH
+
+export ANDROID_HOME=~/Library/Android/sdk
+export ANDROID_NDK_HOME=~/Library/Android/sdk/ndk-bundle
+export PATH=$PATH:$ANDROID_HOME:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$ANDROID_NDK_HOME
+
+# LG webOS ares-cli - (it needs to be installed first)
+export PATH=$PATH:/opt/webOS_TV_SDK/CLI/bin

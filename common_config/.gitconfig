@@ -100,23 +100,51 @@
 	textconv = hexdump -v -C
 
 [alias]
-    config = config --global --list
 	aliases = config --get-regexp alias # List aliases
     au = add --update
-    st = status -sb     # show short format and branch info
-    co = checkout
-    cm = commit --message
     cam = commit --all --message
+    cms = commit --message
+    config = config --global --list
     fap = fetch --all --prune # Fetch all remotes and remove any remote-tracking references that no longer exist on the remote.
     info = remote show origin # displays info for your remote origin repo
-    oops = reset --soft HEAD~1 # remove the last commit from the current branch, but the file changes will stay in the working tree
+    uncommit = reset --soft HEAD~1 # remove the last commit from the current branch, but the file changes will stay in the working tree
+    st = status -sb     # show short format and branch info
     unstage = reset HEAD -- # Reset a single file in the index. Usage: git unstage frotz.c
+    upfork = fetch upstream; git checkout master; git merge upstream/master
+    put = !git commit --all && git push
+    get = !git fetch --prune && git pull --rebase=preserve && git submodule update --init --recursive
 
     # List all the files touched in this commit
     files = "![ x$# != x1 ]&&echo "commit-ish required" >&2 || git diff --name-status \"$1\"^ \"$1\" #"
+    stashes = stash list
+
+    ##### short and sweet #####
+    p = push
+    m = merge
+    l = pull
+    # cb = checkout -b
+    cm = checkout master
+    co = checkout
+    aa = add .
+    cu = gc --aggressive # Cleanup unnecessary files and optimize the local repository
+    di = diff --ignore-all-space
+    dw = diff --color-words
+    ts = status -uno
+    lr = rev-list --left-right --count master... # Lists commit objects in reverse chronological order
+    mb = merge-base $(current_branch) master  # Find as good common_config ancestors as possible for a merge
+    poh = push origin HEAD
+    # Clone a repository including all submodules
+    c = clone --recursive
+    # Commit all changes (verbose)
+    ca = !git add -A && git commit -av
+    # Switch to a branch, creating it if necessary
+    cb = "!f() { git checkout -b \"$1\" 2> /dev/null || git checkout \"$1\"; }; f"
 
     ##### log aliases #####
-
+    # View abbreviated SHA, description, history graph, time and author
+    glog = log --color --graph --date=iso --pretty=format':%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ci) %C(bold blue)<%an>%Creset' --abbrev-commit --
+    # Show a formatted commit tree
+    tree = log --graph --abbrev-commit --decorate --date=relative --format=format':%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
     ## show branching graphically as ascii art
     lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
     lgng = log --pretty=format:'%d %s (%cr) <%an>' # ng = no graph
@@ -125,9 +153,10 @@
     svnlog = log --name-status
 
     ## logwork
-    standup = log --since '1 day ago' --oneline --author darko.tasevski@redbox.com # hack it with your email and uncomment
-    jira = log --since '6am' --oneline --author darko.tasevski@redbox.com # hack it with your email and uncomment
-    mwlis = log --since '7 days ago' --author darko.tasevski@redbox.com --format='%ai %s%n%b'
+    standup = log --since '1 day ago' --oneline --author $(git config user.email)
+    jira = log --since '6am' --oneline --author $(git config user.email)
+    mwlis = log --since '7 days ago' --author $(git config user.email) --format='%ai %s%n%b'
+    log-my-week = !git log --author $(git config user.email) --since "1 week ago"
 
     ##### diff aliases #####
 
@@ -142,20 +171,11 @@
 	# Pull in remote changes for the current repository and all its submodules
 	pullall = !"git pull; git submodule foreach git pull origin master"
 
-	# Clone a repository including all submodules
-	c = clone --recursive
-
-	# Commit all changes (verbose)
-	ca = !git add -A && git commit -av
-
 	# Amend the currently staged files to the latest commit
 	amend = commit --amend --reuse-message=HEAD
 
 	# Credit an author on the latest commit
 	credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
-
-	# Switch to a branch, creating it if necessary
-	go = "!f() { git checkout -b \"$1\" 2> /dev/null || git checkout \"$1\"; }; f"
 
 	# Interactive rebase with the given number of latest commits
 	reb = "!r() { git rebase -i HEAD~$1; }; r"

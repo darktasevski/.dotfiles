@@ -22,13 +22,12 @@ function is_mac() {
 }
 
 # Bash setup
-alias edit-rc="vim ~/.bashrc"
-alias edit-alias="vim ~/.bash.d/aliases_and_functions.sh"
-alias source-rc="source ~/.bashrc"
-alias source-alias="source ~/.bash.d/aliases_and_functions.sh"
+alias edrc="vim ~/.bashrc"
+alias sorcb="source ~/.bashrc"
+alias sorcz="source ~/.zshrc"
 
-alias editzsh="vim ~/.zshrc"
-alias editvim="vim ~/.vimrc"
+alias edzrc="vim ~/.zshrc"
+alias edvrc="vim ~/.vimrc"
 
 # Conversions
 t_debug conversions
@@ -70,6 +69,7 @@ alias free='free -m'                      # show sizes in MB
 alias grep='grep --color=tty -d skip'
 alias hh=" history"
 alias mkdir="mkdir -p"
+alias md="mkdir"
 alias ping="ping -c 5"
 alias rmf='rm -rf'
 alias sudo="sudo "                        # makes sudo recognize aliases.
@@ -108,7 +108,7 @@ alias webserver='python -c "import SimpleHTTPServer; m = SimpleHTTPServer.Simple
 alias servers='sudo lsof -iTCP -sTCP:LISTEN -P -n'
 
 # time
-alias epoch=millis #  tool that we compile ourselves
+alias epoch=~/.bin/millis #  tool that we compile ourselves
 
 # find external ip
 alias my-ip='curl -s http://ipinfo.io/ip'
@@ -116,21 +116,6 @@ alias my-ip-json='curl -s http://ifconfig.co/json'
 
 alias myip='ipconfig getifaddr en1 || ipconfig getifaddr en0'
 alias dig-ip="dig +short myip.opendns.com @resolver1.opendns.com"
-
-function localip() {
-  function _localip() { echo "📶  " "$(ipconfig getifaddr "$1")"; }
-  export -f _localip
-  local purple="\x1B\[35m" reset="\x1B\[m"
-  networksetup -listallhardwareports | \
-    sed -E "s/Hardware Port: (.*)/${purple}\1${reset}/g" | \
-    sed -E "s/Device: (en.*)$/_localip \1/e" | \
-    sed -E "s/Ethernet Address:/📘 /g" | \
-    sed -E "s/(VLAN Configurations)|==*//g"
-}
-
-# SOCKS proxy
-alias socks_proxy='ssh -v -D 22222 carl-erik@timbuktu.kopseng.no -N'
-alias socks_proxy_all='ssh -v -D :22222 carl-erik@timbuktu.kopseng.no -N'
 
 # Used with the git alias functions; gd, gds, gdw, gdws
 alias strip-diff-prefix='sed "s/^\([^-+ ]*\)[-+ ]/\\1/"'
@@ -163,41 +148,13 @@ alias update='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup
 # Finally, clear download history from quarantine. https://mths.be/bum
 alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl; sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'"
 
-#### those are for linux ####
-# Set keyboard layout
-alias keybhr='setxkbmap hr'
-alias keybus='setxkbmap us'
-# Dump pacman orphans
-alias rem-orphans='pacman -Rs $(pacman -Qqdt)'
-
 alias bootservices="systemctl list-unit-files | grep enabled"
-alias fixit='sudo rm -f /var/lib/pacman/db.lck && sudo pacman-mirrors -g && sudo pacman -Syyuu  && sudo pacman -Suu'
 
 # Reload the shell (i.e. invoke as a login shell)
 alias reload='exec $SHELL -l'
 
 ##### Git aliases #####
 alias g='git'
-alias gm='git merge'
-alias gl='git pull'
-alias gc='git clone'
-alias gcb='git checkout -b'
-alias gcm='git checkout master'
-alias gco='git checkout'
-alias gaa='git add .'
-alias gcu='git gc --aggressive' # Cleanup unnecessary files and optimize the local repository
-alias gdi='git diff --ignore-all-space'
-alias gdw='git diff --color-words'
-alias gits='git status -uno'
-alias glr='git rev-list --left-right --count master...' # Lists commit objects in reverse chronological order
-alias gmb='git merge-base $(current_branch) master'  # Find as good common_config ancestors as possible for a merge
-alias gpoh='git push origin HEAD'
-alias gst='git status --short --branch'
-alias upfork='git fetch upstream; git checkout master; git merge upstream/master'
-# View abbreviated SHA, description, history graph, time and author
-alias glog='git log --color --graph --date=iso --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ci) %C(bold blue)<%an>%Creset" --abbrev-commit --'
-# Show a formatted commit tree
-alias gtree="git log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all"
 alias since='git log --oneline --decorate $(git merge-base --fork-point master)..HEAD'
 # Show unmodified tracked files
 alias gunm='echo -e "$(git ls-files --modified)\n$(git ls-files)" | sort | uniq -u'
@@ -213,21 +170,17 @@ alias status="sudo systemctl status"
 alias stop="sudo systemctl stop"
 alias sys-info='inxi -Fxz'
 alias view_recent_alerts='sudo journalctl -p err..alert -b'
-# happens so often that it requires alias on its own...
-alias dock-restart='pkill dde-dock & dde-dock'
 
 # Show active network interfaces
 alias ifactive="ifconfig | pcregrep -M -o '^[^\t:]+:([^\n]|\n\t)*status: active'"
 # View HTTP traffic
-alias sniff="sudo ngrep -d 'en1' -t '^(GET|POST) ' 'tcp and port 80'"
+alias sniff="sudo ngrep -d 'en0' -t '^(GET|POST) ' 'tcp and port 80'"
 alias httpdump="sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET \/.*\""
 
 # Yarn aliases
 alias ya="yarn add"
 alias yanl="yarn add --no-lockfile"
 alias ycc="yarn cache clean"
-alias yh="yarn help"
-alias yo="yarn outdated"
 alias yrm="yarn remove"
 alias yrn="yarn run"
 alias yui="yarn upgrade-interactive"
@@ -298,17 +251,6 @@ function remove-last-newline(){
     rm "${file}"&
 }
 
-
-# System shortcuts
-alias apt='sudo apt' # Need Java for this
-
-# Restore the original system path if for some reason some
-# command in your ~/bin directory does not work
-function restore_path() {
-        PATH="${ORIGINAL_PATH}"
-        export PATH;
-}
-
 # Zach Holman's git aliases converted to functions for more flexibility
 #   @see https://github.com/holman/dotfiles/commit/2c077a95a610c8fd57da2bd04aa2c85e6fd37b7c#diff-4335824c6d289f1b8b41f7f10bf3a2e7
 #   Being functions allow them to take arguments, such as additional options or filenames
@@ -338,7 +280,7 @@ function gh-compare() {
 
 function tmux-restore () {
     if [[ -n $1 ]]; then
-        local setup_file="$HOME/tmux/$1.proj"
+        local setup_file="$HOME/.tmux/$1.proj"
 
         if [[ -e ${setup_file} ]]; then
             $(command -v tmux) new-session "tmux $2 source-file $setup_file"
@@ -360,7 +302,6 @@ function mirror() { mplayer -vf mirror -v tv:// -tv device=/dev/video0:driver=v4
 
 #make a directory and go on it
 function mkcd() { mkdir -p "$@" && eval cd "\"\$$#\""; }
-function test-microphone() { arecord -vvv -f dat /dev/null; }
 
 # Creates an archive from given directory
 function mktar() { tar cvf  "${1%%/}.tar"     "${1%%/}/"; }
