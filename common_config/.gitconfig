@@ -43,11 +43,12 @@
 	# Speed up commands involving untracked files such as `git status`.
 	# https://git-scm.com/docs/git-update-index#_untracked_cache
 	untrackedCache = true
+	pager = diff-so-fancy | less --tabs=4 -RFX
 
 [color]
 	# Use colors in Git commands that are capable of colored output when
 	# outputting to the terminal. (This is the default setting in Git ≥ 1.8.4.)
-    ui = true
+	ui = true
 
 [color "branch"]
 	current = cyan reverse bold
@@ -55,18 +56,18 @@
 	remote = green
 
 [color "diff"]
-	meta = cyan bold
+	meta = 11
 	frag = magenta bold
 	old = red bold
 	new = green bold
-	commit = green bold
+	commit = yellow bold
 	whitespace = red reverse
 
 [color "diff-highlight"]
-	oldNormal = "red bold"
-	oldHighlight = "red bold 52"
-	newNormal = "green bold"
-	newHighlight = "green bold 22"
+	oldNormal = red bold
+	oldHighlight = red bold 52
+	newNormal = green bold
+	newHighlight = green bold 22
 
 [color "status"]
 	header = blue
@@ -103,7 +104,7 @@
 	aliases = config --get-regexp alias # List aliases
     au = add --update
     cam = commit --all --message
-    cms = commit --message
+    com = commit --message
     config = config --global --list
     fap = fetch --all --prune # Fetch all remotes and remove any remote-tracking references that no longer exist on the remote.
     info = remote show origin # displays info for your remote origin repo
@@ -120,8 +121,9 @@
 
     ##### short and sweet #####
     p = push
-    m = merge
+    m = merge --no-ff
     l = pull
+    b = branch -v
     # cb = checkout -b
     cm = checkout master
     co = checkout
@@ -139,6 +141,7 @@
     ca = !git add -A && git commit -av
     # Switch to a branch, creating it if necessary
     cb = "!f() { git checkout -b \"$1\" 2> /dev/null || git checkout \"$1\"; }; f"
+    rv = git remote -v
 
     ##### log aliases #####
     # View abbreviated SHA, description, history graph, time and author

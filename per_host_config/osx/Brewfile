@@ -1,26 +1,106 @@
-tap "caskroom/fonts"
+# specify a directory to install
+cask_args appdir: "~/Applications"
+
+# Install GNU core utilities (those that come with OS X are outdated).
+# Don’t forget to add `$(brew --prefix coreutils)/libexec/gnubin` to `$PATH`.
+brew "coreutils"
+#sudo ln -s /usr/local/bin/gsha256sum /usr/local/bin/sha256sum
+
+# Install some other useful utilities like `sponge`.
+brew "moreutils"
+# Install GNU `find`, `locate`, `updatedb`, and `xargs`, `g`-prefixed.
+brew "findutils"
+# Install GNU `sed`, overwriting the built-in `sed`.
+brew "gnu-sed"
+# Install `wget`
+brew "wget"
+
+# Install Python
+brew "python", link: false
+brew "python3"
+
+# Install ruby-build and rbenv
+brew "ruby-build"
+brew "rbenv"
+
 tap "heroku/brew"
 tap "homebrew/bundle"
 tap "homebrew/cask"
 tap "homebrew/core"
 tap "homebrew/services"
-brew "ack"
-brew "coreutils"
-brew "cowsay"
-brew "elinks"
-brew "fortune"
-brew "git"
-brew "htop"
-brew "python", link: false
-brew "gnupg"
-brew "ngrep"
-brew "go"
-brew "luarocks"
-brew "mongodb"
-brew "n"
-brew "neofetch"
-brew "neovim"
+tap "adoptopenjdk/openjdk"
+
+cask "adoptopenjdk11"
+
+## Install font tools.
+
+tap "bramstein/webfonttools"
+tap "caskroom/fonts"
+
+cask "caskroom/fonts/font-hack-nerd-font"
+
+brew "sfnt2woff"
+brew "sfnt2woff-zopfli"
+brew "woff2"
+
+## Install some CTF tools; see https://github.com/ctfs/write-ups.
+brew "aircrack-ng"
+brew "bfg"
+brew "binutils"
+brew "binwalk"
+brew "cifer"
+brew "dex2jar"
+brew "dns2tcp"
+brew "fcrackzip"
+brew "foremost"
+brew "hashpump"
+brew "hydra"
+brew "john"
+brew "knock"
+brew "netpbm"
 brew "nmap"
+brew "pngcheck"
+brew "socat"
+brew "sqlmap"
+brew "tcpflow"
+brew "tcpreplay"
+brew "tcptrace"
+brew "ucspi-tcp # `tcpserver` etc."
+brew "xz"
+
+# Install other useful binaries.
+brew "ack"
+brew "dark-mode"
+brew "git"
+brew "git-extras"
+brew "git-flow"
+brew "git-lfs"
+brew 'diff-so-fancy'
+brew 'git-crypt'
+brew "hub"
+brew "imagemagick"
+brew "lua"
+brew "lynx"
+brew "p7zip"
+brew "pandoc"
+brew "pigz"
+brew "pkg-config libffi"
+brew "pv"
+brew "rename"
+brew "rhino"
+brew "speedtest_cli"
+brew "ssh-copy-id"
+brew "tree"
+brew "webkit2png"
+brew "zopfli"
+
+brew "elinks"
+brew "gnupg"
+brew "go"
+brew "htop"
+brew "luarocks"
+brew "neofetch"
+brew "ngrep"
 brew "openconnect"
 brew "pinentry-mac"
 brew "reattach-to-user-namespace"
@@ -29,30 +109,37 @@ brew "tmux"
 brew "tokei"
 brew "tree"
 brew "watchman"
-brew "wget"
-brew "yarn"
-brew "zsh"
+
+# Install Heroku
 brew "heroku/brew/heroku"
+
+## Core casks
 cask "alfred"
 cask "cheatsheet"
 cask "dropbox"
-cask "google-chrome"
 cask "iterm2"
-cask "qlcolorcode"
-cask "qlmarkdown"
-cask "qlprettypatch"
-cask "qlstephen"
-cask "quicklook-csv"
-cask "quicklook-json"
-cask "slack"
+cask "mongodb"
 cask "spectacle"
 cask "spotify"
 cask "spotify-notifications"
+cask "slack"
 cask "suspicious-package"
 cask "the-unarchiver"
 cask "transmission"
 cask "virtualbox"
 cask "vlc"
 cask "vscodium"
+
+## Install developer friendly quick look plugins; see https://github.com/sindresorhus/quick-look-plugins
+cask "qlcolorcode"
+cask "qlstephen"
+cask "qlmarkdown"
+cask "quicklook-json"
+cask "qlprettypatch"
+cask "quicklook-csv"
+cask "betterzip"
+cask "qlimagesize"
 cask "webpquicklook"
-cask "caskroom/fonts/font-hack-nerd-font"
+cask "suspicious-package"
+cask "quicklookase"
+cask "qlvideo"

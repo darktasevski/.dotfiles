@@ -27,136 +27,14 @@ fi
 # TODO: See if brewfile can be used for this
 echo "Installing local apps using Homebrew"
 
-# Install GNU core utilities (those that come with OS X are outdated).
-# Don’t forget to add `$(brew --prefix coreutils)/libexec/gnubin` to `$PATH`.
-brew install coreutils
-#sudo ln -s /usr/local/bin/gsha256sum /usr/local/bin/sha256sum
+brew bundle install --verbose --global
 
-# Install some other useful utilities like `sponge`.
-brew install moreutils
-# Install GNU `find`, `locate`, `updatedb`, and `xargs`, `g`-prefixed.
-brew install findutils
-# Install GNU `sed`, overwriting the built-in `sed`.
-brew install gnu-sed
-# Install `wget`
-brew install wget
-
-# Install Python
-brew install python
-brew install python3
-brew postinstall python3
-
-# Install ruby-build and rbenv
-brew install ruby-build
-brew install rbenv
 LINE='eval "$(rbenv init -)"'
 grep -q "$LINE" ~/.extra || echo "$LINE" >> ~/.extra
 
-brew tap heroku/brew
-brew tap homebrew/bundle
-brew tap homebrew/cask
-brew tap homebrew/core
-brew tap homebrew/services
-brew tap adoptopenjdk/openjdk
+brew postinstall python3
 
-brew cask install adoptopenjdk11
-
-## Install font tools.
-brew tap bramstein/webfonttools
-brew tap caskroom/fonts
-brew install sfnt2woff
-brew install sfnt2woff-zopfli
-brew install woff2
-
-## Install some CTF tools; see https://github.com/ctfs/write-ups.
-brew install aircrack-ng
-brew install bfg
-brew install binutils
-brew install binwalk
-brew install cifer
-brew install dex2jar
-brew install dns2tcp
-brew install fcrackzip
-brew install foremost
-brew install hashpump
-brew install hydra
-brew install john
-brew install knock
-brew install netpbm
-brew install nmap
-brew install pngcheck
-brew install socat
-brew install sqlmap
-brew install tcpflow
-brew install tcpreplay
-brew install tcptrace
-brew install ucspi-tcp # `tcpserver` etc.
-brew install xz
-
-# Install other useful binaries.
-brew install ack
-brew install dark-mode
-brew install git
-brew install git-extras
-brew install git-flow
-brew install git-lfs
-brew install hub
-brew install imagemagick
-brew install lua
-brew install lynx
-brew install p7zip
-brew install pandoc
-brew install pigz
-brew install pkg-config libffi
-brew install pv
-brew install rename
-brew install rhino
-brew install speedtest_cli
-brew install ssh-copy-id
-brew install tree
-brew install webkit2png
-brew install zopfli
-
-brew install cowsay
-brew install elinks
-brew install fortune
-brew install gnupg
-brew install go
-brew install htop
-brew install luarocks
-brew install neofetch
-brew install ngrep
-brew install openconnect
-brew install pinentry-mac
-brew install reattach-to-user-namespace
-brew install rpm
-brew install tmux
-brew install tokei
-brew install tree
-brew install watchman
-
-# Install Heroku
-brew install heroku/brew/heroku
 heroku update
-
-## Core casks
-brew cask install --appdir="/Applications" alfred
-brew cask install --appdir="/Applications" iterm2
-brew cask install --appdir="/Applications" virtualbox
-brew cask install --appdir="/Applications" cheatsheet
-brew cask install --appdir="/Applications" spectacle
-brew cask install --appdir="/Applications" spotify
-brew cask install --appdir="/Applications" spotify-notifications
-brew cask install --appdir="/Applications" suspicious-package
-brew cask install --appdir="/Applications" the-unarchiver
-brew cask install --appdir="/Applications" transmission
-brew cask install --appdir="/Applications" vlc
-brew cask install --appdir="/Applications" vscodium
-brew cask install caskroom/fonts/font-hack-nerd-font
-brew cask install mongodb
-
-## Install developer friendly quick look plugins; see https://github.com/sindresorhus/quick-look-plugins
-brew cask install qlcolorcode qlstephen qlmarkdown quicklook-json qlprettypatch quicklook-csv betterzip qlimagesize webpquicklook suspicious-package quicklookase qlvideo
 
 ## Node Version Manager
 if ! command -v n > /dev/null; then

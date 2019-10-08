@@ -2,99 +2,171 @@
 "" http://mislav.uniqpath.com/2011/12/vim-revisited/
 
 " Changelog
+" 2019-10  Cleaned up config a bit and copied some goodies from https://raw.githubusercontent.com/nvie/vimrc/master/vimrc and https://github.com/bugeats/dotfiles
 " @forked from https://github.com/fatso83/dotfiles
-" 2019-04-02 Swapped Vundle for vim-plug. Needed post-install hooks 
+" 2019-04-02 Swapped Vundle for vim-plug. Needed post-install hooks
 " 2015-09-24 Swapped Pathogen for Vundle. Simplicity!
 "            Tipped from: http://lepture.com/en/2012/vundle-vs-pathogen
 
 " Resets all auto commands before adding them - important when sourcing twice
-autocmd! 
+autocmd!
 
-set nocompatible               " be iMproved
+" ================================================================
+" Preferences / Defaults
+" ================================================================
+
+set nocompatible               				" be iMproved
 set modeline
-set modelines=5                " The number of lines to search for a modeline, must be non-0
-filetype off                   " required!
+set modelines=5                				" The number of lines to search for a modeline, must be non-0
+filetype off                   				" required!
 
+set encoding=utf-8
+set showcmd                     			" show leader commands
+set ruler									" shows the current line number column number
+"" Whitespace
+set nowrap                      			" don't wrap lines
+set tabstop=4 shiftwidth=4      			" a tab is four spaces
+set expandtab                   			" use spaces, not tabs (optional).  On pressing tab, insert 4 spaces.
+set backspace=indent,eol,start  			" backspace through everything in insert mode
+"" Searching
+set hlsearch                    			" highlight search terms
+set incsearch                       		" show search matches as you type
+set ignorecase                  			" searches are case insensitive...
+set smartcase                   			" ... unless they contain at least one capital letter
+set autoread								" Set to auto read when a file is changed from the outside
+set printoptions=portrait:n
+set pastetoggle=<F2> 						" Pasting text - toggle between paste and insert mode using F2
+" Tips mostly from nvie.com/ ~ http://nvie.com/posts/how-i-boosted-my-vim/
+set showmatch                           	" When in insert mode, this will momentarily flash the cursor back to the opening bracket
+set matchtime=1                         	" just jump for 100 ms
+set shiftwidth=4                        	" number of spaces to use for autoindenting
+set shiftround                          	" use multiple of shiftwidth when indenting with '<' and '>'
+set smarttab                            	" insert tabs on the start of a line according to shiftwidth, not tabstop
+set history=1000                        	" remember more commands and search history
+set undolevels=1000                     	" use many muchos levels of undo
+set wildignore=*.swp,*.bak,*.pyc,*.class
+set title                               	" change the terminal's title
+set visualbell                          	" don't beep
+set noerrorbells                        	" don't beep
+set nobackup
+set noswapfile
+set listchars=eol:⏎,tab:␉·,trail:␠,nbsp:⎵  " Show 'hidden' characters, like tab and newline: https://vi.stackexchange.com/a/430/1087
+" Lucas F. Costa: http://lucasfcosta.com/2017/01/23/Quick-vIM-Tips-That-Will-Save-Your-Life.html
+set relativenumber                      	" Show relative line numbers
+set number                              	" Show current line number
+" https://twitter.com/mantoni/status/880079687946522625
+set suffixesadd+=.js                    	" Makes gf work for relative files as well
+set mouse=									" Disable mouse integration by default to make copy-paste easy. Toggle with F12
+set magic 									" For regular expressions turn magic on
+" After exiting vim, the content is displayed on the terminal screen and can be used for viewing and copying
+" Benefits-> What is accidentally deleted, if the previous screen opens, you can retrieve
+set  t_ti =  t_te =
+" Automatic completion of the configuration
+" Let Vim's complement menu behave as a regular IDE (see VimTip 1228)
+set completeopt=longest,menu
+"----------UI SETTINGS---------------
+set t_Co=256                        		" Enable 256 colors.
+set termguicolors
+set background=dark                 		" Editor background.
+set guifont=PragmataPro:h14
+syntax enable
+syntax on
+colorscheme darkblue						" This is a default scheme that works well " Override in ~/vimrc.local
+" Solarized theme
+" let g:solarized_termtrans = 1
+" set background=light
+" colorscheme solarized
 
-" Automatically do :ALEFix
-" http://liuchengxu.org/posts/use-vim-as-a-python-ide/
-let g:ale_fix_on_save = 1
-" Enable completion where available.
-" " This setting must be set BEFORE ALE is loaded.
-" let g:ale_completion_enabled = 1
-nmap <F8> <Plug>(ale_fix)
+" ================================================================
+" Mappings
+" ================================================================
+" Remap : to ; so that we skip over using shift for typing vim commands
+nnoremap ; :
+let mapleader="," 							" check out http://superuser.com/questions/693528/vim-is-there-a-downside-to-using-space-as-your-leader-key
+map <C-h> <C-w>h							" Easy window navigation
+map <C-j> <C-w>j
+map <C-k> <C-w>k
+map <C-l> <C-w>l
+
+nmap <silent> <leader>/ :nohlsearch<CR> 	" Clear highlighted search text by just typing ",/"
+cmap w!! w !sudo tee > /dev/null %			" Allow saving of files as sudo when I forgot to start vim using sudo. " https://stackoverflow.com/a/7078429/200987
+" copy current file path
+nnoremap <leader>fcp                   :let @+ = expand("%:p")<cr>:echo @+<cr>
+" copy current file relative path
+nnoremap <leader>fcr                   :let @+ = expand("%")<cr>:echo @+<cr>
+
+" (t)ab tasks ----------------------------
+nnoremap <leader>1                     :tabn 1<CR>
+nnoremap <leader>2                     :tabn 2<CR>
+nnoremap <leader>3                     :tabn 3<CR>
+nnoremap <leader>4                     :tabn 4<CR>
+nnoremap <leader>5                     :tabn 5<CR>
+nnoremap <leader>6                     :tabn 6<CR>
+nnoremap <leader>7                     :tabn 7<CR>
+nnoremap <leader>8                     :tabn 8<CR>
+nnoremap <leader>9                     :tabn 9<CR>
+
+nnoremap <leader>td                    :tabclose<CR>
+nnoremap <leader>th                    :tabnext<CR>
+nnoremap <leader>tj                    :tabnext<CR>
+nnoremap <leader>tk                    :tabprev<CR>
+nnoremap <leader>tl                    :tabprev<CR>
+nnoremap <leader>tm                    :tabm<Space>
+nnoremap <leader>tn                    :tabnew<CR>
+nnoremap <leader>tt                    :tabedit<Space>
+
+" \xs to open Spotify
+nnoremap <leader>xs                    :!open /Applications/Spotify.app<CR>
+
+" ================================================================
+" Pluggins
+" ================================================================
 
 source ~/.vim/plugins-config
 
-filetype plugin indent on       " load file type plugins + indentation
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
-
-syntax enable
-set encoding=utf-8
-
-"" GUI
-" This is a default scheme that works well
-" Override in ~/vimrc.local
-colorscheme darkblue
-set guifont=PragmataPro:h14
-
-"" check out http://superuser.com/questions/693528/vim-is-there-a-downside-to-using-space-as-your-leader-key
-:let mapleader="," 
 "" Don't rely on Cmd working in vim. Learn to use <leader>c<space>
 "" http://stackoverflow.com/questions/9450905/how-to-bind-vim-through-tmux-to-cmd-key/9451636#9451636
-"" map <D-/> <plug>NERDCommenterToggle  
-set showcmd "" show leader commands
-set ruler						" shows the current line number column number
-
-"" Whitespace
-set nowrap                      " don't wrap lines
-set tabstop=4 shiftwidth=4      " a tab is four spaces 
-set expandtab                   " use spaces, not tabs (optional).  On pressing tab, insert 4 spaces.
-set backspace=indent,eol,start  " backspace through everything in insert mode
-
-"" Searching
-set hlsearch                    " highlight matches
-set incsearch                   " incremental searching
-set ignorecase                  " searches are case insensitive...
-set smartcase                   " ... unless they contain at least one capital letter
-
-set printoptions=portrait:n
-
-"" Pasting text - toggle between paste and insert mode using F2
-"" http://nvie.com/posts/how-i-boosted-my-vim/
-set pastetoggle=<F2>
-
+"" map <D-/> <plug>NERDCommenterToggle
 
 " Remember last position
 if has("autocmd")
-    au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+    autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
 
+" ================================================================
+" Filetypes
+" ================================================================
 
-"" File type settings
+filetype plugin indent on       			" load file type plugins + indentation
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+
 "" Set filetype text if unset
 autocmd BufEnter * if &filetype == "" | setlocal ft=text | endif
 
-" text files
-autocmd Filetype text set wrap | set linebreak
-autocmd Filetype markdown set wrap | set linebreak
+augroup filetypes
+	autocmd Filetype text 		set wrap | set linebreak
+	autocmd Filetype markdown 	set wrap | set linebreak
+	autocmd FileType rust       setlocal ts=4 sw=4 expandtab equalprg=rustfmt
+	autocmd FileType json 		syntax match Comment +\/\/.\+$+  " Understand JSONC (json with comments)
+augroup END
 
-" associate *.vss (VectorScript) with Pascal filetype
-au BufRead,BufNewFile *.vss set filetype=pascal
-" associate Processing files with Java
-au BufRead,BufNewFile *.pde set filetype=java
-" associate *.ts with TypeScript
-au BufRead,BufNewFile *.ts set filetype=typescript
-" associate *.kit with Html
-au BufRead,BufNewFile *.kit set filetype=html
-
-" Use nginx syntax highlighting
-au BufRead,BufNewFile *.nginx set ft=nginx
-au BufRead,BufNewFile */etc/nginx/* set ft=nginx
-au BufRead,BufNewFile */usr/local/nginx/conf/* set ft=nginx
-au BufRead,BufNewFile nginx.conf set ft=nginx
-
+augroup filetypedetect
+	autocmd BufRead,BufNewFile *.vss 	set filetype=pascal 	 " associate *.vss (VectorScript) with Pascal filetype
+	autocmd BufRead,BufNewFile *.pde 	set filetype=java		 " associate Processing files with Java
+	autocmd BufRead,BufNewFile *.ts 	set filetype=typescript  " associate *.ts with TypeScript
+	autocmd BufRead,BufNewFile *.kit 	set filetype=html 		 " associate *.kit with Html
+	autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.tsx
+	autocmd BufNewFile,BufRead *.js 	set filetype=javascript.jsx
+	" au BufNewFile,BufRead *.jsx set filetype=javascript.jsx
+	" Make it so any .env files are correctly styled. Normally only worked with .env
+	autocmd BufNewFile,BufRead * if expand('%t') =~ '.env' | set filetype=sh | endif
+	" Use nginx syntax highlighting
+	autocmd BufRead,BufNewFile *.nginx set ft=nginx
+	autocmd BufRead,BufNewFile */etc/nginx/* set ft=nginx
+	autocmd BufRead,BufNewFile */usr/local/nginx/conf/* set ft=nginx
+	autocmd BufRead,BufNewFile nginx.conf set ft=nginx
+augroup END
 
 " Auto-reload vimrc on changes
 autocmd! bufwritepost .vimrc source %
@@ -102,134 +174,160 @@ autocmd! bufwritepost vimrc source %
 autocmd! bufwritepost plugins-config source %
 autocmd! bufwritepost coc-config source %
 
+" run a formatterers on save
+augroup fmt
+	autocmd BufWritePre *.jsx Neoformat
+ 	autocmd BufWritePre * undojoin | Neoformat
+	autocmd BufWritePost *.js AsyncRun -post=checktime eslint --fix %
+augroup END
+
 " Make vim work as a crontab editor: http://vim.wikia.com/wiki/Editing_crontab
-au BufEnter /private/tmp/crontab.* setl backupcopy=yes
+autocmd BufEnter /private/tmp/crontab.* setl backupcopy=yes
 
-" Make NERDTree open automatically if no files were specified
-" autocmd StdinReadPre * let s:std_in=1
-" autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+"----------PLUGGINS SETTINGS---------
 
-" Make the local current directory reflect the currently open buffer
-" Disabled on 2019-04-03: Breaks fugitive.vim :(
-" autocmd BufEnter * lcd %:p:h
-
-" Silence NerdTree errors - might have been introduced by the above
-" https://github.com/scrooloose/nerdtree/issues/162#issuecomment-107643011
-" nmap <silent> <Leader>t :call g:WorkaroundNERDTreeToggle()<CR>
-
-" function! g:WorkaroundNERDTreeToggle()
-   "try | NERDTreeToggle | catch | silent! NERDTree | endtry
-" endfunction
-
-" Open/Close NerdTree with Ctrl-N, but only in Normal mode
-nmap <C-n> :NERDTreeToggle<CR>
-
-" Allow saving of files as sudo when I forgot to start vim using sudo.
-" https://stackoverflow.com/a/7078429/200987
-cmap w!! w !sudo tee > /dev/null %
-
-" Tips mostly from nvie.com/
-set showmatch                           " When in insert mode, this will momentarily flash the cursor back to the opening bracket
-set matchtime=1                         " just jump for 100 ms
-
-set shiftwidth=4                        " number of spaces to use for autoindenting
-set shiftround                          " use multiple of shiftwidth when indenting with '<' and '>'
-set ignorecase                          " ignore case when searching
-set smartcase                           " ignore case if search pattern is all lowercase, case-sensitive otherwise
-set smarttab                            " insert tabs on the start of a line according to shiftwidth, not tabstop
-set hlsearch                            " highlight search terms
-set incsearch                           " show search matches as you type
-set history=1000                        " remember more commands and search history
-set undolevels=1000                     " use many muchos levels of undo
-set wildignore=*.swp,*.bak,*.pyc,*.class
-set title                               " change the terminal's title
-set visualbell                          " don't beep
-set noerrorbells                        " don't beep
-
-nmap <silent> <leader>/ :nohlsearch<CR> " Clear highlighted search text by just typing ",/"
-cmap w!! w !sudo tee % >/dev/null       " Use sudo after you opened a file, in case you forgot
-
-" Show 'hidden' characters, like tab and newline: https://vi.stackexchange.com/a/430/1087
-set listchars=eol:⏎,tab:␉·,trail:␠,nbsp:⎵
-
-" Lucas F. Costa: http://lucasfcosta.com/2017/01/23/Quick-vIM-Tips-That-Will-Save-Your-Life.html
-set relativenumber                      " Show relative line numbers
-set number                              " Show current line number
-" https://twitter.com/mantoni/status/880079687946522625
-set suffixesadd+=.js                    " Makes gf work for relative files as well
-
-" Disable mouse integration by default to make copy-paste easy. Toggle with F12
-set mouse=
-
-" These needs to be before later configuration for objects to be defined
-source ~/.vim/ctrlp-config
-source ~/.vim/coc-config
+source ~/.vim/coc-config				" These needs to be before later configuration for objects to be defined
 
 " Elm settings - see https://github.com/elmcast/elm-vim
-let g:elm_format_autosave = 1           "reformat on autosave
-"let g:ycm_semantic_triggers.elm = ['.']
+" let g:elm_format_autosave = 1         "reformat on autosave
 
-" js settings
-let g:javascript_plugin_jsdoc = 1
-" enable auto sort import on write
-" see https://github.com/ruanyl/vim-sort-imports#available-cmd
-let g:import_sort_auto = 1
-" temporary fix for JSX: https://github.com/pangloss/vim-javascript/issues/955#issuecomment-356350901
-let g:jsx_ext_required = 0
-" auto-format
-" Disable using :RepoVimrcEdit and 'autocmd!'
-" autocmd BufWritePre *.js Neoformat
-autocmd BufWritePre *.jsx Neoformat
+" ================================================================
+" Syntastic
+" ================================================================
+" Syntastics settings
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%{FugitiveStatusline()}
+set statusline+=%*
 
-" Understand JSONC (json with comments)
-autocmd FileType json syntax match Comment +\/\/.\+$+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_javascript_checkers=['eslint']
+" Filter out some error messages
+" Trimming empty warning labels, there is nothing in the instructions for some labels
+let g:syntastic_html_tidy_ignore_errors = ['trimming']
 
+" ================================================================
+" NerdTree
+" ================================================================
 
-" Set up neomake as well: It is intended to replace the built-in :make command and provides functionality similar to plugins like syntastic and dispatch.vim. It is primarily used to run code linters and compilers from within Vim, but can be used to run any program.
+nmap <C-n> :NERDTreeToggle<CR>				" Open/Close NerdTree with Ctrl-N, but only in Normal mode
 
-" Set up fzf instead of Ctrl-P
-" fzf and fzf.vim
+" Making nerdtree prettier
+let NERDTreeMinimalUI = 1
+let NERDTreeDirArrows = 1
+let NERDTreeShowHidden=1
+let NERDTreeIgnore=['\.DS_Store$', '^__pycache__$']
+" Change default arrows.
+let g:NERDTreeDirArrowExpandable = '+'
+let g:NERDTreeDirArrowCollapsible = '-'
+let g:nerdtree_tabs_open_on_console_startup=1
+
+map <Leader>n :NERDTreeToggle<CR>			" Open NERDTree with 'Ctrl+n'.
+nnoremap <leader>nf                    :NERDTreeFind<cr>
+
+" Make NERDTree open automatically if no files were specified
+augroup nerdtree
+	autocmd StdinReadPre * let s:std_in=1
+	autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+augroup END
+
+" ================================================================
+" Ale
+" ================================================================
+
+nmap <F8> <Plug>(ale_fix)
+" Update linters so typescript isn't running both eslint and tslint which is super slow
+let g:ale_linters = {
+      \ 'scss': ['sasslint'],
+      \ 'javascript': ['eslint'],
+      \ 'typescript': ['eslint', 'tsserver', 'typecheck'],
+      \ }
 
 let g:ale_fixers = {
-\   'javascript': [
-\       'eslint --fix',
-\       'eslint',
-\       {buffer, lines -> filter(lines, 'v:val !=~ ''^\s*//''')},
-\   ],
-\}
+	  \ 'css': ['prettier'],
+      \ 'scss': ['prettier'],
+      \ 'javascript': ['prettier', 'eslint --fix', 'eslint'],
+      \ 'typescript': ['prettier', 'eslint'],
+      \ }
 
-""" More Customizations """
+" When working with TypeScript files, ALE supports automatic imports from external modules. 
+let g:ale_completion_tsserver_autoimport = 1
 
-" Achieve (, [, {,", 'Automatically fill in the right part of the input, the cursor will be in the middle position
-inoremap (() <ESC> i
-inoremap [] <ESC> i
-inoremap {{} <ESC> i
-inoremap < <><ESC>i
-inoremap " ""<ESC>i
-inoremap  '  ' ' <ESC> i
+" show errors or warnings in statusline
+let g:airline#extensions#ale#enabled = 1
 
-" After exiting vim, the content is displayed on the terminal screen and can be used for viewing and copying
-" Benefits-> What is accidentally deleted, if the previous screen opens, you can retrieve
-"
-set  t_ti =  t_te =
+let g:ale_fix_on_save = 1					" Automatically do :ALEFix " http://liuchengxu.org/posts/use-vim-as-a-python-ide/
+" let g:ale_javascript_prettier_options = '--single-quote --trailing-comma es5'
 
-" For regular expressions turn magic on
-set magic
+" ================================================================
+" UltiSnips
+" ================================================================
 
-" Automatic completion of the configuration
-" Let Vim's complement menu behave as a regular IDE (see VimTip 1228)
-set completeopt=longest,menu
+let g:UltiSnipsExpandTrigger="<C-space>"
+let g:UltiSnipsListSnippets="<c-h>"
+let g:UltiSnipsJumpForwardTrigger="<c-s-right>"
+let g:UltiSnipsJumpBackwardTrigger="<c-s-left>"
+let g:UltiSnipsEditSplit="vertical"
 
-"----------UI SETTINGS---------------
-set t_Co=256                        " Enable 256 colors.
-set termguicolors
-set background=dark                 " Editor background.
+" ================================================================
+" FZF
+" ================================================================
 
+" Allow fzf search as \t
+nmap <leader>t :FZF<cr>
+
+" Update fzf.vim actions for bindings like command-t
+let g:fzf_action = {
+      \ 'ctrl-s': 'split',
+      \ 'ctrl-t': 'tabedit',
+      \ 'ctrl-v': 'vsplit',
+      \ }
+let g:fzf_layout = { 'down': '~40%' }
+
+" ================================================================
+" vim-closetag
+" ================================================================
+
+" Update closetag to also work on js and html files, don't want ts since <> is used for type args
+let g:closetag_filenames='*.html,*.js,*.jsx,*.tsx'
+" Disables auto-close if not in a "valid" region (based on filetype)
+let g:closetag_regions = {
+    \ 'typescript.tsx': 'jsxRegion,tsxRegion',
+    \ 'javascript.jsx': 'jsxRegion',
+    \ }
+
+" ================================================================
+" Fugitive
+" ================================================================
+
+nnoremap <silent> <leader>gs :Gstatus<CR>
+nnoremap <silent> <leader>ga :Git add -A<CR>
+nnoremap <silent> <leader>gd :Gdiff<CR>
+nnoremap <silent> <leader>gc :Gcommit<CR>
+nnoremap <silent> <leader>gp :Gpush<CR>
+nnoremap <silent> <leader>gl :Gpull<CR>
+nnoremap <silent> <leader>gr :Gremove<CR>
+nnoremap <silent> <leader>gb :Gbrowse<CR>
+vnoremap <silent> <leader>gb :Gbrowse<CR>
+
+" ================================================================
+" Airline
+" ================================================================
+
+" let g:airline_theme='oceanicnext'
 let g:airline_theme='gruvbox'
 let g:gruvbox_termcolors=256
 let g:gruvbox_contrast_dark='hard'
 
-if filereadable("~/.vimrc.local")
+let g:indentLine_char_list = ['|', '¦', '┆', '┊']
+
+" ================================================================
+" read local settings
+" ================================================================
+if filereadable(glob("~/.vimrc.local"))
     source ~/.vimrc.local
 endif
 

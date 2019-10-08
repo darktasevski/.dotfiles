@@ -8,73 +8,48 @@ if has("macunix")
     Plug 'vim-scripts/copy-as-rtf'
 endif
 
-" UI and color schemes
 Plug 'mhinz/vim-startify', {'do': 'mkdir -p ~/.vim/files/info'}     " Fancy start screen for Vim
-Plug 'morhetz/gruvbox'                                              " Retro groove color scheme.
 Plug 'vim-airline/vim-airline'                                      " Lean & mean status/tabline
 Plug 'vim-airline/vim-airline-themes'
-Plug 'romainl/Apprentice'
-
-" Needs backend: npm -g update instant-markdown-d
+Plug 'morhetz/gruvbox'                                              " Retro groove color scheme.
+Plug 'joshdick/onedark.vim'
+Plug 'altercation/vim-colors-solarized'
+Plug 'Lokaltog/vim-easymotion'                						" make moving inside file real easy
 Plug 'alvan/vim-closetag'                                           " Auto close (X)HTML tags
-Plug 'ctrlpvim/ctrlp.vim'                                           " does fuzzy matching to open files
-Plug 'editorconfig/editorconfig-vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+Plug 'sgur/vim-editorconfig'
 Plug 'jiangmiao/auto-pairs'                                         " Insert or delete brackets, parens, quotes in pair.
 Plug 'mwnx/vimcrypt'                                                " GPG & OpenSSL support (AES, ...)
 Plug 'nvie/vim-togglemouse'                                         " F12 will switch mouse mode between terminal and vim
-Plug 'Raimondi/delimitMate'                                         " auto-completion for quotes, parens, brackets
-Plug 'ruanyl/vim-sort-imports'
-Plug 'sbdchd/neoformat'                                             " Used with prettier
-Plug 'scrooloose/nerdcommenter'
+Plug 'sbdchd/neoformat'                                             " Used with prettier - requires globally installed prettier, eslint, etc.
+Plug 'tpope/vim-commentary'
 Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'suan/vim-instant-markdown', { 'for': 'markdown'}
 Plug 'tpope/vim-surround'                                           " Surround.vim is all about 'surroundings': parentheses, brackets, ..., etc.
+Plug 'tpope/vim-repeat'
 Plug 'vim-syntastic/syntastic'                                      " Syntax checking hacks for vim
-Plug 'w0rp/ale'                                                     " Asynchronous Lint Engine TODO: config
-
-
+Plug 'sheerun/vim-polyglot'
+Plug 'skywind3000/asyncrun.vim'
+Plug 'dense-analysis/ale'
 Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}          " YCM alternative - needs Node, Yarn
-
-" Syntax highlighting
-" Plug 'OrangeT/vim-csharp' "razor, c#
-" Plug 'PProvost/vim-ps1'                                           " powershell NOTE: Used for windows ps1 powershell scripts
-Plug 'elmcast/elm-vim'
-Plug 'leafgarland/typescript-vim', {'for': 'typescript' }
-Plug 'mxw/vim-jsx'                                                  " fixes JSX: https://github.com/pangloss/vim-javascript/issues/955#issuecomment-356350901
-Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+Plug 'tmux-plugins/vim-tmux-focus-events'
+Plug 'airblade/vim-gitgutter'
+Plug 'SirVer/ultisnips'
+Plug 'mlaursen/vim-react-snippets'
+Plug 'junegunn/goyo.vim'                      						" edit in without any distraction
+Plug 'gregsexton/MatchTag'											" highlights the matching HTML tag when the cursor is positioned on a tag.
+Plug 'Yggdroot/indentLine'
 Plug 'tpope/vim-fugitive'                                           " git plugin
 Plug 'tpope/vim-rhubarb'                                            " github plugin
 Plug 'inkarkat/vim-ingo-library'                                    " dependency for SyntaxRange
 Plug 'vim-scripts/SyntaxRange' " :[range]SyntaxInclude {filetype}   " Handling different syntaxes in one file
-
-" DISABLED! This disables the autocmd that remembers where I last was
-"" Per-repo settings - for instance, disable AutoCmd *.js
-"" Plug 'captbaritone/repo-vimrc'
+Plug 'ryanoasis/vim-devicons'                                       " Adds file type glyphs/icons to popular Vim plugins: NERDTree, vim-, Powerline, etc... ** REQUIRES PATCHED FONTS **
+" Plug 'OrangeT/vim-csharp' "razor, c#
+" Plug 'elmcast/elm-vim'
 
 " All of your plugins must be added before the following line
 call plug#end()
-
-"----------PLUGGINS SETTINGS---------
-" Syntastics settings
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_javascript_checkers=['eslint']
-
-" Filter out some error messages
-" Trimming empty warning labels, there is nothing in the instructions for some labels
-let g:syntastic_html_tidy_ignore_errors = ['trimming']
-
-" Plug 'scrooloose/nerdtree'.
-" Open NERDTree with 'Ctrl+n'.
-map <Leader>n :NERDTreeToggle<CR>
-" Change default arrows.
-let g:NERDTreeDirArrowExpandable = '+'
-let g:NERDTreeDirArrowCollapsible = '-'
 
 " vi: ft=vim

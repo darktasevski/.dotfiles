@@ -84,6 +84,8 @@ fi
 zplug load
 
 export PATH="/usr/local/sbin:$PATH"
-
+export PATH="$HOME/Library/Python/3.7/bin:$PATH"
 export PATH="$HOME/.jenv/bin:$PATH"
 eval "$(jenv init -)"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

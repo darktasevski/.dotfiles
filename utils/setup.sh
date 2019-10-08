@@ -20,6 +20,6 @@ ln -sf scripts/* "$HOME"/.bin/
 # Dependencies for scripts (requires sudo for some reason when installing from shellscript :/)
 sudo -H pip3 install smsutil
 sudo -H pip3 install requests
-
+sudo -H pip3 install awscli --upgrade --user
 # Restore current directory of user
 popd > /dev/null
