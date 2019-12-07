@@ -6,6 +6,10 @@ export HISTSIZE=100000 # The number of commands to save. C  an't be unset, like 
 export SAVEHIST=100000 # needed in order to save it somewhere
 export HISTCONTROL=ignoreboth # don't put duplicate lines or lines starting with space in the history.
 
+# Include dotfiles in globbing
+# https://coderwall.com/p/rfwjlq
+setopt globdots
+
 setopt AUTO_CD
 setopt correct
 # Appends every command to the history file once it is executed
@@ -16,6 +20,9 @@ setopt share_history
 setopt hist_expire_dups_first
 # If you run the same command multiple times in a row, only add it to the history once.
 setopt hist_ignore_dups
+# don't push multiple copies of the same directory onto the directory stack
+setopt pushd_ignore_dups
+
 
 # Completion
 setopt auto_menu

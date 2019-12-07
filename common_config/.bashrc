@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 # To enable debug printing, just set the DEBUG environment variable
 # You can then use `debug` or `t_debug` statements to echo debug info
@@ -41,6 +42,9 @@ declare -x CLICOLOR
 # User limits - limit the use of system-wide resources.
 # -c stands for The maximum size of core files created.
 ulimit -c unlimited
+# Files will be created with these permissions:
+# files 644 -rw-r--r-- (666 minus 022)
+# dirs  755 drwxr-xr-x (777 minus 022)
 # @see https://ss64.com/bash/umask.html
 umask 022
 
@@ -132,12 +136,6 @@ fi
 t_debug "Reading local settings for this machine"
 # This needs to be at the bottom to be able to override earlier settings/variables/functions
 read_config_if_exists "$HOME/.bashrc.local"
-
-if [[ -e "$HOME/.bulksms.auth" ]]; then
-    . "$HOME/.bulksms.auth"
-    export BULKSMS_ID
-    export BULKSMS_SECRET
-fi
 
 t_debug Finished bash setup
 

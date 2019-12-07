@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 if ! declare -p t_debug > /dev/null 2> /dev/null; then
+    # shellcheck source=$HOME/.bash.d/core_utils.sh
     source ~/.bash.d/core_utils.sh
 fi
 
@@ -76,7 +77,7 @@ alias sudo="sudo "                        # makes sudo recognize aliases.
 alias t='tail -f'
 alias rm='rm -i'
 alias mv='mv -i'
-
+alias k9="kill -9"
 alias l='ls -lFh'                         #size,show type,human readable
 alias la='ls -lAFh'                       #long list,show almost all,show type,human readable
 alias lr='ls -tRFh'                       #sorted by date,recursive,show type,human readable
@@ -86,14 +87,12 @@ alias ldot='ls -ld .*'
 alias lS='ls -1FSsh'
 alias lart='ls -1Fcart'
 alias lrt='ls -1Fcrt'
+alias lsd='ls -1F'                        # ls for Directories.
 
 alias prettify_json='python -mjson.tool'  # Pretty print json
 
-# Indent text before sending it to Stack Overflow
-alias indent4="sed -E 's/(^.*)/    \1/'"
-alias remove-indent4="sed -E 's/^    //'"
-
 t_debug "aliases: setting up node aliases"
+
 # node commands - important that these are enclosed in single quotes to avoid expansion!
 alias npm-exec='PATH=$(npm bin):$PATH'
 alias eslint='$(npm bin)/eslint'
@@ -102,6 +101,7 @@ alias prettier='$(npm bin)/prettier'
 t_debug "aliases: finished setting up node aliases"
 
 t_debug webserver aliases
+
 # webdev
 # it's so long because I enabled UTF8 support: https://stackoverflow.com/a/24517632/200987
 alias webserver='python -c "import SimpleHTTPServer; m = SimpleHTTPServer.SimpleHTTPRequestHandler.extensions_map; m['\'\''] = '\''text/plain'\''; m.update(dict([(k, v + '\'';charset=UTF-8'\'') for k, v in m.items()])); SimpleHTTPServer.test();"'
@@ -119,10 +119,6 @@ alias dig-ip="dig +short myip.opendns.com @resolver1.opendns.com"
 
 # Used with the git alias functions; gd, gds, gdw, gdws
 alias strip-diff-prefix='sed "s/^\([^-+ ]*\)[-+ ]/\\1/"'
-
-# For stack overflow pasting
-alias stack-overflow-no-copy='sed -e "s/diffia/ACME/g" -e "s/$USER/myuser/g" | indent4 '
-alias stack-overflow='stack-overflow-no-copy | pbcopy; pbpaste; echo -e "\n\nCopied to pastebuffer (use stack-overflow-no-copy to avoid this)!"'
 
 # "reminder aliases" for how to suspend and continue a process
 alias processes-suspend='killall -sSTOP '
@@ -190,26 +186,6 @@ alias yui="yarn upgrade-interactive"
 # find . -name .gitattributes | map dirname
 alias map="xargs -n1"
 
-# Docker
-# alias dockerps='docker ps --format=$FORMAT'
-# alias dockerconc='docker ps -aq --no-trunc | xargs docker rm'
-# alias dockerLamp='docker run -v /work/Docker:/var/www/example.com/public_html -p 80:80 -t -i linode/lamp /bin/bash'
-# alias dklc='docker ps -l'  # List last Docker container
-# alias dklcid='docker ps -l -q'  # List last Docker container ID
-# alias dklcip='docker inspect -f "{{.NetworkSettings.IPAddress}}" $(docker ps -l -q)'  # Get IP of last Docker container
-# alias dkps='docker ps'  # List running Docker containers
-# alias dkpsa='docker ps -a'  # List all Docker containers
-# alias dki='docker images'  # List Docker images
-# alias dkrmac='docker rm $(docker ps -a -q)'  # Delete all Docker containers
-# alias dkrmlc='docker-remove-most-recent-container'  # Delete most recent (i.e., last) Docker container
-# alias dkrmui='docker images -q -f dangling=true |xargs -r docker rmi'  # Delete all untagged Docker images
-# alias dkrmall='docker-remove-stale-assets'  # Delete all untagged images and exited containers
-# alias dkrmli='docker-remove-most-recent-image'  # Delete most recent (i.e., last) Docker image
-# alias dkrmi='docker-remove-images'  # Delete images for supplied IDs or all if no IDs are passed as arguments
-# alias dkideps='docker-image-dependencies'  # Output a graph of image dependencies using Graphiz
-# alias dkre='docker-runtime-environment'  # List environmental variables of the supplied image ID
-# alias dkelc='docker exec -it `dklcid` bash' # Enter last container (works with Docker 1.3 and above)
-
 function psgrep() { ps -ef | grep -i "$@"; }
 
 # Trims whitespace at start and end of line
@@ -261,7 +237,7 @@ function gd() {   git diff          --color "$@"| strip-diff-prefix | less -r; }
 function gds() {  git diff --staged --color "$@"| strip-diff-prefix | less -r; }
 function gdw() {  git diff          --color --word-diff "$@"        | less -r; }
 function gdws() { git diff --staged --color --word-diff "$@"        | less -r; }
-alias gs='git status -sb' # upgrade your git if -sb breaks for you. it's fun.
+alias gs='git -c color.status=always status -b' # upgrade your git if -sb breaks for you. it's fun.
 alias glg='git lg'
 
 function bye-bye-branches() {
@@ -315,9 +291,6 @@ function recover_archive () { jar xvf "$1"; }
 # Parse markdown file and print it man page like
 function mdless() { pandoc -s -f markdown -t man "$1" | groff -T utf8 -man | less; }
 
-# ls for Directories.
-function lsd { ls -1F "$*" | grep '/$'; }
-
 # Determine size of a file or total size of a directory
 function fs() {
     if du -b /dev/null > /dev/null 2>&1; then
@@ -327,9 +300,9 @@ function fs() {
     fi
 
     if [[ -n "$*" ]]; then
-        du $arg -- "$@";
+        du ${arg} -- "$@";
     else
-        du $arg .[^.]* *;
+        du ${arg} .[^.]* *;
     fi
 }
 
@@ -365,15 +338,15 @@ lazy_load()
 
     # Unalias activator aliases since the lazy is about to be run
     local PARSED_ACTIVATORS=false # Whether activators have been parsed
-    local ACTIVATOR_ARGS="" 
+    local ACTIVATOR_ARGS=""
     for arg in $*
     do
-        if [ $arg = "__EOA__" ]
-        then 
+        if [[ ${arg} = "__EOA__" ]]
+        then
             local PARSED_ACTIVATORS=true
         else
-            if $PARSED_ACTIVATORS
-            then 
+            if ${PARSED_ACTIVATORS}
+            then
                 # Collect command line arguments for activator command
                 ACTIVATOR_ARGS="$ACTIVATOR_ARGS $arg"
             else
@@ -384,10 +357,10 @@ lazy_load()
     done
 
     # Run Lazy load command
-    eval " $load_cmd"
+    eval " ${load_cmd}"
 
     # Run activator with collected command line args
-    eval " $activator $ACTIVATOR_ARGS"
+    eval " ${activator} ${ACTIVATOR_ARGS}"
 }
 
 # Usage: lazy(load_cmd, activators...)
@@ -396,7 +369,7 @@ lazy_load()
 # then which the lazy loader actually loads the load command.
 # activators is a space seperated string of activation alias that will cause
 # the load command to run, thereafter activator command will run.
-# 
+#
 lazy()
 {
     load_cmd="$1"
@@ -407,7 +380,7 @@ lazy()
         # __EOA__ is used to enote end of activators and start of command line arguments for the activators
         load_alias="`printf 'lazy_load "%s" %s %s "__EOA__" \n' "$load_cmd" "$activator" "$*"`"
         alias "$activator"="$load_alias"
-    done 
+    done
 }
 # Examples:
 # lazy load conda
@@ -415,6 +388,11 @@ lazy()
 # lazy load kubectl completion
 # lazy "source <(kubectl completion zsh)" kubectl
 # lazy "source <(microk8s.kubectl completion zsh)" microk8s.kubectl
+
+# List of HTTP status codes
+httpcodes() {
+  node -p 'require("http").STATUS_CODES' | sed -E "s/[{},'\]//g;s/^[ ]+//g"
+}
 
 # Nice util for listing all declared functions. You use `type` to print them
 alias list-functions='declare | egrep '\''^[[:alpha:]][[:alnum:]_]* ()'\''; echo -e "\nTo print a function definition, issue \`type function-name\` "'

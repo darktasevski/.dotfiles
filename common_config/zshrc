@@ -1,4 +1,6 @@
-# fortune | cowsay -f vader
+# For debugging zsh startup time
+# zmodload zsh/zprof
+# for i in $(seq 1 10); do /usr/bin/time $SHELL -i -c exit; done
 
 function read_config {
   if [[ -e "$1" ]]; then
@@ -14,27 +16,17 @@ function read_config_if_exists {
 # Re-use BASH aliases and exports
 read_config "$HOME/.bash.d/core_utils.sh"
 read_config ~/.bash.d/aliases_and_functions.sh
-
-read_config ~/.zsh/env-vars.zsh
-read_config ~/.zsh/zsh-conf.zsh
+read_config ~/.zsh/zshenv.sh
+read_config ~/.zsh/zshconf.zsh
 read_config ~/.zsh/colors.zsh
 read_config_if_exists "$HOME/.bash.d/colors.sh"
-
-# include selfmade binaries and bin
-# Needed for some of the utility functions in this rc file, therefore
-# cannot be in the profile file, which is read later on
-# Otherwise, we will for instance get "millis: command not found" on
-# every new terminal, even though it is found on the CLI when testing
-if [[ -d ~/.bin ]] ; then
-    PATH=~/.bin:"${PATH}"
-fi
 
 # Check if zplug is installed
 if [[ ! -d ~/.zplug ]]; then
   git clone https://github.com/zplug/zplug ~/.zplug
-  source ~/.zplug/init.zsh && zplug update --self > /dev/null
+  read_config_if_exists ~/.zplug/init.zsh && zplug update --self > /dev/null
 else
-    source ~/.zplug/init.zsh
+    read_config ~/.zplug/init.zsh
 fi
 
 ##################################################
@@ -44,21 +36,14 @@ fi
 
 # Load completion library for those sweet [tab] squares
 zplug "lib/completion", from:oh-my-zsh
-
 zplug "plugins/colorize", from:oh-my-zsh
-
 # Never got the oh-my-zsh version to work without manual configuration,
 zplug "rupa/z", use:z.sh
-
 # Syntax highlighting for commands, load last
 zplug "zsh-users/zsh-syntax-highlighting", from:github, defer:2
-
 zplug "chrissicool/zsh-256color", from:github
-
 zplug "djui/alias-tips", from:github
-
 zplug "zlsun/solarized-man", from:github
-
 zplug "zsh-users/zsh-autosuggestions"
 zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-history-substring-search", defer:3
@@ -83,9 +68,6 @@ fi
 # Then, source plugins and add commands to $PATH
 zplug load
 
-export PATH="/usr/local/sbin:$PATH"
-export PATH="$HOME/Library/Python/3.7/bin:$PATH"
-export PATH="$HOME/.jenv/bin:$PATH"
-eval "$(jenv init -)"
-
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# zprof

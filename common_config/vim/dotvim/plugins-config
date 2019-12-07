@@ -19,13 +19,14 @@ Plug 'alvan/vim-closetag'                                           " Auto close
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'sgur/vim-editorconfig'
-Plug 'jiangmiao/auto-pairs'                                         " Insert or delete brackets, parens, quotes in pair.
+" Plug 'jiangmiao/auto-pairs'                                         " Insert or delete brackets, parens, quotes in pair.
 Plug 'mwnx/vimcrypt'                                                " GPG & OpenSSL support (AES, ...)
 Plug 'nvie/vim-togglemouse'                                         " F12 will switch mouse mode between terminal and vim
 Plug 'sbdchd/neoformat'                                             " Used with prettier - requires globally installed prettier, eslint, etc.
 Plug 'tpope/vim-commentary'
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'ryanoasis/vim-devicons'                                       " Adds file type glyphs/icons to popular Vim plugins: NERDTree, vim-, Powerline, etc... ** REQUIRES PATCHED FONTS **
 Plug 'suan/vim-instant-markdown', { 'for': 'markdown'}
 Plug 'tpope/vim-surround'                                           " Surround.vim is all about 'surroundings': parentheses, brackets, ..., etc.
 Plug 'tpope/vim-repeat'
@@ -35,6 +36,7 @@ Plug 'skywind3000/asyncrun.vim'
 Plug 'dense-analysis/ale'
 Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}          " YCM alternative - needs Node, Yarn
 Plug 'tmux-plugins/vim-tmux-focus-events'
+Plug 'christoomey/vim-tmux-navigator'
 Plug 'airblade/vim-gitgutter'
 Plug 'SirVer/ultisnips'
 Plug 'mlaursen/vim-react-snippets'
@@ -45,7 +47,6 @@ Plug 'tpope/vim-fugitive'                                           " git plugin
 Plug 'tpope/vim-rhubarb'                                            " github plugin
 Plug 'inkarkat/vim-ingo-library'                                    " dependency for SyntaxRange
 Plug 'vim-scripts/SyntaxRange' " :[range]SyntaxInclude {filetype}   " Handling different syntaxes in one file
-Plug 'ryanoasis/vim-devicons'                                       " Adds file type glyphs/icons to popular Vim plugins: NERDTree, vim-, Powerline, etc... ** REQUIRES PATCHED FONTS **
 " Plug 'OrangeT/vim-csharp' "razor, c#
 " Plug 'elmcast/elm-vim'
 

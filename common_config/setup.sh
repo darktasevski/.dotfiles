@@ -151,4 +151,4 @@ ln -sfv "$SCRIPT_DIR"/zshrc "$DEST"/.zshrc
 [[ ! -e "$DEST"/.ngrok2 ]] && mkdir "$DEST/.ngrok2"
 ln -vsiF "${SCRIPT_DIR}"/ngrok.yml "${DEST}"/.ngrok2/ngrok.yml
 
-popd > /dev/null
+popd > /dev/null || exit

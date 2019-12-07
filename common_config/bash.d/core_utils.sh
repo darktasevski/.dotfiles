@@ -28,7 +28,7 @@ function timer_now(){
     local diff;
     local now;
     now=$(millis)
-    diff=$now-$__timer
+    diff=${now}-${__timer}
     echo "${diff}"
 }
 

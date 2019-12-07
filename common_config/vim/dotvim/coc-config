@@ -1,9 +1,17 @@
 " use <tab> for trigger completion and navigate to next complete item
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
+" function! s:check_back_space() abort
+"   let col = col('.') - 1
+"   return !col || getline('.')[col - 1]  =~# '\s'
+" endfunction
+
+" inoremap <silent><expr> <TAB>
+"       \ pumvisible() ? coc#_select_confirm() :
+"       \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+"       \ <SID>check_back_space() ? "\<TAB>" :
+"       \ coc#refresh()
+" inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
@@ -13,36 +21,33 @@ function! s:show_documentation()
   endif
 endfunction
 
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? coc#_select_confirm() :
-      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
 let g:coc_snippet_next = '<tab>'
-let g:coc_global_extensions = ['coc-snippets', 'coc-json', 'coc-tsserver', 'coc-prettier', 'coc-python', 'coc-yank', 'coc-css']
+let g:coc_global_extensions = [
+  \ 'coc-snippets',
+  \ 'coc-pairs',
+  \ 'coc-tsserver',
+  \ 'coc-eslint',
+  \ 'coc-prettier',
+  \ 'coc-yank',
+  \ 'coc-css',
+  \ 'coc-json',
+  \ ]
 
 " Use K to show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
-" Rename (as in IntelliJ)
-nmap <S-F6> <Plug>(coc-rename)
-" Rename per the recommendations
-nmap <leader>rn <Plug>(coc-rename)
+" Rename (as in VSCode)
+nmap <F2> <Plug>(coc-rename)
 
-" (c)oc (d)efinition (j)ump            Jump to definition(s) of current symbol.
-nnoremap <leader>cdj                   <Plug>(coc-definition)
-" (c)oc de(c)laration (j)ump           Jump to declaration(s) of current symbol.
-nnoremap <leader>ccj                   <Plug>(coc-declaration)
-" (c)oc (i)mplementation (j)ump        Jump to implementation(s) of current symbol.
-nnoremap <leader>cij                   <Plug>(coc-implementation)
-" (c)oc (t)ype-efinition (j)ump        Jump to type definition(s) of current symbol.
-nnoremap <leader>ctj                   <Plug>(coc-type-definition)
-" (c)oc (r)eferences (j)ump            Jump to references of current symbol.
-nnoremap <leader>crj                   <Plug>(coc-references)
-" (c)oc (o)pen (l)ink                  Open link under cursor.
-nnoremap <leader>col                   <Plug>(coc-openlink)
+" Use `[g` and `]g` to navigate diagnostics
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition) 		" Jump to definition(s) of current symbol.
+nmap <silent> gl <Plug>(coc-declaration) 		" Jump to declaration(s) of current symbol.
+nmap <silent> gy <Plug>(coc-type-definition) 	" Jump to type definition(s) of current symbol.
+nmap <silent> gi <Plug>(coc-implementation) 	" Jump to implementation(s) of current symbol.
+nmap <silent> gr <Plug>(coc-references) 		" Jump to references of current symbol.
+nmap <silent> ol <Plug>(coc-openlink)			" Open link under cursor.
 " vi: ft=vim

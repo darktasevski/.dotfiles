@@ -83,10 +83,10 @@ colorscheme darkblue						" This is a default scheme that works well " Override 
 " Remap : to ; so that we skip over using shift for typing vim commands
 nnoremap ; :
 let mapleader="," 							" check out http://superuser.com/questions/693528/vim-is-there-a-downside-to-using-space-as-your-leader-key
-map <C-h> <C-w>h							" Easy window navigation
-map <C-j> <C-w>j
-map <C-k> <C-w>k
-map <C-l> <C-w>l
+" map <C-h> <C-w>h							" Easy window navigation - this is done (a bit better) by vim-tmux-navigator plugin
+" map <C-j> <C-w>j
+" map <C-k> <C-w>k
+" map <C-l> <C-w>l
 
 nmap <silent> <leader>/ :nohlsearch<CR> 	" Clear highlighted search text by just typing ",/"
 cmap w!! w !sudo tee > /dev/null %			" Allow saving of files as sudo when I forgot to start vim using sudo. " https://stackoverflow.com/a/7078429/200987
@@ -276,7 +276,7 @@ let g:UltiSnipsEditSplit="vertical"
 " FZF
 " ================================================================
 
-" Allow fzf search as \t
+" Allow fzf search as ,t
 nmap <leader>t :FZF<cr>
 
 " Update fzf.vim actions for bindings like command-t
@@ -330,5 +330,8 @@ let g:indentLine_char_list = ['|', '¦', '┆', '┊']
 if filereadable(glob("~/.vimrc.local"))
     source ~/.vimrc.local
 endif
+
+set rtp+=/usr/local/opt/fzf
+
 
 " vi: ft=vim
