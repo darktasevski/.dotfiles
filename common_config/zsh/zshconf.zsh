@@ -4,7 +4,13 @@ autoload -U promptinit; promptinit
 export HISTFILE=~/.zsh_history
 export HISTSIZE=100000 # The number of commands to save. C  an't be unset, like in bash
 export SAVEHIST=100000 # needed in order to save it somewhere
-export HISTCONTROL=ignoreboth # don't put duplicate lines or lines starting with space in the history.
+
+setopt HIST_EXPIRE_DUPS_FIRST    # Expire a duplicate event first when trimming history.
+setopt HIST_IGNORE_DUPS          # Do not record an event that was just recorded again.
+setopt HIST_IGNORE_ALL_DUPS      # Delete an old recorded event if a new event is a duplicate.
+setopt HIST_FIND_NO_DUPS         # Do not display a previously found event.
+setopt HIST_IGNORE_SPACE         # Do not record an event starting with a space.
+setopt HIST_SAVE_NO_DUPS         # Do not write a duplicate event to the history file.
 
 # Include dotfiles in globbing
 # https://coderwall.com/p/rfwjlq

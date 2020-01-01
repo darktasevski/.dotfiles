@@ -8,7 +8,7 @@
 # https://stackoverflow.com/a/40125397/200987
 # https://stackoverflow.com/a/40009032/200987
 
-# window 0 - main window in the left pane and 3 minor windows in the right pane
+# window 0 - main window
 new-window
 
 # Pane 1
@@ -18,17 +18,17 @@ send-keys 'clear; z youi; git status' C-m
 
 # Pane 2
 split-window -h
-send-keys 'clear; z youi; yarn start' C-m # metro bundler
+send-keys 'clear; z youi; yarn start' C-m 	# metro bundler
 
 # Pane 3
 split-window -v
-send-keys 'clear; z youi; git status; yarn dev:clean:cloud' C-m
-select-pane -L; # go left
+send-keys 'clear; z youi; yarn dev:clean:cloud' C-m
+select-pane -L; 							# go left
 
 # Pane 4
 split-window -v
 send-keys 'clear; z youi' C-m
-select-pane -U; # go up to the first pane
+select-pane -U; 							# go up to the first pane
 
 # window 1 - brightscript debugger
 new-window 
