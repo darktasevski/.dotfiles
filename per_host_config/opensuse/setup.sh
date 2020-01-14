@@ -60,7 +60,7 @@ sudo pip3 install -r python.local
 if ! command -v rbenv >> /dev/null; then
     git clone https://github.com/rbenv/rbenv.git ~/.rbenv
     (cd ~/.rbenv && src/configure && make -C src) # @see https://stackoverflow.com/a/10382170/7453363
-    echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> "$HOME"/.zsh/env-vars.zsh
+    echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> "$HOME"/.zsh/zshenv.sh
     echo 'eval "$(rbenv init -)"' >> "$HOME"/.zshrc
     ~/.rbenv/bin/rbenv init
     export PATH="$HOME/.rbenv/bin:$PATH"

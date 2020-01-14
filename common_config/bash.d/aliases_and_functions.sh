@@ -89,7 +89,31 @@ alias lart='ls -1Fcart'
 alias lrt='ls -1Fcrt'
 alias lsd='ls -1F'                        # ls for Directories.
 
-alias prettify_json='python -mjson.tool'  # Pretty print json
+# Prettyprint some JSON text with a few back-ends, w/ optional CURL:
+# - 'json a-url-here' to curl-and-prettify
+# - '<command emitting JSON> | json' to just-prettify
+function json() {
+    # Obtain prettyprinter command string
+    if which jq > /dev/null; then
+        # Default to using jq as prettyprinter, it's quite nice for that alone
+        _pretty="jq -C ."
+    else
+        # Otherwise, fallback to Python's json module; Python is errywhere.
+        _pretty="python -m json.tool"
+        # Add pygmentize if it exists. (So, our absolute worst case is
+        # pretty-printed, but not colorized. Still useful.)
+        if which pygmentize > /dev/null; then
+            _pretty="${_pretty} | pygmentize -l json"
+        fi
+    fi
+    
+    # Insert a curl if args were given; otherwise assume stdin is being used.
+    if [[ -z $1 ]]; then
+        eval ${_pretty}
+    else
+        eval "curl -ks $2 \"$1\" | ${_pretty}"
+    fi | less -FR
+}
 
 t_debug "aliases: setting up node aliases"
 
@@ -156,6 +180,10 @@ alias since='git log --oneline --decorate $(git merge-base --fork-point master).
 alias gunm='echo -e "$(git ls-files --modified)\n$(git ls-files)" | sort | uniq -u'
 # Nuke files from repo history
 alias gnuke='sh ~/.dotfiles/bin/git-nuke.sh'
+
+function gcamp() {
+    git commit -a -m "$1" && git push
+}
 
 alias nvp='npm version patch'
 
@@ -392,6 +420,21 @@ lazy()
 # List of HTTP status codes
 httpcodes() {
   node -p 'require("http").STATUS_CODES' | sed -E "s/[{},'\]//g;s/^[ ]+//g"
+}
+
+# Heh.
+function _lolvim() {
+    _msg="THIS AIN'T VIM, BUDDY"
+    cowsay $_msg 2>/dev/null || echo $_msg
+}
+function :wq() { _lolvim }
+function :qa() { _lolvim }
+
+# Helpers to go from non-timestamped log output to something bin/logparse can
+# profile. Expects stdin.
+alias tss='ts -s "%H:%M:%.S"'
+function profile() {
+    tss | logparse $@
 }
 
 # Nice util for listing all declared functions. You use `type` to print them

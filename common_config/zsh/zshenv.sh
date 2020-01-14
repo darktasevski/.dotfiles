@@ -61,7 +61,9 @@ RBENV_PATH=$HOME/.rbenv/bin
 ARES_BIN_PATH=$PATH:/opt/webOS_TV_SDK/CLI/bin # LG webOS ares-cli - (it needs to be installed first)
 TIZEN_STUFF_PATH=${HOME}/tizen-studio/tools/ide/bin:${HOME}/tizen-studio/tools:${HOME}/tizen-studio/tools/emulator/bin
 
-export PATH=$PATH:${YARN_PATH}:${JENV_PATH}:${ANDROID_STUFF_PATH}:${LOCAL_SBIN_PATH}:${PY_3_PATH}:${RBENV_PATH}:${ARES_BIN_PATH}:$PATH
+export LG_WEBOS_TV_SDK_HOME="/opt/webOS_TV_SDK"
+
+export PATH=$PATH:${YARN_PATH}:${ANDROID_STUFF_PATH}:${LOCAL_SBIN_PATH}:${PY_3_PATH}:${ARES_BIN_PATH}:$PATH
 
 # Lazy load env variables, as those were adding 2 seconds to the shell startup time...
 # @see https://frederic-hemberger.de/articles/speed-up-initial-zsh-startup-with-lazy-loading/
@@ -69,7 +71,7 @@ function tizen() {
     # Execute only once
     unfunction "$0"
     if ! command -v tizen > /dev/null; then
-        export PATH=PATH:${TIZEN_STUFF_PATH}:$PATH
+        export PATH=$PATH:${TIZEN_STUFF_PATH}
     fi
 
     # Else execute command with provided args
@@ -83,7 +85,30 @@ function tizen() {
 function sdb() {
     unfunction "$0"
     if ! command -v sdb > /dev/null; then
-        export PATH=PATH:${TIZEN_STUFF_PATH}:$PATH
+        export PATH=$PATH:${TIZEN_STUFF_PATH}
+    fi
+
+    $0 "$@"
+
+    return 0;
+}
+
+# check if I need to lazy load ruby also
+function rbenv() {
+    unfunction "$0"
+    if ! command -v rbenv > /dev/null; then
+        export PATH=$PATH:${RBENV_PATH}
+    fi
+
+    $0 "$@"
+
+    return 0;
+}
+
+function jenv() {
+    unfunction "$0"
+    if ! command -v jenv > /dev/null; then
+        export PATH=$PATH:${JENV_PATH}
     fi
 
     $0 "$@"

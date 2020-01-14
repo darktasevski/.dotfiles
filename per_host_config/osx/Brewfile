@@ -93,6 +93,8 @@ brew "ssh-copy-id"
 brew "tree"
 brew "webkit2png"
 brew "zopfli"
+brew "archey"
+brew "exa"
 
 brew "elinks"
 brew "gnupg"
