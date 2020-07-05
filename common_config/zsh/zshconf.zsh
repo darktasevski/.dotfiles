@@ -2,8 +2,8 @@
 autoload -U promptinit; promptinit
 
 export HISTFILE=~/.zsh_history
-export HISTSIZE=100000 # The number of commands to save. C  an't be unset, like in bash
-export SAVEHIST=100000 # needed in order to save it somewhere
+export HISTSIZE=10000 # The number of commands to save. C  an't be unset, like in bash
+export SAVEHIST=10000 # needed in order to save it somewhere
 
 setopt HIST_EXPIRE_DUPS_FIRST    # Expire a duplicate event first when trimming history.
 setopt HIST_IGNORE_DUPS          # Do not record an event that was just recorded again.

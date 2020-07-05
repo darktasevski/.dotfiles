@@ -2,7 +2,7 @@
 cask_args appdir: "~/Applications"
 
 # Install GNU core utilities (those that come with OS X are outdated).
-# Don’t forget to add `$(brew --prefix coreutils)/libexec/gnubin` to `$PATH`.
+# Don't forget to add `$(brew --prefix coreutils)/libexec/gnubin` to `$PATH`.
 brew "coreutils"
 #sudo ln -s /usr/local/bin/gsha256sum /usr/local/bin/sha256sum
 
@@ -145,3 +145,4 @@ cask "webpquicklook"
 cask "suspicious-package"
 cask "quicklookase"
 cask "qlvideo"
+cask "lulu"

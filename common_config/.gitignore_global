@@ -54,7 +54,7 @@ atlassian-ide-plugin.xml
 .vscode
 
 # Project specific files that I do not want to check in changes to (withtout removing)
-*.min.js
+# *.min.js
 
 ## Node
 node_modules

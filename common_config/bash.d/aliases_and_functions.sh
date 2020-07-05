@@ -22,33 +22,16 @@ function is_mac() {
   fi
 }
 
-# Bash setup
-alias edrc="vim ~/.bashrc"
-alias sorcb="source ~/.bashrc"
-alias sorcz="source ~/.zshrc"
-
-alias edzrc="vim ~/.zshrc"
-alias edvrc="vim ~/.vimrc"
-
-# Conversions
-t_debug conversions
-# URL-encode strings
-alias urldecode='python -c "import sys, urllib as ul; print ul.unquote_plus(sys.argv[1])"'
-alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1])"'
-alias htmldecode='python -c "import sys, HTMLParser;h = HTMLParser.HTMLParser();print h.unescape(sys.argv[1])"'
-alias htmlencode='python3 -c "import sys, html; print(html.escape(sys.argv[1]))"'
-alias html2text='python -c "import sys,html2text;sys.stdout.write(html2text.html2text(sys.stdin.read().decode(\"utf-8\")))"'
-
 t_debug Use htop if available
 if command -v htop > /dev/null; then
     alias top='htop'
 fi
 
 # Use Hub if installed. Just using `hub` instead of `which hub` cuts 2 seconds of Cygwin load time
-t_debug Use hub if available
-if /usr/local/bin/hub help > /dev/null 2>&1; then
-    alias git='hub'
-fi
+# t_debug Use hub if available
+# if /usr/local/bin/hub help > /dev/null 2>&1; then
+#     alias git='hub'
+# fi
 
 t_debug Add custom ignore pattern for GNU ls
 IGNORE=""
@@ -63,14 +46,12 @@ alias ls='/bin/ls $IGNORE'
 
 t_debug small utils and aliases
 alias c=" clear"
-alias clean-temp='find -E ~ -type f -and -regex ".*~$|.*-ck.js|.*.tmp" -exec rm {} \;'
 alias cp="cp -i"                          # confirm before overwriting something
 alias df='df -h'                          # human-readable sizes
 alias free='free -m'                      # show sizes in MB
 alias grep='grep --color=tty -d skip'
 alias hh=" history"
-alias mkdir="mkdir -p"
-alias md="mkdir"
+alias md="mkdir -p"
 alias ping="ping -c 5"
 alias rmf='rm -rf'
 alias sudo="sudo "                        # makes sudo recognize aliases.
@@ -115,17 +96,9 @@ function json() {
     fi | less -FR
 }
 
-t_debug "aliases: setting up node aliases"
-
-# node commands - important that these are enclosed in single quotes to avoid expansion!
-alias npm-exec='PATH=$(npm bin):$PATH'
-alias eslint='$(npm bin)/eslint'
-alias prettier='$(npm bin)/prettier'
-
 t_debug "aliases: finished setting up node aliases"
 
 t_debug webserver aliases
-
 # webdev
 # it's so long because I enabled UTF8 support: https://stackoverflow.com/a/24517632/200987
 alias webserver='python -c "import SimpleHTTPServer; m = SimpleHTTPServer.SimpleHTTPRequestHandler.extensions_map; m['\'\''] = '\''text/plain'\''; m.update(dict([(k, v + '\'';charset=UTF-8'\'') for k, v in m.items()])); SimpleHTTPServer.test();"'
@@ -137,19 +110,13 @@ alias epoch=~/.bin/millis #  tool that we compile ourselves
 # find external ip
 alias my-ip='curl -s http://ipinfo.io/ip'
 alias my-ip-json='curl -s http://ifconfig.co/json'
-
 alias myip='ipconfig getifaddr en1 || ipconfig getifaddr en0'
-alias dig-ip="dig +short myip.opendns.com @resolver1.opendns.com"
 
 # Used with the git alias functions; gd, gds, gdw, gdws
 alias strip-diff-prefix='sed "s/^\([^-+ ]*\)[-+ ]/\\1/"'
 
-# "reminder aliases" for how to suspend and continue a process
-alias processes-suspend='killall -sSTOP '
-alias processes-start='killall -sSTART '
-
 # Shortcuts
-alias dwl=" cd ~/Downloads"
+alias ddl=" cd ~/Downloads"
 alias roj="cd ~/Projects"
 
 alias brewup='brew update && brew upgrade'
@@ -275,11 +242,11 @@ function bye-bye-branches() {
 # View commits in GitHub
 function gh-commit() {
     [[ -n $2 ]] && open "https://github.com/$1/commit/$2" && return
-    echo "Usage: gh-commit fatso83/razor-cli-node 779490"
+    echo "Usage: gh-commit puritanic/.dotfile fgjdkgbe4"
 }
 function gh-compare() {
     [[ -n $3 ]] &&  open "https://github.com/$1/compare/$2...$3" \
-    || echo "Usage: gh-compare fatso83/razor-cli-node 779490 master"
+    || echo "Usage: gh-compare puritanic/.dotfile fgjdkgbe4 master"
 }
 
 function tmux-restore () {
@@ -429,13 +396,6 @@ function _lolvim() {
 }
 function :wq() { _lolvim }
 function :qa() { _lolvim }
-
-# Helpers to go from non-timestamped log output to something bin/logparse can
-# profile. Expects stdin.
-alias tss='ts -s "%H:%M:%.S"'
-function profile() {
-    tss | logparse $@
-}
 
 # Nice util for listing all declared functions. You use `type` to print them
 alias list-functions='declare | egrep '\''^[[:alpha:]][[:alnum:]_]* ()'\''; echo -e "\nTo print a function definition, issue \`type function-name\` "'
