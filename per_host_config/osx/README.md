@@ -1,9 +1,9 @@
 # Mac OSX setup checklist
 
-- Update OSX
-- Set up ssh and gpg keys for Github/Gitlab
-- Install Chrome, Password manager, Alfred, Dropbox, Teams/Slack, Webstorm + Webstorm settings
-- Download .fonts and ngrok
+-   Update OSX
+-   Set up ssh and gpg keys for Github/Gitlab
+-   Install Chrome, Password manager, Alfred, Dropbox, Teams/Slack, Webstorm + Webstorm settings
+-   Download .fonts and ngrok
 
 ## Installing ngrok on OSX
 
@@ -12,7 +12,9 @@
 3. Create a symlink (instructions below)
 
 ### Creating a symlink to ngrok
+
 Run the following two commands in Terminal to create the symlink.
+
 ```shell
 # cd into your local bin directory
 cd /usr/local/bin

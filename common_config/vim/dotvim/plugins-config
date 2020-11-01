@@ -38,7 +38,7 @@ Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}          " YCM altern
 Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'airblade/vim-gitgutter'
-Plug 'SirVer/ultisnips'
+" Plug 'SirVer/ultisnips'
 Plug 'mlaursen/vim-react-snippets'
 Plug 'junegunn/goyo.vim'                      						" edit in without any distraction
 Plug 'gregsexton/MatchTag'											" highlights the matching HTML tag when the cursor is positioned on a tag.

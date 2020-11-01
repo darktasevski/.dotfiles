@@ -81,3 +81,5 @@ source /usr/local/share/zsh-history-substring-search/zsh-history-substring-searc
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 if which jenv > /dev/null; then eval "$(jenv init -)"; fi
+# test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+

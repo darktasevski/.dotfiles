@@ -1,8 +1,8 @@
 [user]
-    name = Darkø Tasevski
-    email = darko.tasevski@redbox.com # office mail
+	name = Darkø Tasevski
+	email = darko.tasevski@redbox.com
+	signingkey = 2D11296FC902980A
     # email = darktasevski@gmail.com # Home mail
-    signingkey = 58AC580B134D81B6
 
 [gpg]
 	program = gpg

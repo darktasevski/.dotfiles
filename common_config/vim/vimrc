@@ -118,6 +118,9 @@ nnoremap <leader>tt                    :tabedit<Space>
 " \xs to open Spotify
 nnoremap <leader>xs                    :!open /Applications/Spotify.app<CR>
 
+let g:python_host_prog  = '/usr/bin/python'
+let g:python3_host_prog = '/usr/bin/python3'
+
 " ================================================================
 " Pluggins
 " ================================================================

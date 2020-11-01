@@ -71,7 +71,7 @@ if [[ "$(uname)" == "Darwin" ]]; then                        # Do something unde
 #    chmod -R g+w /Library/Caches/Homebrew
 
     # This is a bit better one @see https://gist.github.com/irazasyed/7732946
-    sudo chown -R $(whoami) $(brew --prefix)/*
+    # sudo chown -R $(whoami) $(brew --prefix)/*
     sudo mkdir -p /usr/local/sbin /usr/local/Frameworks
     sudo chown -R $(whoami) /usr/local/sbin /usr/local/Frameworks
     sudo install -d -o $(whoami) -g admin /usr/local/Frameworks
@@ -138,9 +138,9 @@ ln -sf ~/.vimrc ~/.config/nvim/init.vim
 # ============================
 # Zsh setup
 # ============================
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" "" --unattended
-sudo bash -c "echo $(which zsh) >> /etc/shells"
-chsh -s $(which zsh)
+# sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" "" --unattended
+# sudo bash -c "echo $(which zsh) >> /etc/shells"
+# chsh -s $(which zsh)
 
 [[ ! -e "$DEST"/.zshrc ]] && rm "$DEST"/.zshrc
 ln -sfv "$SCRIPT_DIR"/zshrc "$DEST"/.zshrc
