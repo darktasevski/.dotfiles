@@ -21,7 +21,7 @@ if ! command -v brew > /dev/null; then
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
     brew update
-    brew upgrade --all
+    brew upgrade
 fi
 
 # TODO: See if brewfile can be used for this
