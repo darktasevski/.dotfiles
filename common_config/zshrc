@@ -50,22 +50,16 @@ zplug "chrissicool/zsh-256color", from:github
 zplug "djui/alias-tips", from:github
 zplug "zlsun/solarized-man", from:github
 zplug "zsh-users/zsh-autosuggestions" # suggests commands as you type based on history and completions.
-# zplug "zsh-users/zsh-history-substring-search", defer:3
 # zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-syntax-highlighting", from:github, defer:2
 
-# Theme!
-#zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
-#zplug "mafredri/zsh-async", from:github, defer:0 # Async for zsh, used by pure
-#zplug "bhilburn/powerlevel9k", use:powerlevel9k.zsh-theme
-
 # Install plugins if there are plugins that have not been installed
-#if ! zplug check --verbose; then
-#    printf "Install? [y/N]: "
-#    if read -r -q; then
-#        echo; zplug install
-#    fi
-#fi
+if ! zplug check --verbose; then
+   printf "Install? [y/N]: "
+   if read -r -q; then
+       echo; zplug install
+   fi
+fi
 
 # Then, source plugins and add commands to $PATH
 zplug load
@@ -82,4 +76,3 @@ source /usr/local/share/zsh-history-substring-search/zsh-history-substring-searc
 
 if which jenv > /dev/null; then eval "$(jenv init -)"; fi
 # test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-

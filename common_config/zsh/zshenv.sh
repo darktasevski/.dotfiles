@@ -24,8 +24,7 @@ export VISUAL='vim'
 export EDITOR='vim'
 export TERM="xterm-256color"
 #https://github.com/keybase/keybase-issues/issues/2798
-GPG_TTY=$(tty)
-export GPG_TTY
+export GPG_TTY=$(tty)
 # Prefer US English and use UTF-8.
 export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8

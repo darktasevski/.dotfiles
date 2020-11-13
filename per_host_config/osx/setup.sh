@@ -27,10 +27,10 @@ fi
 # TODO: See if brewfile can be used for this
 echo "Installing local apps using Homebrew"
 
-#brew bundle install --verbose
+brew bundle install --verbose
 
-LINE='eval "$(rbenv init -)"'
-grep -q "$LINE" ~/.extra || echo "$LINE" >> ~/.extra
+# LINE='eval "$(rbenv init -)"'
+# grep -q "$LINE" ~/.extra || echo "$LINE" >> ~/.extra
 
 brew postinstall python3
 
@@ -50,9 +50,9 @@ fi
 brew cleanup
 
 # Copy fonts if fetched from Github
-if [[ -d ~/.fonts ]]; then
-  cp -R ~/.fonts ~/Library/Fonts
-fi
+# if [[ -d ~/.fonts ]]; then
+#   cp -R ~/.fonts ~/Library/Fonts
+# fi
 
 # Reveal IP address, hostname, OS version, etc. when clicking the clock
 # in the login window
@@ -64,13 +64,13 @@ sudo defaults write /Library/Preferences/com.apple.loginwindow AdminHostInfo Hos
 # defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 
 # Disable “natural” (Lion-style) scrolling
-# defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
+defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
 
 # Increase sound quality for Bluetooth headphones/headsets
 defaults write com.apple.BluetoothAudioAgent "Apple Bitpool Min (editable)" -int 40
 
 # Disable auto-correct
-defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
+# defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
 
 # Save screenshots to the Pictures/Screenshots
 mkdir ${HOME}/Pictures/Screenshots
@@ -84,11 +84,8 @@ defaults write com.apple.screencapture type -string "png"
 # defaults write com.apple.finder ShowMountedServersOnDesktop -bool true
 # defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool true
 
-# Finder: show all filename extensions
-#defaults write NSGlobalDomain AppleShowAllExtensions -bool true
-
 # When performing a search, search the current folder by default
-# defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
+defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
 
 # Privacy: don’t send search queries to Apple
 defaults write com.apple.Safari UniversalSearchEnabled -bool false

@@ -1,1 +1,1 @@
-/Users/banshee/.vimrc
+/Users/dtasevski/.vimrc

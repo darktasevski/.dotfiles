@@ -11,4 +11,3 @@ fi
 
 # Add the directory of Tizen .NET Command Line Tools to user path.
 export PATH=/Users/banshee/Tizen/SDK/tools/ide/bin:$PATH
-export GPG_TTY=$(tty)
