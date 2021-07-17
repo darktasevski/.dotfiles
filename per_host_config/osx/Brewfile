@@ -1,27 +1,72 @@
 # specify a directory to install
 cask_args appdir: "~/Applications"
 
-# Install GNU core utilities (those that come with OS X are outdated).
-# Don't forget to add `$(brew --prefix coreutils)/libexec/gnubin` to `$PATH`.
-brew "coreutils"
-#sudo ln -s /usr/local/bin/gsha256sum /usr/local/bin/sha256sum
-
-# Install some other useful utilities like `sponge`.
-brew "moreutils"
-# Install GNU `find`, `locate`, `updatedb`, and `xargs`, `g`-prefixed.
-brew "findutils"
-# Install GNU `sed`, overwriting the built-in `sed`.
-brew "gnu-sed"
-# Install `wget`
-brew "wget"
-
 # Install Python
 brew "python", link: false
 brew "python3"
 
-# Install ruby-build and rbenv
-brew "ruby-build"
-#brew "rbenv"
+# brew leaves | xargs -n1 brew desc
+brew "ack" # Search tool like grep, but optimized for programmers
+brew "adns" # C/C++ resolver library and DNS resolver utilities
+brew "aws-sam-cli" # AWS SAM CLI 🐿 is a tool for local development and testing of Serverless applications
+brew "awscli" # Official Amazon AWS command-line interface
+brew "bandwhich" # Terminal bandwidth utilization tool
+brew "sfnt2woff" # Convert existing TrueType/OpenType fonts to WOFF format
+brew "sfnt2woff-zopfli" # WOFF utilities with Zopfli compression
+brew "coreutils" # GNU File, Shell, and Text utilities
+brew "diff-so-fancy" # Good-lookin' diffs with diff-highlight and more
+brew "exa" # Modern replacement for 'ls'
+brew "fd" # Simple, fast and user-friendly alternative to find
+brew "findutils" # Collection of GNU find, xargs, and locate
+brew "git" # Distributed revision control system
+brew "git-crypt" # Enable transparent encryption/decryption of files in a git repo
+brew "git-extras" # Small git utilities
+brew "git-lfs" # Git extension for versioning large files
+brew "gnu-sed" # GNU implementation of the famous stream editor
+brew "gnupg" # GNU Pretty Good Privacy (PGP) package
+brew "dtool" # Command-line tool collection to assist development
+brew "highlight" # Convert source code to formatted text with syntax highlighting
+brew "htop" # Improved top (interactive process viewer)
+brew "hyperfine" # Command-line benchmarking tool
+brew "jansson" # C library for encoding, decoding, and manipulating JSON
+brew "jenv" # Manage your Java environment
+brew "librsvg" # Library to render SVG files using Cairo
+brew "luajit" # Just-In-Time Compiler (JIT) for the Lua programming language
+brew "luarocks" # Package manager for the Lua programming language
+brew "lynx" # Text-based web browser
+brew "maven" # Java-based project management
+brew "moreutils" # Collection of tools that nobody wrote when UNIX was young
+brew "mysql" # Open source relational database management system
+brew "n" # Node version management
+brew "neofetch" # Fast, highly customisable system info script
+brew "neovim" # Ambitious Vim-fork focused on extensibility and agility
+brew "ngrep" # Network grep
+brew "nmap" # Port scanning utility for large networks
+brew "onefetch" # Git repository summary on your terminal
+brew "openconnect" # Open client for Cisco AnyConnect VPN
+brew "pandoc" # Swiss-army knife of markup format conversion
+brew "php" # General-purpose scripting language
+brew "pinentry-mac" # Pinentry for GPG on Mac
+brew "pv" # Monitor data's progress through a pipe
+# brew "reattach-to-user-namespace" # Reattach process (e.g., tmux) to background
+# brew "tmux" # Terminal multiplexer
+brew "rename" # Perl-powered file rename script with many helpful built-ins
+brew "powerlevel10k" # A Zsh Theme
+# brew "rpm" # Standard unix software packaging tool
+# brew "ruby-build" # Install various Ruby versions and implementations
+brew "rust" # Safe, concurrent, practical language
+brew "ssh-copy-id" # Add a public key to a remote machine's authorized_keys file
+brew "telnet" # User interface to the TELNET protocol
+brew "tokei" # Program that allows you to count code, quickly
+brew "tree" # Display directories as trees (with optional color/HTML output)
+brew "watchman" # Watch files and take action when they change
+brew "webkit2png" # Create screenshots of webpages from the terminal
+brew "wget" # Internet file retriever
+brew "woff2" # Utilities to create and convert Web Open Font File (WOFF) files
+brew "yarn" # JavaScript package manager
+brew "z" # Tracks most-used directories to make cd smarter
+brew "zopfli" # New zlib (gzip, deflate) compatible compressor
+brew "zsh-history-substring-search" # Zsh port of Fish shell's history search
 
 #tap "heroku/brew"
 tap "homebrew/bundle"
@@ -35,87 +80,14 @@ tap "adoptopenjdk/openjdk"
 tap "bramstein/webfonttools"
 tap "caskroom/fonts"
 
-brew "ack"
-brew "bandwhich"
-brew "sfnt2woff"
-brew "sfnt2woff-zopfli"
-brew "woff2"
-brew "diff-so-fancy"
-brew "exa"
-brew "fd"
-brew "git-crypt"
-brew "git-extras"
-brew "git-lfs"
-brew "git"
-brew "gnupg"
-brew "guoxbin/guoxbin/dtool"
-brew "highlight"
-brew "htop"
-brew "hyperfine"
-brew "jenv"
-brew "luarocks"
-brew "lynx"
-brew "n"
-brew "neofetch"
-brew "neovim"
-brew "ngrep"
-brew "nmap"
-brew "onefetch"
-brew "openconnect"
-brew "pandoc"
-brew "pinentry-mac"
-brew "pv"
-brew "reattach-to-user-namespace"
-brew "rename"
-brew "romkatv/powerlevel10k/powerlevel10k"
-brew "rpm"
-brew "ruby-build"
-brew "rust"
-brew "ssh-copy-id"
-brew "telnet"
-brew "tmux"
-brew "tokei"
-brew "tree"
-brew "watchman"
-brew "webkit2png"
-brew "yarn"
-brew "z"
-brew "zopfli"
-brew "zsh-history-substring-search"
-
-## Install some CTF tools; see https://github.com/ctfs/write-ups.
-# brew "aircrack-ng"
-# brew "bfg"
-# brew "binutils"
-# brew "binwalk"
-# brew "cifer"
-# brew "dex2jar"
-# brew "dns2tcp"
-# brew "fcrackzip"
-# brew "foremost"
-# brew "hashpump"
-# brew "hydra"
-# brew "john"
-# brew "knock"
-# brew "netpbm"
-# brew "pngcheck"
-# brew "socat"
-# brew "sqlmap"
-# brew "tcpflow"
-# brew "tcpreplay"
-# brew "tcptrace"
-# brew "ucspi-tcp # `tcpserver` etc."
-# brew "xz"
-
 cask "caskroom/fonts/font-hack-nerd-font"
-cask "spotify"
+# cask "spotify"
 cask "suspicious-package"
 cask "the-unarchiver"
 cask "transmission"
-cask "virtualbox"
-cask "vlc"
+# cask "virtualbox"
+# cask "vlc" # Switched to IINA
 cask "adoptopenjdk13"
-# cask "vscodium"
 
 ## Install developer friendly quick look plugins; see https://github.com/sindresorhus/quick-look-plugins
 cask "qlcolorcode"

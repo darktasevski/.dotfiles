@@ -58,19 +58,21 @@ export FZF_DEFAULT_COMMAND='fd -t file -LH -E .git'
 
 LOCAL_SBIN_PATH="/usr/local/sbin:$PATH"
 PY_3_PATH="$HOME/Library/Python/3.7/bin:$PATH"
-ANDROID_STUFF_PATH=${ANDROID_HOME}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools:${ANDROID_NDK_HOME}
+# ANDROID_STUFF_PATH=${ANDROID_HOME}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools:${ANDROID_NDK_HOME}
 YARN_PATH="$PATH:$(yarn global bin)" # Point to Yarn global installs
 RBENV_PATH=$HOME/.rbenv/bin
 ARES_BIN_PATH=$PATH:/opt/webOS_TV_SDK/CLI/bin # LG webOS ares-cli - (it needs to be installed first)
-TIZEN_STUFF_PATH=${HOME}/Tizen/SDK/tools/ide/bin:${HOME}/Tizen/SDK/tools:${HOME}/Tizen/SDK/tools/emulator/bin
+TIZEN_STUFF_PATH=${HOME}/tizen-studio/tools/ide/bin:${HOME}/tizen-studio/tools:${HOME}/tizen-studio/tools/emulator/bin
 RUBY_GEMS=/usr/local/lib/ruby/gems/2.7.0/bin
+
+export MAVEN_HOME=/usr/local/Cellar/maven/3.8.1
 
 export LG_WEBOS_TV_SDK_HOME="/opt/webOS_TV_SDK"
 
 JENV_PATH="$HOME/.jenv/bin:$PATH"
 export JENV_ROOT=/usr/local/opt/jenv
 
-export PATH=$PATH:${YARN_PATH}:${ANDROID_STUFF_PATH}:${LOCAL_SBIN_PATH}:${PY_3_PATH}:${ARES_BIN_PATH}:${RUBY_GEMS}:$PATH
+export PATH=$PATH:${YARN_PATH}:${LOCAL_SBIN_PATH}:${PY_3_PATH}:${ARES_BIN_PATH}:${RUBY_GEMS}:${MAVEN_HOME}:$PATH
 
 # Lazy load env variables, as those were adding 2 seconds to the shell startup time...
 # @see https://frederic-hemberger.de/articles/speed-up-initial-zsh-startup-with-lazy-loading/

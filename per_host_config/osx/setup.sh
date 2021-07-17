@@ -34,18 +34,6 @@ brew bundle install --verbose
 
 brew postinstall python3
 
-#heroku update
-
-## Node Version Manager
-if ! command -v n > /dev/null; then
-    brew install n
-    sudo n latest
-fi
-
-if ! command -v yarn > /dev/null; then
-    brew install yarn
-fi
-
 # Remove outdated versions from the cellar.
 brew cleanup
 
@@ -64,10 +52,10 @@ sudo defaults write /Library/Preferences/com.apple.loginwindow AdminHostInfo Hos
 # defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 
 # Disable “natural” (Lion-style) scrolling
-defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
+# defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
 
 # Increase sound quality for Bluetooth headphones/headsets
-defaults write com.apple.BluetoothAudioAgent "Apple Bitpool Min (editable)" -int 40
+# defaults write com.apple.BluetoothAudioAgent "Apple Bitpool Min (editable)" -int 40
 
 # Disable auto-correct
 # defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
@@ -107,12 +95,12 @@ defaults write NSGlobalDomain WebKitDeveloperExtras -bool true
 defaults write org.m0k.transmission UseIncompleteDownloadFolder -bool true
 defaults write org.m0k.transmission IncompleteDownloadFolder -string "${HOME}/Downloads"
 # Don’t prompt for confirmation before downloading
-defaults write org.m0k.transmission DownloadAsk -bool false
+# defaults write org.m0k.transmission DownloadAsk -bool false
 
 # Trash original torrent files
 defaults write org.m0k.transmission DeleteOriginalTorrent -bool true
 
 # Hide the donate message
-defaults write org.m0k.transmission WarningDonate -bool false
+# defaults write org.m0k.transmission WarningDonate -bool false
 # Hide the legal disclaimer
 defaults write org.m0k.transmission WarningLegal -bool false

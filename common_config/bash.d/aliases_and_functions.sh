@@ -120,7 +120,6 @@ alias ddl=" cd ~/Downloads"
 alias roj="cd ~/Projects"
 
 alias brewup='brew update && brew upgrade'
-alias fact="elinks -dump randomfunfacts.com | sed -n '/^| /p' | tr -d \|"
 alias tree='tree -C -I $(git check-ignore * 2>/dev/null | tr "\n" "|").git'
 # `tre` is a shorthand for `tree` with hidden files and color enabled, ignoring
 # the `.git` directory, listing directories first. The output gets piped into
@@ -152,15 +151,25 @@ function gcamp() {
     git commit -a -m "$1" && git push
 }
 
+commit_types="feat: (new feature for the user, not a new feature for build script)
+fix: (bug fix for the user, not a fix to a build script)
+docs: (changes to the documentation)
+style: (formatting, missing semicolons, etc; no production code change)
+refactor: (refactoring production code, eg. renaming a variable)
+test: (adding missing tests, refactoring tests; no production code change)
+build: (changes to build tools or CI/CD configuration)
+chore: (updating npm scripts etc; no production code change)"
+
+alias cmt='echo $commit_types'
+
 alias nvp='npm version patch'
 
-#SYSTEM RELATED ALIASES :
+# SYSTEM RELATED ALIASES :
 alias restart="sudo systemctl restart"
 alias start="sudo systemctl start"
 alias status="sudo systemctl status"
 alias stop="sudo systemctl stop"
-alias sys-info='inxi -Fxz'
-alias view_recent_alerts='sudo journalctl -p err..alert -b'
+alias sysinfo='inxi -Fxz'
 
 # Show active network interfaces
 alias ifactive="ifconfig | pcregrep -M -o '^[^\t:]+:([^\n]|\n\t)*status: active'"
@@ -170,9 +179,7 @@ alias httpdump="sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET
 
 # Yarn aliases
 alias ya="yarn add"
-alias yanl="yarn add --no-lockfile"
 alias ycc="yarn cache clean"
-alias yrm="yarn remove"
 alias yrn="yarn run"
 alias yui="yarn upgrade-interactive"
 
@@ -240,36 +247,36 @@ function bye-bye-branches() {
 }
 
 # View commits in GitHub
-function gh-commit() {
-    [[ -n $2 ]] && open "https://github.com/$1/commit/$2" && return
-    echo "Usage: gh-commit puritanic/.dotfile fgjdkgbe4"
-}
-function gh-compare() {
-    [[ -n $3 ]] &&  open "https://github.com/$1/compare/$2...$3" \
-    || echo "Usage: gh-compare puritanic/.dotfile fgjdkgbe4 master"
-}
+# function gh-commit() {
+#     [[ -n $2 ]] && open "https://github.com/$1/commit/$2" && return
+#     echo "Usage: gh-commit puritanic/.dotfile fgjdkgbe4"
+# }
+# function gh-compare() {
+#     [[ -n $3 ]] &&  open "https://github.com/$1/compare/$2...$3" \
+#     || echo "Usage: gh-compare puritanic/.dotfile fgjdkgbe4 master"
+# }
 
-function tmux-restore () {
-    if [[ -n $1 ]]; then
-        local setup_file="$HOME/.tmux/$1.proj"
+# function tmux-restore () {
+#     if [[ -n $1 ]]; then
+#         local setup_file="$HOME/.tmux/$1.proj"
 
-        if [[ -e ${setup_file} ]]; then
-            $(command -v tmux) new-session "tmux $2 source-file $setup_file"
-        else
-            printf "\nNo such file \"$setup_file\".\nListing existing files:\n\n"
-            ls -1 ~/.tmux/*.proj
-            return 1
-        fi
-    else
-        echo "Usage: tmux-restore my-js-setup <optional command>"
-        return 1
-    fi
-}
+#         if [[ -e ${setup_file} ]]; then
+#             $(command -v tmux) new-session "tmux $2 source-file $setup_file"
+#         else
+#             printf "\nNo such file \"$setup_file\".\nListing existing files:\n\n"
+#             ls -1 ~/.tmux/*.proj
+#             return 1
+#         fi
+#     else
+#         echo "Usage: tmux-restore my-js-setup <optional command>"
+#         return 1
+#     fi
+# }
 
 # https://twitter.com/climagic/status/551435572490010624
 # same can be done using VLC => vlc v4l2:///dev/video0
 # Use your webcam and mplayer as a mirror with this function.
-function mirror() { mplayer -vf mirror -v tv:// -tv device=/dev/video0:driver=v4l2; }
+# function mirror() { mplayer -vf mirror -v tv:// -tv device=/dev/video0:driver=v4l2; }
 
 #make a directory and go on it
 function mkcd() { mkdir -p "$@" && eval cd "\"\$$#\""; }
@@ -384,11 +391,6 @@ lazy()
 # lazy "source <(kubectl completion zsh)" kubectl
 # lazy "source <(microk8s.kubectl completion zsh)" microk8s.kubectl
 
-# List of HTTP status codes
-httpcodes() {
-  node -p 'require("http").STATUS_CODES' | sed -E "s/[{},'\]//g;s/^[ ]+//g"
-}
-
 # Heh.
 function _lolvim() {
     _msg="THIS AIN'T VIM, BUDDY"
@@ -402,4 +404,3 @@ alias list-functions='declare | egrep '\''^[[:alpha:]][[:alnum:]_]* ()'\''; echo
 alias vim='nvim'
 
 t_debug "global aliases and functions finished"
-

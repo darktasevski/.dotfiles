@@ -30,7 +30,7 @@ if [[ -d "$DEST"/.bash_completion.d ]]; then
   rm -r "$DEST"/.bash_completion.d
 fi
 
-[[ ! -e "$DEST/.tmux" ]] && git clone https://github.com/gpakosz/.tmux.git "$DEST/.tmux";
+# [[ ! -e "$DEST/.tmux" ]] && git clone https://github.com/gpakosz/.tmux.git "$DEST/.tmux";
 
 # ============================
 # Create symlinks
@@ -43,9 +43,9 @@ for file in "$SCRIPT_DIR"/zsh/*; do
   ln -sfv "$file" "${ZSH_DIR}"/
 done
 
-for file in "$SCRIPT_DIR"/tmux/*.conf "$SCRIPT_DIR"/tmux/*.proj; do
-  ln -sfv "$file" "${DEST}/.tmux/"
-done
+# for file in "$SCRIPT_DIR"/tmux/*.conf "$SCRIPT_DIR"/tmux/*.proj; do
+#   ln -sfv "$file" "${DEST}/.tmux/"
+# done
 
 ln -sv "$SCRIPT_DIR"/bash_completion.d "$DEST"/.bash_completion.d
 ln -sfv "$SCRIPT_DIR"/.profile "$DEST"/.profile
@@ -54,8 +54,8 @@ ln -sfv "$SCRIPT_DIR"/.gitconfig "$DEST"/.gitconfig
 ln -sfv "$SCRIPT_DIR"/.gitignore_global "$DEST"/.gitignore_global
 ln -sfv "$SCRIPT_DIR"/.gitattributes_global "$DEST"/.gitattributes_global
 ln -sfv "$SCRIPT_DIR"/pystartup "$DEST"/.pystartup
-ln -sfv "$DEST"/.tmux/.tmux.conf "$DEST"/.tmux.conf
-ln -sfv "$DEST"/.tmux/.tmux.conf.local "$DEST"/.tmux.conf.local
+# ln -sfv "$DEST"/.tmux/.tmux.conf "$DEST"/.tmux.conf
+# ln -sfv "$DEST"/.tmux/.tmux.conf.local "$DEST"/.tmux.conf.local
 ln -sfv "$SCRIPT_DIR"/.npmrc "$DEST"/.npmrc
 
 # @see https://stackoverflow.com/a/17072017/7453363 for more OSs
@@ -75,6 +75,16 @@ if [[ "$(uname)" == "Darwin" ]]; then                        # Do something unde
     sudo mkdir -p /usr/local/sbin /usr/local/Frameworks
     sudo chown -R $(whoami) /usr/local/sbin /usr/local/Frameworks
     sudo install -d -o $(whoami) -g admin /usr/local/Frameworks
+
+	## Node Version Manager
+	if ! command -v n > /dev/null; then
+		brew install n
+		sudo n latest
+	fi
+
+	if ! command -v yarn > /dev/null; then
+		brew install yarn
+	fi
 
     if ! command -v zsh > /dev/null; then
         brew install zsh

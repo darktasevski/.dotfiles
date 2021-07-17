@@ -63,5 +63,5 @@ node_modules
 .env
 
 ## Lockfiles
-*.lock
-*-lock.*
+# *.lock
+# *-lock.*
