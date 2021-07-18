@@ -52,6 +52,7 @@ zplug "zlsun/solarized-man", from:github
 zplug "zsh-users/zsh-autosuggestions" # suggests commands as you type based on history and completions.
 # zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-syntax-highlighting", from:github, defer:2
+zplug romkatv/powerlevel10k, as:theme, depth:1
 
 # Install plugins if there are plugins that have not been installed
 if ! zplug check --verbose; then
@@ -67,7 +68,7 @@ zplug load
 # [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # eval "$(starship init zsh)"
-source /usr/local/opt/powerlevel10k/powerlevel10k.zsh-theme
+# source /usr/local/opt/powerlevel10k/powerlevel10k.zsh-theme
 source /usr/local/share/zsh-history-substring-search/zsh-history-substring-search.zsh
 # zprof
 

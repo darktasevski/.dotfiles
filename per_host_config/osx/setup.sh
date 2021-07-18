@@ -24,7 +24,6 @@ if ! command -v brew > /dev/null; then
     brew upgrade
 fi
 
-# TODO: See if brewfile can be used for this
 echo "Installing local apps using Homebrew"
 
 brew bundle install --verbose
