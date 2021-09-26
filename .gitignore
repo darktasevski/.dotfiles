@@ -28,7 +28,6 @@ yarn-error.log*
 dist/
 build/
 
-
 ### SublimeText ###
 # cache files for sublime text
 *.tmlanguage.cache
@@ -41,7 +40,6 @@ build/
 # project files should be checked into the repository, unless a significant
 # proportion of contributors will probably not be using SublimeText
 # *.sublime-project
-
 
 ### VisualStudioCode ###
 .vscode/*
@@ -58,7 +56,6 @@ modules.xml
 ### Vim ###
 
 .vim/plugged
-
 
 ### System Files ###
 .DS_Store

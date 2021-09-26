@@ -4,30 +4,30 @@ MAIN_DIR="$HOME"
 DEST="${MAIN_DIR}"
 BASH_DIR="${MAIN_DIR}/.bash.d"
 ZSH_DIR="${MAIN_DIR}/.zsh"
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-pushd "$SCRIPT_DIR" > /dev/null
+pushd "$SCRIPT_DIR" >/dev/null
 
 source "$SCRIPT_DIR/bash.d/colors.sh"
 
 if [[ ! -e "$MAIN_DIR" ]]; then
-  echo Destination "${MAIN_DIR}" does not exist
-  exit 1
+	echo Destination "${MAIN_DIR}" does not exist
+	exit 1
 fi
 
 # ============================
 # Create files and dirs
 # ============================
 if [[ ! -e "$BASH_DIR" ]]; then
-  mkdir "${BASH_DIR}"
+	mkdir "${BASH_DIR}"
 fi
 
 if [[ ! -e "$ZSH_DIR" ]]; then
-  mkdir "${ZSH_DIR}"
+	mkdir "${ZSH_DIR}"
 fi
 
 if [[ -d "$DEST"/.bash_completion.d ]]; then
-  rm -r "$DEST"/.bash_completion.d
+	rm -r "$DEST"/.bash_completion.d
 fi
 
 # [[ ! -e "$DEST/.tmux" ]] && git clone https://github.com/gpakosz/.tmux.git "$DEST/.tmux";
@@ -36,11 +36,11 @@ fi
 # Create symlinks
 # ============================
 for file in "$SCRIPT_DIR"/bash.d/*; do
-  ln -sfv "$file" "${BASH_DIR}"/
+	ln -sfv "$file" "${BASH_DIR}"/
 done
 
 for file in "$SCRIPT_DIR"/zsh/*; do
-  ln -sfv "$file" "${ZSH_DIR}"/
+	ln -sfv "$file" "${ZSH_DIR}"/
 done
 
 # for file in "$SCRIPT_DIR"/tmux/*.conf "$SCRIPT_DIR"/tmux/*.proj; do
@@ -59,61 +59,62 @@ ln -sfv "$SCRIPT_DIR"/pystartup "$DEST"/.pystartup
 ln -sfv "$SCRIPT_DIR"/.npmrc "$DEST"/.npmrc
 
 # @see https://stackoverflow.com/a/17072017/7453363 for more OSs
-if [[ "$(uname)" == "Darwin" ]]; then                        # Do something under Mac OS X platform
-    echo  -n -e "$(blue "Installing OSX needful\n")"
+if [[ "$(uname)" == "Darwin" ]]; then # Do something under Mac OS X platform
+	echo -n -e "$(blue "Installing OSX needful\n")"
 
-    # Make sure everything under /usr/local belongs to the group admin; and
-    # Make sure anyone from the group admin can write to anything under /usr/local.
-    # This is not the greatest solution tho
-#    chgrp -R admin /usr/local
-#    chmod -R g+w /usr/local
-#    chgrp -R admin /Library/Caches/Homebrew
-#    chmod -R g+w /Library/Caches/Homebrew
+	# Make sure everything under /usr/local belongs to the group admin; and
+	# Make sure anyone from the group admin can write to anything under /usr/local.
+	# This is not the greatest solution tho
+	#    chgrp -R admin /usr/local
+	#    chmod -R g+w /usr/local
+	#    chgrp -R admin /Library/Caches/Homebrew
+	#    chmod -R g+w /Library/Caches/Homebrew
 
-    # This is a bit better one @see https://gist.github.com/irazasyed/7732946
-    # sudo chown -R $(whoami) $(brew --prefix)/*
-    sudo mkdir -p /usr/local/sbin /usr/local/Frameworks
-    sudo chown -R $(whoami) /usr/local/sbin /usr/local/Frameworks
-    sudo install -d -o $(whoami) -g admin /usr/local/Frameworks
+	# This is a bit better one @see https://gist.github.com/irazasyed/7732946
+	# sudo chown -R $(whoami) $(brew --prefix)/*
+	sudo mkdir -p /usr/local/sbin /usr/local/Frameworks
+	sudo chown -R $(whoami) /usr/local/sbin /usr/local/Frameworks
+	sudo install -d -o $(whoami) -g admin /usr/local/Frameworks
 
 	## Node Version Manager
-	if ! command -v n > /dev/null; then
+	if ! command -v n >/dev/null; then
 		brew install n
 		sudo n latest
 	fi
 
-	if ! command -v yarn > /dev/null; then
+	if ! command -v yarn >/dev/null; then
 		brew install yarn
 	fi
 
-    if ! command -v zsh > /dev/null; then
-        brew install zsh
-    fi
+	if ! command -v zsh >/dev/null; then
+		brew install zsh
+	fi
 
-    if ! command -v neovim > /dev/null; then
-        brew install neovim
-    fi
+	if ! command -v neovim >/dev/null; then
+		brew install neovim
+	fi
 elif [[ "$(expr substr $(uname -s) 1 5)" == "Linux" ]]; then # Do something under GNU/Linux platform
-    echo  -n -e "$(blue "Installing Linux needful\n")"
-#    sudo pacman -Sy --noconfirm curl vim vim-runtime        # Manjaro
-    sudo zypper install -y zsh vim neovim make               # openSUSE
+	echo -n -e "$(blue "Installing Linux needful\n")"
+	#    sudo pacman -Sy --noconfirm curl vim vim-runtime        # Manjaro
+	sudo zypper install -y zsh vim neovim make # openSUSE
 
-    # ============================
-    # Node.js, npm & yarn setup, only for linuxes, we're going to install those later via brew for osx
-    # ============================
+	# ============================
+	# Node.js, npm & yarn setup, only for linuxes, we're going to install those later via brew for osx
+	# ============================
 
-    # Install n - Node version manager
-    if ! command -v n >> /dev/null; then
-        curl -L https://git.io/n-install | N_PREFIX=~/.n bash
-        # Export N_PREFIX here to make node/npm available to the rest of the script
-        export N_PREFIX="$HOME/.n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).
-    fi
+	# Install n - Node version manager
+	if ! command -v n >>/dev/null; then
+		curl -L https://git.io/n-install | N_PREFIX=~/.n bash
+		# Export N_PREFIX here to make node/npm available to the rest of the script
+		export N_PREFIX="$HOME/.n"
+		[[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin" # Added by n-install (see http://git.io/n-install-repo).
+	fi
 
-    # Install yarn
-    if ! command -v yarn >> /dev/null; then
-        curl -o- -L https://yarnpkg.com/install.sh | bash
-        export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
-    fi
+	# Install yarn
+	if ! command -v yarn >>/dev/null; then
+		curl -o- -L https://yarnpkg.com/install.sh | bash
+		export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+	fi
 fi
 
 # ============================
@@ -124,7 +125,7 @@ fi
 rm -rf "$DEST"/.vim 2>/dev/null
 
 if [[ ! -e "$DEST"/.vim ]]; then
-    ln -sf "$SCRIPT_DIR"/vim/dotvim "$DEST"/.vim
+	ln -sf "$SCRIPT_DIR"/vim/dotvim "$DEST"/.vim
 fi
 
 ln -sf "$SCRIPT_DIR"/vim/vimrc "$DEST"/.vimrc
@@ -132,7 +133,7 @@ ln -sf "$SCRIPT_DIR"/vim/vimrc "$DEST"/.vimrc
 # Checks out the Vundle submodule
 # git submodule update --init --recursive
 
-echo  -n -e "$(blue "Installing all VIM plugins")"
+echo -n -e "$(blue "Installing all VIM plugins")"
 echo -e "$(dark_grey "(might take some time the first time ... )")"
 vim +PlugInstall +qall
 
@@ -161,4 +162,4 @@ ln -sfv "$SCRIPT_DIR"/zshrc "$DEST"/.zshrc
 [[ ! -e "$DEST"/.ngrok2 ]] && mkdir "$DEST/.ngrok2"
 ln -vsiF "${SCRIPT_DIR}"/ngrok.yml "${DEST}"/.ngrok2/ngrok.yml
 
-popd > /dev/null || exit
+popd >/dev/null || exit

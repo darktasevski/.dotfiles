@@ -9,20 +9,20 @@
 
 # line endings are normalized to LF on _checkin_.
 # this just applies to what git thinks are text files
-*   text=auto
+* text=auto
 
 # except ... for the special .gitignore_global due to the weird Icon^M file
 common-setup/gitignore_global -text
 
 # don't fuck with binaries
-*.jpg   -text
-*.exe   -text
+*.jpg -text
+*.exe -text
 
-*.bat       eol=crlf
-*.ps1       eol=crlf
+*.bat eol=crlf
+*.ps1 eol=crlf
 
 # everything - including stuff Git don't think is text - is normalized
-common-setup/**  eol=lf
+common-setup/** eol=lf
 
 # To view the effect:
 # $ rm .git/index     # Remove the index to force Git to
